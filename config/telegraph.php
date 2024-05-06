@@ -43,7 +43,7 @@ return [
          *
          * For reference, see https://core.telegram.org/bots/api#using-a-local-bot-api-server
          */
-        // 'domain' => 'http://my.custom.domain',
+        'domain' => 'https://bot.dieto.uz/custom-url/for-webhook',
 
         /*
          * If enabled, unknown webhook commands are
