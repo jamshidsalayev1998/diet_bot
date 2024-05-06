@@ -1,5 +1,6 @@
 <?php
 
+use App\Handlers\CustomTelegramBotHandler;
 use DefStudio\Telegraph\Telegraph;
 
 return [
@@ -28,7 +29,8 @@ return [
          *
          * For reference, see https://docs.defstudio.it/telegraph/webhooks/overview
          */
-        'handler' => DefStudio\Telegraph\Handlers\EmptyWebhookHandler::class,
+        // 'handler' => DefStudio\Telegraph\Handlers\EmptyWebhookHandler::class,
+        'handler' => CustomTelegramBotHandler::class,
 
         /*
          * Middleware to be applied to the webhook route
