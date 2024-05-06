@@ -20,7 +20,7 @@ return [
          * Sets the webhook URL that will be exposed by the server,
          * this can be customized or entirely disabled (by setting it to NULL)
          */
-        'url' => '/telegraph/{token}/webhook',
+        'url' => '/telegraph/curtom-url/webhook',
         // 'url' => null,
 
         /*
