@@ -18,4 +18,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/telegraph/6502974186:AAHY3T5E9jkXNre7aqZ0ShvNt25x23mC0DU/webhook' , [WebhookController::class , 'handler']);
