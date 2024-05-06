@@ -7,11 +7,11 @@ use Illuminate\Support\Stringable;
 
 class CustomTelegramBotHandler extends WebhookHandler
 {
-    protected function handleChatMessage(Stringable $text)
+    protected function handleChatMessage(Stringable $text): void
     {
         $this->chat->html("message : $text")->send();
     }
-    protected function handleUnknownCommand(Stringable $text)
+    protected function handleUnknownCommand(Stringable $text): void
     {
         $this->chat->html("I can't understand your command: $text")->send();
     }
