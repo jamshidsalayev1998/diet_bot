@@ -19,10 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/telegraph/6502974186:AAHY3T5E9jkXNre7aqZ0ShvNt25x23mC0DU/webhook' , function(){
-    TempMessage::create([
-        'text_response' => json_encode('dasd')
-    ]);
-    return response('ok',200);
-})->name('telegraph.webhook');
+if ($webhookUrl = config('telegraph.webhook_url', config('telegraph.webhook.url', '/telegraph/{token}/webhook'))) {
+
+    Route::post($webhookUrl, function(){
+        return \response()->noContent();
+    })
+        ->middleware(config('telegraph.webhook.middleware', []))
+        ->name('telegraph.webhook');
+
+}
 
