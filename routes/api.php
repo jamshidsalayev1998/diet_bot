@@ -1,6 +1,5 @@
 <?php
 
-use DefStudio\Telegraph\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,13 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-if ($webhookUrl = config('telegraph.webhook_url', config('telegraph.webhook.url', '/telegraph/{token}/webhook'))) {
-
-    Route::post($webhookUrl, [WebhookController::class, 'handle'])
-        ->middleware(config('telegraph.webhook.middleware', []))
-        ->name('telegraph.webhook');
-
-    Route::post('/telegraph/custom-url/webhook?6502974186:AAHY3T5E9jkXNre7aqZ0ShvNt25x23mC0DU?6502974186:AAHY3T5E9jkXNre7aqZ0ShvNt25x23mC0DU', [WebhookController::class, 'handle']);
-}
 
