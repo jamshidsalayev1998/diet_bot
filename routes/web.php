@@ -23,5 +23,5 @@ Route::post('/telegraph/6502974186:AAHY3T5E9jkXNre7aqZ0ShvNt25x23mC0DU/webhook/{
     TempMessage::create([
         'text_response' => json_encode($bot)
     ]);
-});
+})->name('telegraph.webhook');
 
