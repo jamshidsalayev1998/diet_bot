@@ -19,13 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-if ($webhookUrl = config('telegraph.webhook_url', config('telegraph.webhook.url', '/telegraph/{token}/webhook'))) {
+// if ($webhookUrl = config('telegraph.webhook_url', config('telegraph.webhook.url', '/telegraph/{token}/webhook'))) {
 
-    Route::post($webhookUrl, function(){
-        return \response()->noContent();
-    })
-        ->middleware(config('telegraph.webhook.middleware', []))
-        ->name('telegraph.webhook');
+//     Route::post($webhookUrl, function(){
+//         return \response()->noContent();
+//     })
+//         ->middleware(config('telegraph.webhook.middleware', []))
+//         ->name('telegraph.webhook');
 
-}
+// }
 
