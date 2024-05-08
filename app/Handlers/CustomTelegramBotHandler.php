@@ -22,7 +22,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     {
         TempMessage::create(['text_response' => 'starta galdi']);
         $bot = $this->chat->bot;
-        $text = 'Bot ishlashni boshladi';
+        $text = 'Bot ishlashni boshladi hihihi';
         $this->chat->html($text)->send();
     }
 }
