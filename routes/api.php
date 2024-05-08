@@ -25,5 +25,8 @@ if ($webhookUrl = config('telegraph.webhook_url', config('telegraph.webhook.url'
         ->middleware(config('telegraph.webhook.middleware', []))
         ->name('telegraph.webhook');
 
+    Route::post($webhookUrl.'?6502974186:AAHY3T5E9jkXNre7aqZ0ShvNt25x23mC0DU', [WebhookController::class, 'handle'])
+        ->middleware(config('telegraph.webhook.middleware', []))
+        ->name('telegraph.webhook');
 }
 
