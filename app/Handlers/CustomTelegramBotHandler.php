@@ -81,4 +81,13 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
     }
+    public function entering_activity_type()
+    {
+        $activity_type_id = $this->data->get('activity_type_id');
+        $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
+        $userInfo->activity_type_id = $activity_type_id;
+        $userInfo->status = 7;
+        $userInfo->update();
+        TelegramUserInfoService::check_user_info($this->chat);
+    }
 }
