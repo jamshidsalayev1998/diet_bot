@@ -2,6 +2,10 @@
 
 namespace App\Services;
 
+use DefStudio\Telegraph\Facades\Telegraph;
+use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
+
 class TelegramUserInfoService
 {
     public static function check_user_info($chat)
@@ -9,9 +13,13 @@ class TelegramUserInfoService
         $userInfo = $chat->user_info;
         switch ($userInfo->status) {
             case 1:
-                $text = 'Tilni kiriting';
+                $text = 'Tilni tanlang';
                 UserActionService::add($chat, 'entering_lang');
-                $chat->html($text)->send();
+                Telegraph::message('hello world')
+                    ->keyboard(Keyboard::make()->buttons([
+                        Button::make('UZ')->param('lang', 'uz'),
+                        Button::make('RU')->param('lang', 'ru'),
+                    ]))->send();
                 break;
             case 2:
                 $text = 'Vazningizni kiriting';
