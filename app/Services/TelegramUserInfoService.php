@@ -110,7 +110,7 @@ class TelegramUserInfoService
         $status = 1;
         $userInfo = $chat->user_info;
         $validator = Validator::make([
-            'weight' => $weight,
+            'weight' => intval($weight),
 
         ], [
             'weight' => ['required', 'integer', 'between:20,200']
