@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Validator;
 
 class TelegramUserInfoService
 {
-    public static function check_user_info($chat,$userInfo)
+    public static function check_user_info($chat)
     {
+        $userInfo = self::check_exists_user_info($chat);
         switch ($userInfo->status) {
             case 1:
                 $text = 'Tilni tanlang';
@@ -68,7 +69,7 @@ class TelegramUserInfoService
                 self::send_daily_spend_calories($chat);
                 break;
             default:
-                $text = 'nomalum status '.$userInfo->status;
+                $text = 'nomalum status';
                 $chat->html($text)->send();
         }
     }
