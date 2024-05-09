@@ -107,10 +107,12 @@ class TelegramUserInfoService
 
     public static function store_weight($chat, $weight)
     {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
         $status = 1;
         $userInfo = $chat->user_info;
         $validator = Validator::make([
-            'weight' => intval($weight),
+            'weight' => $weightInteger,
 
         ], [
             'weight' => ['required', 'integer', 'between:20,200']
@@ -118,7 +120,7 @@ class TelegramUserInfoService
         if ($validator->fails()) {
             $status = 0;
             $errors = $validator->errors()->all();
-            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting! .'.json_encode($errors))->send();
+            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting! .' . json_encode($errors))->send();
         } else {
             $userInfo->weight = $weight;
             $userInfo->status = 4;
