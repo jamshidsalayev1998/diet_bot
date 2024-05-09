@@ -40,4 +40,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $data = $this->extractCallbackQueryData();
         Telegraph::message('call  '.json_encode($data))->send();
     }
+    private function entering_lang(){
+        Telegraph::message('buyoqa keldi')->send();
+    }
 }

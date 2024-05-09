@@ -70,4 +70,6 @@ class TelegramUserInfoService
         $userInfo->status = 9;
         $userInfo->update();
     }
+
+
 }
