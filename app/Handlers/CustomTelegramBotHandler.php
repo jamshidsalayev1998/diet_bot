@@ -22,17 +22,17 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
-        $childChat = ChildTelegramChat::where('chat_id',$this->chat->chat_id)->first();
-        // $userInfo = UserInfo::where('chat_id' , $this->chat->chat_id)->first();
-        // if (!$userInfo) {
-        //     $userInfo = UserInfo::create([
-        //         'chat_id' => $this->chat->chat_id,
-        //     ]);
-        // }
-        // if ($userInfo->status < 9) {
-        //     TelegramUserInfoService::check_user_info($childChat);
-        // }
-        $text = 'Bot ishlashni boshladi hihihi '.$this->chat->chat_id;
+        $bot = $this->chat->bot;
+        $userInfo = $this->chat->user_info;
+        if(!$userInfo){
+            $userInfo = UserInfo::create([
+                'chat_id' => $this->chat->chat_id,
+            ]);
+        }
+        if($userInfo->status < 9 ){
+            TelegramUserInfoService::check_user_info($this->chat);
+        }
+        $text = 'Bot ishlashni boshladi hihihi';
         $this->chat->html($text)->send();
     }
 }
