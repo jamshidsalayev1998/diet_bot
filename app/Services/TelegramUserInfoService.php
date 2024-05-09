@@ -115,7 +115,7 @@ class TelegramUserInfoService
         ], [
             'weight' => ['required', 'integer']
         ]);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $status = 0;
             Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
