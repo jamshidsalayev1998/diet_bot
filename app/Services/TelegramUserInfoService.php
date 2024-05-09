@@ -113,7 +113,7 @@ class TelegramUserInfoService
             'weight' => $weight,
 
         ], [
-            'weight' => ['required', 'integer']
+            'weight' => ['required', 'regex:/^\d+$/']
         ]);
         if ($validator->fails()) {
             $status = 0;
