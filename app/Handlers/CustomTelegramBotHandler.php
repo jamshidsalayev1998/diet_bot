@@ -33,7 +33,10 @@ class CustomTelegramBotHandler extends WebhookHandler
         if($userInfo->status < 9 ){
             TelegramUserInfoService::check_user_info($this->chat);
         }
-        Telegraph::message('asdasd')->send();
+        else{
+
+            Telegraph::message('asdasd')->send();
+        }
     }
     private function handleCallbackQuery(): void
     {
@@ -41,9 +44,11 @@ class CustomTelegramBotHandler extends WebhookHandler
         Telegraph::message('call  '.json_encode($data))->send();
     }
     public function entering_lang(){
-        $data = $this->data->get('lang');
-        Telegraph::message('call  '.json_encode($data))->send();
-        // $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
-        // $userInfo->language =
+        $lang = $this->data->get('lang');
+        $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
+        $userInfo->language =$lang;
+        $userInfo->status = 2;
+        $userInfo->update();
+        TelegramUserInfoService::check_user_info($this->chat);
     }
 }
