@@ -17,8 +17,8 @@ class TelegramUserInfoService
                 UserActionService::add($chat, 'entering_lang');
                 Telegraph::message($text)
                     ->keyboard(Keyboard::make()->buttons([
-                        Button::make('UZ')->param('lang', 'uz'),
-                        Button::make('RU')->param('lang', 'ru'),
+                        Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
+                        Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
                     ]))->send();
                 break;
             case 2:
