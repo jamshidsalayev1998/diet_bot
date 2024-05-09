@@ -32,7 +32,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         // if ($userInfo->status < 9) {
         //     TelegramUserInfoService::check_user_info($childChat);
         // }
-        $text = 'Bot ishlashni boshladi hihihi';
+        $text = 'Bot ishlashni boshladi hihihi '.$this->chat->chat_id;
         $this->chat->html($text)->send();
     }
 }
