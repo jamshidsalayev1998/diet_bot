@@ -68,7 +68,7 @@ class TelegramUserInfoService
                 self::send_daily_spend_calories($chat);
                 break;
             default:
-                $text = 'nomalum status';
+                $text = 'nomalum status '.$userInfo->status;
                 $chat->html($text)->send();
         }
     }
