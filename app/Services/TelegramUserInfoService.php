@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\V1\UserInfo;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -69,6 +70,16 @@ class TelegramUserInfoService
         $userInfo->daily_spend_calories = 2345;
         $userInfo->status = 9;
         $userInfo->update();
+    }
+
+    public static function check_exists_user_info($chat){
+        $userInfo = $chat->user_info;
+        if(!$userInfo){
+            $userInfo = UserInfo::create([
+                'chat_id' => $chat->chat_id,
+            ]);
+        }
+        return $userInfo;
     }
 
 
