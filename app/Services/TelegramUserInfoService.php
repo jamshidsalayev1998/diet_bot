@@ -69,8 +69,13 @@ class TelegramUserInfoService
                 self::send_daily_spend_calories($chat);
                 break;
             default:
-                $text = 'nomalum status';
-                $chat->html($text)->send();
+                $text = 'Tilni tanlang';
+                UserActionService::add($chat, 'entering_lang');
+                Telegraph::message($text)
+                    ->keyboard(Keyboard::make()->buttons([
+                        Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
+                        Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
+                    ]))->send();
         }
     }
 
