@@ -15,7 +15,19 @@ class CustomTelegramBotHandler extends WebhookHandler
 
     protected function handleChatMessage(Stringable $text): void
     {
-        $this->chat->html("message : $text")->send();
+        $userAction = $this->chat->user_action;
+        if ($userAction) {
+            switch ($userAction->screen) {
+                case 'entering_weight':
+                    $statusStore = TelegramUserInfoService::store_weight($this->chat,$text);
+                    if($statusStore){
+                        TelegramUserInfoService::check_user_info($this->chat);
+                    }
+                    break;
+            }
+        } else {
+            Telegraph::message('xatolik')->send();
+        }
     }
     protected function handleUnknownCommand(Stringable $text): void
     {
@@ -25,15 +37,14 @@ class CustomTelegramBotHandler extends WebhookHandler
     {
         $bot = $this->chat->bot;
         $userInfo = $this->chat->user_info;
-        if(!$userInfo){
+        if (!$userInfo) {
             $userInfo = UserInfo::create([
                 'chat_id' => $this->chat->chat_id,
             ]);
         }
-        if($userInfo->status < 9 ){
+        if ($userInfo->status < 9) {
             TelegramUserInfoService::check_user_info($this->chat);
-        }
-        else{
+        } else {
 
             Telegraph::message('asdasd')->send();
         }
@@ -41,12 +52,13 @@ class CustomTelegramBotHandler extends WebhookHandler
     private function handleCallbackQuery(): void
     {
         $data = $this->extractCallbackQueryData();
-        Telegraph::message('call  '.json_encode($data))->send();
+        Telegraph::message('call  ' . json_encode($data))->send();
     }
-    public function entering_lang(){
+    public function entering_lang()
+    {
         $lang = $this->data->get('lang');
         $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
-        $userInfo->language =$lang;
+        $userInfo->language = $lang;
         $userInfo->status = 2;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);

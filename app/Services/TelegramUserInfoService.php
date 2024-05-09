@@ -6,6 +6,7 @@ use App\Models\V1\UserInfo;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
+use Illuminate\Support\Facades\Validator;
 
 class TelegramUserInfoService
 {
@@ -80,6 +81,27 @@ class TelegramUserInfoService
             ]);
         }
         return $userInfo;
+    }
+
+    public static function store_weight($chat , $weight){
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator =Validator::make([
+            'weight' => $weight,
+
+        ],[
+            'weight' =>['required' , 'integer']
+        ]);
+        if($validator->failed()){
+            $status = 0;
+            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        }
+        else{
+            $userInfo->weight = $weight;
+            $userInfo->status = 3;
+            $userInfo->update();
+        }
+        return $status;
     }
 
 
