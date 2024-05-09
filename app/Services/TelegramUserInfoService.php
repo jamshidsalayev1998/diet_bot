@@ -130,13 +130,15 @@ class TelegramUserInfoService
     }
     public static function store_goal_weight($chat, $weight)
     {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
         $status = 1;
         $userInfo = $chat->user_info;
         $validator = Validator::make([
-            'weight' => $weight,
+            'weight' => $weightInteger,
 
         ], [
-            'weight' => ['required', 'integer']
+            'weight' => ['required', 'integer', 'between:20,200']
         ]);
         if ($validator->failed()) {
             $status = 0;
@@ -150,17 +152,19 @@ class TelegramUserInfoService
     }
     public static function store_tall($chat, $weight)
     {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
         $status = 1;
         $userInfo = $chat->user_info;
         $validator = Validator::make([
-            'weight' => $weight,
+            'weight' => $weightInteger,
 
         ], [
-            'weight' => ['required', 'integer']
+            'weight' => ['required', 'integer', 'between:40,300']
         ]);
         if ($validator->failed()) {
             $status = 0;
-            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            Telegraph::message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
             $userInfo->tall = $weight;
             $userInfo->status = 6;
@@ -170,17 +174,19 @@ class TelegramUserInfoService
     }
     public static function store_age($chat, $weight)
     {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
         $status = 1;
         $userInfo = $chat->user_info;
         $validator = Validator::make([
-            'weight' => $weight,
+            'weight' => $weightInteger,
 
         ], [
-            'weight' => ['required', 'integer']
+            'weight' => ['required', 'integer', 'between:10,80']
         ]);
         if ($validator->failed()) {
             $status = 0;
-            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            Telegraph::message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
             $userInfo->age = $weight;
             $userInfo->status = 7;
