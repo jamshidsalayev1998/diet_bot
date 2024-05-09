@@ -25,37 +25,46 @@ class TelegramUserInfoService
                     ]))->send();
                 break;
             case 2:
+                $text = 'Jinsingizni tanlang';
+                UserActionService::add($chat, 'entering_gender');
+                Telegraph::message($text)
+                    ->keyboard(Keyboard::make()->buttons([
+                        Button::make('Ayol')->action('entering_gender')->param('gender', '0'),
+                        Button::make('Erkak')->action('entering_gender')->param('gender', '1'),
+                    ]))->send();
+                break;
+            case 3:
                 $text = 'Vazningizni kiriting';
                 UserActionService::add($chat, 'entering_weight');
                 $chat->html($text)->send();
                 break;
-            case 3:
+            case 4:
                 $text = 'Kozlangan vaznni kiriting';
                 UserActionService::add($chat, 'entering_goal_weight');
                 $chat->html($text)->send();
                 break;
-            case 4:
+            case 5:
                 $text = 'Bo`yingizni kiriting';
                 UserActionService::add($chat, 'entering_tall');
                 $chat->html($text)->send();
                 break;
-            case 5:
+            case 6:
                 $text = 'Yoshingizni kiriting';
                 UserActionService::add($chat, 'entering_age');
                 $chat->html($text)->send();
                 break;
-            case 6:
+            case 7:
                 $text = 'Aktivlik turini tanlang';
                 UserActionService::add($chat, 'entering_activity_type');
                 $activityTypes = ActivityType::all();
                 $buttons = [];
-                foreach($activityTypes as $activityType){
-                    array_push($buttons , Button::make($activityType->title)->action('entering_activity_type')->param('activity_type_id', $activityType->id));
+                foreach ($activityTypes as $activityType) {
+                    array_push($buttons, Button::make($activityType->title)->action('entering_activity_type')->param('activity_type_id', $activityType->id));
                 }
                 Telegraph::message($text)
                     ->keyboard(Keyboard::make()->buttons($buttons))->send();
                 break;
-            case 7:
+            case 8:
                 self::calculate_daily_spend_calories($chat);
                 self::send_daily_spend_calories($chat);
                 break;
@@ -76,13 +85,14 @@ class TelegramUserInfoService
     {
         $userInfo = $chat->user_info;
         $userInfo->daily_spend_calories = 2345;
-        $userInfo->status = 9;
+        $userInfo->status = 10;
         $userInfo->update();
     }
 
-    public static function check_exists_user_info($chat){
+    public static function check_exists_user_info($chat)
+    {
         $userInfo = $chat->user_info;
-        if(!$userInfo){
+        if (!$userInfo) {
             $userInfo = UserInfo::create([
                 'chat_id' => $chat->chat_id,
             ]);
@@ -90,86 +100,84 @@ class TelegramUserInfoService
         return $userInfo;
     }
 
-    public static function store_weight($chat , $weight){
+    public static function store_weight($chat, $weight)
+    {
         $status = 1;
         $userInfo = $chat->user_info;
-        $validator =Validator::make([
+        $validator = Validator::make([
             'weight' => $weight,
 
-        ],[
-            'weight' =>['required' , 'integer']
+        ], [
+            'weight' => ['required', 'integer']
         ]);
-        if($validator->failed()){
+        if ($validator->failed()) {
             $status = 0;
             Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
-        }
-        else{
+        } else {
             $userInfo->weight = $weight;
-            $userInfo->status = 3;
-            $userInfo->update();
-        }
-        return $status;
-    }
-    public static function store_goal_weight($chat , $weight){
-        $status = 1;
-        $userInfo = $chat->user_info;
-        $validator =Validator::make([
-            'weight' => $weight,
-
-        ],[
-            'weight' =>['required' , 'integer']
-        ]);
-        if($validator->failed()){
-            $status = 0;
-            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
-        }
-        else{
-            $userInfo->goal_weight = $weight;
             $userInfo->status = 4;
             $userInfo->update();
         }
         return $status;
     }
-    public static function store_tall($chat , $weight){
+    public static function store_goal_weight($chat, $weight)
+    {
         $status = 1;
         $userInfo = $chat->user_info;
-        $validator =Validator::make([
+        $validator = Validator::make([
             'weight' => $weight,
 
-        ],[
-            'weight' =>['required' , 'integer']
+        ], [
+            'weight' => ['required', 'integer']
         ]);
-        if($validator->failed()){
+        if ($validator->failed()) {
             $status = 0;
             Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
-        }
-        else{
-            $userInfo->tall = $weight;
+        } else {
+            $userInfo->goal_weight = $weight;
             $userInfo->status = 5;
             $userInfo->update();
         }
         return $status;
     }
-    public static function store_age($chat , $weight){
+    public static function store_tall($chat, $weight)
+    {
         $status = 1;
         $userInfo = $chat->user_info;
-        $validator =Validator::make([
+        $validator = Validator::make([
             'weight' => $weight,
 
-        ],[
-            'weight' =>['required' , 'integer']
+        ], [
+            'weight' => ['required', 'integer']
         ]);
-        if($validator->failed()){
+        if ($validator->failed()) {
             $status = 0;
             Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
-        }
-        else{
-            $userInfo->age = $weight;
+        } else {
+            $userInfo->tall = $weight;
             $userInfo->status = 6;
             $userInfo->update();
         }
         return $status;
     }
+    public static function store_age($chat, $weight)
+    {
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weight,
 
-
+        ], [
+            'weight' => ['required', 'integer']
+        ]);
+        if ($validator->failed()) {
+            $status = 0;
+            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $userInfo->age = $weight;
+            $userInfo->status = 7;
+            $userInfo->update();
+        }
+        return $status;
+    }
 }

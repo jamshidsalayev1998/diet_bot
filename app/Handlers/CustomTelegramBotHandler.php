@@ -77,7 +77,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $lang = $this->data->get('lang');
         $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
         $userInfo->language = $lang;
-        $userInfo->status = 2;
+        $userInfo->status = 3;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
     }
@@ -86,7 +86,16 @@ class CustomTelegramBotHandler extends WebhookHandler
         $activity_type_id = $this->data->get('activity_type_id');
         $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
         $userInfo->activity_type_id = $activity_type_id;
-        $userInfo->status = 7;
+        $userInfo->status = 8;
+        $userInfo->update();
+        TelegramUserInfoService::check_user_info($this->chat);
+    }
+    public function entering_gender()
+    {
+        $gender = $this->data->get('gender');
+        $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
+        $userInfo->gender = $gender;
+        $userInfo->status = 3;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
     }

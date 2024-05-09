@@ -3,6 +3,7 @@ return [
     'user_info_statuses' => [
         'Yangi (hechnarsa kiritilmagan)',
         'Yangi (til kiritilgan)',
+        'Yangi (jins kiritilgan)',
         'Yangi (vazn kiritilgan)',
         'Yangi (kozlangan vazn kiritilgan)',
         'Yangi (kozlangan vazn kiritilgan)',
