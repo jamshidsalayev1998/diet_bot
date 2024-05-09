@@ -15,7 +15,7 @@ class TelegramUserInfoService
             case 1:
                 $text = 'Tilni tanlang';
                 UserActionService::add($chat, 'entering_lang');
-                Telegraph::message('hello world')
+                Telegraph::message($text)
                     ->keyboard(Keyboard::make()->buttons([
                         Button::make('UZ')->param('lang', 'uz'),
                         Button::make('RU')->param('lang', 'ru'),
