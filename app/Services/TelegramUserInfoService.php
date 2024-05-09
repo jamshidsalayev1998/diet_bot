@@ -110,14 +110,14 @@ class TelegramUserInfoService
         $status = 1;
         $userInfo = $chat->user_info;
         $validator = Validator::make([
-            'weight' => (int) $weight,
+            'weight' => $weight,
 
         ], [
             'weight' => ['required', 'integer', 'between:20,200']
         ]);
         if ($validator->fails()) {
             $status = 0;
-            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting! .'.$weight)->send();
         } else {
             $userInfo->weight = $weight;
             $userInfo->status = 4;
