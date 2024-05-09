@@ -30,6 +30,12 @@ class CustomTelegramBotHandler extends WebhookHandler
                         TelegramUserInfoService::check_user_info($this->chat);
                     }
                     break;
+                case 'entering_tall':
+                    $statusStore = TelegramUserInfoService::store_tall($this->chat, $text);
+                    if ($statusStore) {
+                        TelegramUserInfoService::check_user_info($this->chat);
+                    }
+                    break;
             }
         } else {
             Telegraph::message('xatolik')->send();
