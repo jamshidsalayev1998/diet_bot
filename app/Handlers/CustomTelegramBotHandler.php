@@ -22,9 +22,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
-        $childChat = ChildTelegramChat::firstOrNew([
-            'chat_id' => $this->chat->chat_id,
-        ]);
+        $childChat = ChildTelegramChat::where('chat_id',$this->chat->chat_id)->first();
         $userInfo = $childChat->user_info;
         if (!$userInfo) {
             $userInfo = UserInfo::create([
