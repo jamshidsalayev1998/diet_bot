@@ -19,8 +19,14 @@ class CustomTelegramBotHandler extends WebhookHandler
         if ($userAction) {
             switch ($userAction->screen) {
                 case 'entering_weight':
-                    $statusStore = TelegramUserInfoService::store_weight($this->chat,$text);
-                    if($statusStore){
+                    $statusStore = TelegramUserInfoService::store_weight($this->chat, $text);
+                    if ($statusStore) {
+                        TelegramUserInfoService::check_user_info($this->chat);
+                    }
+                    break;
+                case 'entering_goal_weight':
+                    $statusStore = TelegramUserInfoService::store_goal_weight($this->chat, $text);
+                    if ($statusStore) {
                         TelegramUserInfoService::check_user_info($this->chat);
                     }
                     break;

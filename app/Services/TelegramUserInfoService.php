@@ -103,6 +103,26 @@ class TelegramUserInfoService
         }
         return $status;
     }
+    public static function store_goal_weight($chat , $weight){
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator =Validator::make([
+            'weight' => $weight,
+
+        ],[
+            'weight' =>['required' , 'integer']
+        ]);
+        if($validator->failed()){
+            $status = 0;
+            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        }
+        else{
+            $userInfo->goal_weight = $weight;
+            $userInfo->status = 4;
+            $userInfo->update();
+        }
+        return $status;
+    }
 
 
 }
