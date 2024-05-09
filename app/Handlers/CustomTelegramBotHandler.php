@@ -6,6 +6,7 @@ use App\Models\TempMessage;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
 use App\Services\TelegramUserInfoService;
+use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use Illuminate\Support\Stringable;
 
@@ -32,7 +33,6 @@ class CustomTelegramBotHandler extends WebhookHandler
         if($userInfo->status < 9 ){
             TelegramUserInfoService::check_user_info($this->chat);
         }
-        $text = 'Bot ishlashni boshladi hihihi';
-        $this->chat->html($text)->send();
+        Telegraph::message('asdasd')->send();
     }
 }
