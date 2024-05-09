@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\V1\ActivityType;
 use App\Models\V1\UserInfo;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
@@ -46,7 +47,13 @@ class TelegramUserInfoService
             case 6:
                 $text = 'Aktivlik turini tanlang';
                 UserActionService::add($chat, 'entering_activity_type');
-                $chat->html($text)->send();
+                $activityTypes = ActivityType::all();
+                $buttons = [];
+                foreach($activityTypes as $activityType){
+                    array_push($buttons , Button::make($activityType->title)->action('entering_activity_type')->param('activity_type_id', $activityType->id));
+                }
+                Telegraph::message($text)
+                    ->keyboard(Keyboard::make()->buttons($buttons))->send();
                 break;
             case 7:
                 self::calculate_daily_spend_calories($chat);
@@ -139,6 +146,26 @@ class TelegramUserInfoService
         else{
             $userInfo->tall = $weight;
             $userInfo->status = 5;
+            $userInfo->update();
+        }
+        return $status;
+    }
+    public static function store_age($chat , $weight){
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator =Validator::make([
+            'weight' => $weight,
+
+        ],[
+            'weight' =>['required' , 'integer']
+        ]);
+        if($validator->failed()){
+            $status = 0;
+            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        }
+        else{
+            $userInfo->age = $weight;
+            $userInfo->status = 6;
             $userInfo->update();
         }
         return $status;
