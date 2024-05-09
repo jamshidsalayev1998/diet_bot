@@ -15,31 +15,32 @@ class CustomTelegramBotHandler extends WebhookHandler
 
     protected function handleChatMessage(Stringable $text): void
     {
+        $userInfo = $this->chat->user_info;
         $userAction = $this->chat->user_action;
         if ($userAction) {
             switch ($userAction->screen) {
                 case 'entering_weight':
                     $statusStore = TelegramUserInfoService::store_weight($this->chat, $text);
                     if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
+                        TelegramUserInfoService::check_user_info($this->chat,$userInfo);
                     }
                     break;
                 case 'entering_goal_weight':
                     $statusStore = TelegramUserInfoService::store_goal_weight($this->chat, $text);
                     if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
+                        TelegramUserInfoService::check_user_info($this->chat,$userInfo);
                     }
                     break;
                 case 'entering_tall':
                     $statusStore = TelegramUserInfoService::store_tall($this->chat, $text);
                     if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
+                        TelegramUserInfoService::check_user_info($this->chat,$userInfo);
                     }
                     break;
                 case 'entering_age':
                     $statusStore = TelegramUserInfoService::store_age($this->chat, $text);
                     if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
+                        TelegramUserInfoService::check_user_info($this->chat,$userInfo);
                     }
                     break;
             }
@@ -53,7 +54,6 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
-        $bot = $this->chat->bot;
         $userInfo = $this->chat->user_info;
         if (!$userInfo) {
             $userInfo = UserInfo::create([
@@ -61,7 +61,7 @@ class CustomTelegramBotHandler extends WebhookHandler
             ]);
         }
         if ($userInfo->status < 9) {
-            TelegramUserInfoService::check_user_info($this->chat);
+            TelegramUserInfoService::check_user_info($this->chat,$userInfo);
         } else {
 
             Telegraph::message('asdasd')->send();
@@ -79,7 +79,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->language = $lang;
         $userInfo->status = 3;
         $userInfo->update();
-        TelegramUserInfoService::check_user_info($this->chat);
+        TelegramUserInfoService::check_user_info($this->chat,$userInfo);
     }
     public function entering_activity_type()
     {
@@ -88,7 +88,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->activity_type_id = $activity_type_id;
         $userInfo->status = 8;
         $userInfo->update();
-        TelegramUserInfoService::check_user_info($this->chat);
+        TelegramUserInfoService::check_user_info($this->chat,$userInfo);
     }
     public function entering_gender()
     {
@@ -97,6 +97,6 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->gender = $gender;
         $userInfo->status = 3;
         $userInfo->update();
-        TelegramUserInfoService::check_user_info($this->chat);
+        TelegramUserInfoService::check_user_info($this->chat,$userInfo);
     }
 }
