@@ -3,6 +3,7 @@
 namespace App\Handlers;
 
 use App\Models\TempMessage;
+use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
 use App\Services\TelegramUserInfoService;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
@@ -10,6 +11,7 @@ use Illuminate\Support\Stringable;
 
 class CustomTelegramBotHandler extends WebhookHandler
 {
+
     protected function handleChatMessage(Stringable $text): void
     {
         $this->chat->html("message : $text")->send();
@@ -20,15 +22,17 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
-        $bot = $this->chat->bot;
-        $userInfo = $this->chat->user_info;
-        if(!$userInfo){
+        $childChat = ChildTelegramChat::firstOrNew([
+            'chat_id' => $this->chat->chat_id,
+        ]);
+        $userInfo = $childChat->user_info;
+        if (!$userInfo) {
             $userInfo = UserInfo::create([
                 'chat_id' => $this->chat->chat_id,
             ]);
         }
-        if($userInfo->status < 9 ){
-            TelegramUserInfoService::check_user_info($this->chat);
+        if ($userInfo->status < 9) {
+            TelegramUserInfoService::check_user_info($childChat);
         }
         $text = 'Bot ishlashni boshladi hihihi';
         $this->chat->html($text)->send();
