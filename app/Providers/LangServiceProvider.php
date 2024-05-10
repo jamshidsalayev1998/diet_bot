@@ -27,11 +27,12 @@ class LangServiceProvider extends ServiceProvider
             'text_response' => json_encode($request->all())
         ]);
         $data = $request->all();
-        $userInfo = UserInfo::where('chat_id' , $data['message']['from']['id'])->orderBy('id' , 'ASC')->first();
-        if(!$userInfo){
+        $userInfo = null;
+        if (key_exists('message', $data))
+            $userInfo = UserInfo::where('chat_id', $data['message']['from']['id'])->orderBy('id', 'ASC')->first();
+        if (!$userInfo) {
             $locale = config('app.locale');
-        }
-        else{
+        } else {
             $locale = $userInfo->language;
         }
         app()->setLocale($locale);
