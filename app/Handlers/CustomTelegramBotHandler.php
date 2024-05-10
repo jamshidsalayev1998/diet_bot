@@ -56,6 +56,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         TempMessage::create([
             'text_response' => 'startga keldi'
         ]);
+        $this->chat->html('bunda ishladi')->send();
         // $userInfo = $this->chat->user_info;
         // if (!$userInfo) {
         //     $userInfo = UserInfo::create([
