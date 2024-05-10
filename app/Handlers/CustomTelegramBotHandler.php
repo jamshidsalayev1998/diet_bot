@@ -81,6 +81,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 3;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
+        $this->reply('Til tanlandi');
     }
     public function entering_activity_type()
     {

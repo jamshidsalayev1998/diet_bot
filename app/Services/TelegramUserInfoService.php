@@ -79,6 +79,7 @@ class TelegramUserInfoService
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
                     ]))->send();
         }
+        
     }
 
     public static function send_daily_spend_calories($chat)
