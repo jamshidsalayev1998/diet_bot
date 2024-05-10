@@ -65,7 +65,7 @@ class CustomTelegramBotHandler extends WebhookHandler
 
         //     Telegraph::message('asdasd')->send();
         // }
-        Telegraph::message(json_encode($this->chat))->send();
+        Telegraph::message(json_encode($this->message))->send();
     }
     private function handleCallbackQuery(): void
     {
