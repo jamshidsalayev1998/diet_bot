@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class TelegramUserInfoService
 {
-    public static function check_user_info($chat)
+    public static function check_user_info($chat, $userInfo = null)
     {
-        $userInfo = $chat->user_info;
-        // $userInfo = self::check_exists_user_info($chat);
+        if (!$userInfo)
+            $userInfo = self::check_exists_user_info($chat);
+        // $userInfo = $chat->user_info;
         switch ($userInfo->status) {
             case 1:
                 $text = 'Tilni tanlang';
