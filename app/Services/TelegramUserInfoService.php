@@ -18,7 +18,7 @@ class TelegramUserInfoService
             case 1:
                 $text = 'Tilni tanlang';
                 UserActionService::add($chat, 'entering_lang');
-                Telegraph::message($text)
+                $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
                         Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
@@ -27,7 +27,7 @@ class TelegramUserInfoService
             case 2:
                 $text = 'Jinsingizni tanlang';
                 UserActionService::add($chat, 'entering_gender');
-                Telegraph::message($text)
+                $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
                         Button::make('Ayol')->action('entering_gender')->param('gender', '0'),
                         Button::make('Erkak')->action('entering_gender')->param('gender', '1'),
@@ -61,7 +61,7 @@ class TelegramUserInfoService
                 foreach ($activityTypes as $activityType) {
                     array_push($buttons, Button::make($activityType->title)->action('entering_activity_type')->param('activity_type_id', $activityType->id));
                 }
-                Telegraph::message($text)
+                $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons($buttons))->send();
                 break;
             case 8:
@@ -71,7 +71,7 @@ class TelegramUserInfoService
             default:
                 $text = 'Tilni tanlang';
                 UserActionService::add($chat, 'entering_lang');
-                Telegraph::message($text)
+                $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
                         Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
@@ -120,7 +120,7 @@ class TelegramUserInfoService
         if ($validator->fails()) {
             $status = 0;
             $errors = $validator->errors()->all();
-            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting! .' . json_encode($errors))->send();
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting! .' . json_encode($errors))->send();
         } else {
             $userInfo->weight = $weight;
             $userInfo->status = 4;
@@ -142,7 +142,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->failed()) {
             $status = 0;
-            Telegraph::message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
             $userInfo->goal_weight = $weight;
             $userInfo->status = 5;
@@ -164,7 +164,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->failed()) {
             $status = 0;
-            Telegraph::message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
             $userInfo->tall = $weight;
             $userInfo->status = 6;
@@ -186,7 +186,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->failed()) {
             $status = 0;
-            Telegraph::message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
             $userInfo->age = $weight;
             $userInfo->status = 7;

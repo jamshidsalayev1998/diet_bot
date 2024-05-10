@@ -44,7 +44,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                     break;
             }
         } else {
-            Telegraph::message('xatolik')->send();
+            $this->chat->message('xatolik')->send();
         }
     }
     protected function handleUnknownCommand(Stringable $text): void
@@ -53,28 +53,25 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
-        TempMessage::create([
-            'text_response' => 'startga keldi'
-        ]);
-        $this->chat->html('bunda ishladi')->send();
-        // $userInfo = $this->chat->user_info;
-        // if (!$userInfo) {
-        //     $userInfo = UserInfo::create([
-        //         'chat_id' => $this->chat->chat_id,
-        //     ]);
-        // }
-        // if ($userInfo->status < 9) {
-        //     TelegramUserInfoService::check_user_info($this->chat);
-        // } else {
 
-        //     Telegraph::message('asdasd')->send();
-        // }
-        Telegraph::message(json_encode($this->message))->send();
+        $userInfo = $this->chat->user_info;
+        if (!$userInfo) {
+            $userInfo = UserInfo::create([
+                'chat_id' => $this->chat->chat_id,
+            ]);
+        }
+        if ($userInfo->status < 9) {
+            TelegramUserInfoService::check_user_info($this->chat);
+        } else {
+
+            $this->chat->message('asdasd')->send();
+        }
+        $this->chat->message(json_encode($this->message))->send();
     }
     private function handleCallbackQuery(): void
     {
         $data = $this->extractCallbackQueryData();
-        Telegraph::message('call  ' . json_encode($data))->send();
+        $this->chat->message('call  ' . json_encode($data))->send();
     }
     public function entering_lang()
     {
