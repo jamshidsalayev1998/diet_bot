@@ -8,9 +8,11 @@ use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Support\Facades\Validator;
+use TelegramMessageLangsTrait;
 
 class TelegramUserInfoService
 {
+    use TelegramMessageLangsTrait;
     public static function check_user_info($chat, $userInfo = null)
     {
         if (!$userInfo)
@@ -18,7 +20,7 @@ class TelegramUserInfoService
         // $userInfo = $chat->user_info;
         switch ($userInfo->status) {
             case 1:
-                $text = 'Tilni tanlang';
+                $text = self::lang('select_language');
                 UserActionService::add($chat, 'entering_lang');
                 $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
@@ -27,7 +29,7 @@ class TelegramUserInfoService
                     ]))->send();
                 break;
             case 2:
-                $text = 'Jinsingizni tanlang';
+                $text = self::lang('select_gender');
                 UserActionService::add($chat, 'entering_gender');
                 $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
@@ -36,32 +38,33 @@ class TelegramUserInfoService
                     ]))->send();
                 break;
             case 3:
-                $text = 'Vazningizni kiriting';
+                $text = self::lang('enter_weight');
                 UserActionService::add($chat, 'entering_weight');
                 $chat->html($text)->send();
                 break;
             case 4:
-                $text = 'Kozlangan vaznni kiriting';
+                $text = self::lang('enter_goal_weight');
                 UserActionService::add($chat, 'entering_goal_weight');
                 $chat->html($text)->send();
                 break;
             case 5:
-                $text = 'Bo`yingizni kiriting';
+                $text = self::lang('enter_tall');
                 UserActionService::add($chat, 'entering_tall');
                 $chat->html($text)->send();
                 break;
             case 6:
-                $text = 'Yoshingizni kiriting';
+                $text = self::lang('enter_age');
                 UserActionService::add($chat, 'entering_age');
                 $chat->html($text)->send();
                 break;
             case 7:
-                $text = 'Aktivlik turini tanlang';
+                $text = self::lang('select_activity_type');
                 UserActionService::add($chat, 'entering_activity_type');
                 $activityTypes = ActivityType::all();
                 $buttons = [];
                 foreach ($activityTypes as $activityType) {
-                    array_push($buttons, Button::make($activityType->title)->action('entering_activity_type')->param('activity_type_id', $activityType->id));
+                    $title = json_decode($activityType->title);
+                    array_push($buttons, Button::make($title[app()->getLocale()])->action('entering_activity_type')->param('activity_type_id', $activityType->id));
                 }
                 $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons($buttons))->send();
@@ -71,7 +74,7 @@ class TelegramUserInfoService
                 self::send_daily_spend_calories($chat);
                 break;
             default:
-                $text = 'Tilni tanlang';
+                $text = self::lang('select_language');
                 UserActionService::add($chat, 'entering_lang');
                 $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
@@ -79,7 +82,6 @@ class TelegramUserInfoService
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
                     ]))->send();
         }
-        
     }
 
     public static function send_daily_spend_calories($chat)

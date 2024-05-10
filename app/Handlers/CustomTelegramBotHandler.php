@@ -64,8 +64,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         if ($userInfo->status < 9) {
             TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         } else {
-
-            $this->chat->message('asdasd'.app()->getLocale())->send();
+            $this->chat->message('asdasd')->send();
         }
     }
     private function handleCallbackQuery(): void
