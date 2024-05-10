@@ -6,13 +6,14 @@ use App\Models\TempMessage;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
 use App\Services\TelegramUserInfoService;
+use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use Illuminate\Support\Stringable;
 
 class CustomTelegramBotHandler extends WebhookHandler
 {
-
+    use TelegramMessageLangsTrait;
     protected function handleChatMessage(Stringable $text): void
     {
         $userAction = $this->chat->user_action;
@@ -80,7 +81,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 3;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
-        $this->reply('Til tanlandi');
+        $this->reply($this::lang('language_selected'));
     }
     public function entering_activity_type()
     {
@@ -90,6 +91,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 8;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
+        $this->reply($this::lang('activity_type_selected'));
     }
     public function entering_gender()
     {
@@ -99,5 +101,6 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 3;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
+        $this->reply($this::lang('gender_selected'));
     }
 }
