@@ -13,7 +13,8 @@ class TelegramUserInfoService
 {
     public static function check_user_info($chat)
     {
-        $userInfo = self::check_exists_user_info($chat);
+        $userInfo = $chat->user_info;
+        // $userInfo = self::check_exists_user_info($chat);
         switch ($userInfo->status) {
             case 1:
                 $text = 'Tilni tanlang';
