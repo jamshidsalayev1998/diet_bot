@@ -30,11 +30,11 @@ class TelegramUserInfoService
                 break;
             case 2:
                 $text = self::lang('select_gender');
-                UserActionService::add($chat, 'entering_gender');
+                UserActionService::add($chat, 'selecting_gender');
                 $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
-                        Button::make('Ayol')->action('entering_gender')->param('gender', '0'),
-                        Button::make('Erkak')->action('entering_gender')->param('gender', '1'),
+                        Button::make('Ayol')->action('selecting_gender')->param('gender', '0'),
+                        Button::make('Erkak')->action('selecting_gender')->param('gender', '1'),
                     ]))->send();
                 break;
             case 3:
