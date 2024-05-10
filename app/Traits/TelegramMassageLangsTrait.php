@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Traits;
 trait TelegramMessageLangsTrait{
     public function lang($messageKeyWord){
         $messages = config('message_langs');

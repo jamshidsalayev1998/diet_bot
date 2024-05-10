@@ -8,7 +8,7 @@ use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Support\Facades\Validator;
-use TelegramMessageLangsTrait;
+use App\Traits\TelegramMessageLangsTrait;
 
 class TelegramUserInfoService
 {
