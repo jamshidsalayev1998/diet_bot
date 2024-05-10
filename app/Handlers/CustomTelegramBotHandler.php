@@ -66,7 +66,6 @@ class CustomTelegramBotHandler extends WebhookHandler
 
             $this->chat->message('asdasd')->send();
         }
-        $this->chat->message(json_encode($this->message))->send();
     }
     private function handleCallbackQuery(): void
     {
