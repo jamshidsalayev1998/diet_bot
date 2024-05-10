@@ -63,7 +63,7 @@ class TelegramUserInfoService
                 $activityTypes = ActivityType::all();
                 $buttons = [];
                 foreach ($activityTypes as $activityType) {
-                    $title = json_decode($activityType->title);
+                    $title = json_decode($activityType->title,true);
                     array_push($buttons, Button::make($title[app()->getLocale()])->action('entering_activity_type')->param('activity_type_id', $activityType->id));
                 }
                 $chat->message($text)
