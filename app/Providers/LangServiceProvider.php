@@ -31,7 +31,7 @@ class LangServiceProvider extends ServiceProvider
         if (key_exists('message', $data))
             $userInfo = UserInfo::where('chat_id', $data['message']['from']['id'])->orderBy('id', 'ASC')->first();
         if (!$userInfo) {
-            $locale = config('app.locale');
+            $locale = config('app.locale' , 'uz');
         } else {
             $locale = $userInfo->language;
         }
