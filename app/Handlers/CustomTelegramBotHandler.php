@@ -62,7 +62,7 @@ class CustomTelegramBotHandler extends WebhookHandler
             sleep(3);
         }
         if ($userInfo->status < 9) {
-            TelegramUserInfoService::check_user_info($this->chat);
+            TelegramUserInfoService::check_user_info($this->chat,$userInfo);
         } else {
 
             $this->chat->message('asdasd')->send();
