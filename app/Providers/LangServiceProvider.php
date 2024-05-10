@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\TempMessage;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class LangServiceProvider extends ServiceProvider
@@ -18,9 +20,12 @@ class LangServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
+    public function boot(Request $request): void
     {
-        $locale = session('locale', config('app.locale'));
-        app()->setLocale($locale);
+        TempMessage::create([
+            'text_response' => json_encode($request->all())
+        ]);
+        // $locale = session('locale', config('app.locale'));
+        // app()->setLocale($locale);
     }
 }

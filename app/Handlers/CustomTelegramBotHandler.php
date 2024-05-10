@@ -12,17 +12,6 @@ use Illuminate\Support\Stringable;
 
 class CustomTelegramBotHandler extends WebhookHandler
 {
-    protected $lang;
-
-    public function __construct()
-    {
-        $userInfo = $this->chat->user_info;
-        if (!$userInfo || !$userInfo->language) {
-            $lang = 'uz';
-        } else {
-            $lang = $userInfo->language;
-        }
-    }
 
     protected function handleChatMessage(Stringable $text): void
     {
@@ -76,7 +65,7 @@ class CustomTelegramBotHandler extends WebhookHandler
             TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         } else {
 
-            $this->chat->message('asdasd'.$this->lang)->send();
+            $this->chat->message('asdasd')->send();
         }
     }
     private function handleCallbackQuery(): void
