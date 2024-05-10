@@ -53,18 +53,19 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
-        $userInfo = $this->chat->user_info;
-        if (!$userInfo) {
-            $userInfo = UserInfo::create([
-                'chat_id' => $this->chat->chat_id,
-            ]);
-        }
-        if ($userInfo->status < 9) {
-            TelegramUserInfoService::check_user_info($this->chat);
-        } else {
+        // $userInfo = $this->chat->user_info;
+        // if (!$userInfo) {
+        //     $userInfo = UserInfo::create([
+        //         'chat_id' => $this->chat->chat_id,
+        //     ]);
+        // }
+        // if ($userInfo->status < 9) {
+        //     TelegramUserInfoService::check_user_info($this->chat);
+        // } else {
 
-            Telegraph::message('asdasd')->send();
-        }
+        //     Telegraph::message('asdasd')->send();
+        // }
+        Telegraph::message(json_encode($this->chat))->send();
     }
     private function handleCallbackQuery(): void
     {
