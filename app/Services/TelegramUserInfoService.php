@@ -51,7 +51,7 @@ class TelegramUserInfoService
             case 5:
                 $normalWeight = self::calculate_average_goal_weight($userInfo);
                 if($normalWeight['status']){
-                    $text = self::lang('enter_goal_weight').PHP_EOL.self::lang('normal_weight_for_you').$normalWeight['weight'];
+                    $text = self::lang('enter_goal_weight').PHP_EOL.self::lang('normal_weight_for_you').$normalWeight['normal_weight'];
                 }
                 else{
                     $text = self::lang('enter_goal_weight');
