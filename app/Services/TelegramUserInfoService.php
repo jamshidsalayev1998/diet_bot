@@ -269,14 +269,14 @@ class TelegramUserInfoService
         } else {
             $genderTitle = self::lang('woman');
         }
-        $text = '🇺🇿 ' . self::lang('language') . ' : ' . self::lang($userInfo->language) . PHP_EOL;
-        $text .= '👬 ' . self::lang('gender') . ' : ' . $genderTitle . PHP_EOL;
-        // $text .= '👬' . self::lang('gender') . ' : ' . $userInfo->gender ? self::lang('man') : self::lang('woman') . PHP_EOL;
-        $text .= '↕️ ' . self::lang('tall') . ' : ' . $userInfo->tall . ' sm' . PHP_EOL;
-        $text .= '🏗 ' . self::lang('weight') . ' : ' . $userInfo->weight . ' kg' . PHP_EOL;
-        $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL;
-        $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL;
-        $text .= '⛹🏻 ' . self::lang('activity_type') . ' : ' . $titleActivity[app()->getLocale()] . PHP_EOL;
+        $text = '🇺🇿 ' . self::lang('language') . ' : ' . self::lang($userInfo->language) . PHP_EOL . PHP_EOL;
+        $text .= '👬 ' . self::lang('gender') . ' : ' . $genderTitle . PHP_EOL . PHP_EOL;
+        // $text .= '👬' . self::lang('gender') . ' : ' . $userInfo->gender ? self::lang('man') : self::lang('woman') . PHP_EOL . PHP_EOL;
+        $text .= '↕️ ' . self::lang('tall') . ' : ' . $userInfo->tall . ' sm' . PHP_EOL . PHP_EOL;
+        $text .= '🏗 ' . self::lang('weight') . ' : ' . $userInfo->weight . ' kg' . PHP_EOL . PHP_EOL;
+        $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL . PHP_EOL;
+        $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL . PHP_EOL;
+        $text .= '⛹🏻 ' . self::lang('activity_type') . ' : ' . $titleActivity[app()->getLocale()] . PHP_EOL . PHP_EOL;
         $chat->message($text)->send();
     }
 }
