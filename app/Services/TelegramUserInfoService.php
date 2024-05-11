@@ -129,7 +129,7 @@ class TelegramUserInfoService
             $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting! .' . json_encode($errors))->send();
         } else {
             $userInfo->weight = $weight;
-            $userInfo->status = 4;
+            $userInfo->status = 5;
             $userInfo->update();
         }
         return $status;
@@ -151,7 +151,7 @@ class TelegramUserInfoService
             $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
             $userInfo->goal_weight = $weight;
-            $userInfo->status = 5;
+            $userInfo->status = 6;
             $userInfo->update();
         }
         return $status;
@@ -173,7 +173,7 @@ class TelegramUserInfoService
             $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
             $userInfo->tall = $weight;
-            $userInfo->status = 6;
+            $userInfo->status = 4;
             $userInfo->update();
         }
         return $status;
