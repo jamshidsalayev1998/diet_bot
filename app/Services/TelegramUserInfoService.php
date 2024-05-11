@@ -80,7 +80,8 @@ class TelegramUserInfoService
                 break;
             case 8:
                 self::calculate_daily_spend_calories($chat);
-                self::send_daily_spend_calories($chat);
+                // self::send_daily_spend_calories($chat);
+                self::send_user_info_confirmation_message($chat,$userInfo);
                 break;
             default:
                 $text = self::lang('select_language');
@@ -111,7 +112,7 @@ class TelegramUserInfoService
         }
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
-        $userInfo->daily_spend_calories = $calories;
+        $userInfo->daily_spend_calories = round($calories);
         $userInfo->status = 10;
         $userInfo->update();
     }
@@ -258,5 +259,18 @@ class TelegramUserInfoService
             'status' => $status,
             'normal_weight' => round($weight)
         ];
+    }
+
+    public static function send_user_info_confirmation_message($chat, $userInfo)
+    {
+        $titleActivity = $userInfo->activity_type->title;
+        $text = '🇺🇿' . self::lang('language') . ' : ' . self::lang($userInfo->language) . PHP_EOL;
+        $text .= '👬' . self::lang('gender') . ' : ' . $userInfo->gender ? self::lang('man'):self::lang('woman') . PHP_EOL;
+        $text .= '↕️' . self::lang('tall') . ' : ' . $userInfo->tall .' sm'. PHP_EOL;
+        $text .= '🏗' . self::lang('weight') . ' : ' . $userInfo->weight .' kg'. PHP_EOL;
+        $text .= '🥇' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight .' kg'. PHP_EOL;
+        $text .= '🎂' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL;
+        $text .= '⛹🏻' . self::lang('activity_type') . ' : ' . $titleActivity[app()->getLocale()] . PHP_EOL;
+        $chat->message($text)->send();
     }
 }
