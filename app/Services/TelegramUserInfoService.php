@@ -9,6 +9,8 @@ use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\TelegramMessageLangsTrait;
+use DefStudio\Telegraph\Keyboard\ReplyButton;
+use DefStudio\Telegraph\Keyboard\ReplyKeyboard;
 
 class TelegramUserInfoService
 {
@@ -52,12 +54,21 @@ class TelegramUserInfoService
                 $normalWeight = self::calculate_average_goal_weight($userInfo);
                 if($normalWeight['status']){
                     $text = self::lang('enter_goal_weight').PHP_EOL.self::lang('normal_weight_for_you').' : '.$normalWeight['normal_weight'].' kg';
+                    $chat->message($text)
+                    ->keyboard(ReplyKeyboard::make()
+                    ->row([
+                        ReplyButton::make('Send Contact')->requestContact(),
+                        ReplyButton::make('Send Location')->requestLocation(),
+                    ])
+                    ->row([
+                        ReplyButton::make('Quiz')->requestQuiz(),
+                    ]))->send();
                 }
                 else{
                     $text = self::lang('enter_goal_weight');
+                    $chat->html($text)->send();
                 }
                 UserActionService::add($chat, 'entering_goal_weight');
-                $chat->html($text)->send();
                 break;
             case 6:
                 $text = self::lang('enter_age');
