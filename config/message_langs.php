@@ -25,6 +25,8 @@ return [
         'woman' => 'Ayol',
         'uz' => 'Uzbekcha',
         'ru' => 'Ruscha',
+        'confirm' => 'Tasdiqlash',
+        'start_again' => 'Boshidan boshlash',
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -45,6 +47,8 @@ return [
         'weight' => 'Vazn',
         'goal_weight' => 'Ko`zlangan vazn',
         'age' => 'Yosh',
-        'activity_type' => 'Aktivlik'
+        'activity_type' => 'Aktivlik',
+        'confirm' => 'Tasdiqlash',
+        'start_again' => 'Boshidan boshlash',
     ],
 ];

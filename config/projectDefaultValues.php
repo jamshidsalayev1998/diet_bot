@@ -12,5 +12,6 @@ return [
         'Yangi (aktivlik kiritilgan)',
         'Yangi (kunlik kkal sarfi hisoblangan)',
         'User info toliq',
+        'User info tasdiqlangan',
     ]
 ];
