@@ -263,7 +263,7 @@ class TelegramUserInfoService
 
     public static function send_user_info_confirmation_message($chat, $userInfo)
     {
-        $titleActivity = $userInfo->activity_type->title;
+        $titleActivity = json_decode($userInfo->activity_type->title,true);
         $text = '🇺🇿' . self::lang('language') . ' : ' . self::lang($userInfo->language) . PHP_EOL;
         $text .= '👬' . self::lang('gender') . ' : ' . $userInfo->gender ? self::lang('man'):self::lang('woman') . PHP_EOL;
         $text .= '↕️' . self::lang('tall') . ' : ' . $userInfo->tall .' sm'. PHP_EOL;
