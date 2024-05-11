@@ -56,6 +56,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     {
 
         $userInfo = $this->chat->user_info;
+        $this->chat->message('Hush kelibsiz')->removeReplyKeyboard()->send();
         if (!$userInfo) {
             $userInfo = UserInfo::create([
                 'chat_id' => $this->chat->chat_id,
