@@ -134,11 +134,22 @@ class TelegramUserInfoService
         if ($validator->fails()) {
             $status = 0;
             $errors = $validator->errors()->all();
-            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting! .' . json_encode($errors))->send();
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $userInfo->weight = $weight;
-            $userInfo->status = 5;
-            $userInfo->update();
+            $normalWeight = self::calculate_average_goal_weight($userInfo);
+            if ($normalWeight['status']) {
+                if ($normalWeight['normal_weight'] > $weight) {
+                    $chat->message(self::lang('your_weight_is_small_than_normal'))->send();
+                    $status = 0;
+                } elseif ($normalWeight['normal_weight'] == $weight) {
+                    $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
+                    $status = 0;
+                } else {
+                    $userInfo->weight = $weight;
+                    $userInfo->status = 5;
+                    $userInfo->update();
+                }
+            }
         }
         return $status;
     }
