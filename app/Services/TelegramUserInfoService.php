@@ -54,9 +54,7 @@ class TelegramUserInfoService
                 $normalWeight = self::calculate_average_goal_weight($userInfo);
                 if ($normalWeight['status']) {
                     $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight'] . ' kg';
-                    $chat->message($text)->replyKeyboard(ReplyKeyboard::make()->row([
-                        ReplyButton::make($normalWeight['normal_weight']),
-                    ]))->send();
+                    $chat->message($text)->replyKeyboard(ReplyKeyboard::make()->button($normalWeight['normal_weight'])->oneTime())->send();
                 } else {
                     $text = self::lang('enter_goal_weight');
                     $chat->html($text)->send();
