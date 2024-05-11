@@ -45,7 +45,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                     break;
             }
         } else {
-            $this->chat->message('xatolik')->send();
+            $this->chat->message('xatolik')->removeReplyKeyboard()->send();
         }
     }
     protected function handleUnknownCommand(Stringable $text): void
