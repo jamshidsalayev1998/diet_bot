@@ -55,9 +55,7 @@ class TelegramUserInfoService
                 if($normalWeight['status']){
                     $text = self::lang('enter_goal_weight').PHP_EOL.self::lang('normal_weight_for_you').' : '.$normalWeight['normal_weight'].' kg';
                     $chat->message($text)->replyKeyboard(ReplyKeyboard::make()->buttons([
-                        ReplyButton::make('foo')->requestPoll(),
-                        ReplyButton::make('bar')->requestQuiz(),
-                        ReplyButton::make('baz')->webApp('https://webapp.dev'),
+                        ReplyButton::make($normalWeight['normal_weight']),
                      ]))->send();
                 }
                 else{
