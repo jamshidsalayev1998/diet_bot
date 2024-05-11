@@ -12,6 +12,8 @@ return [
         'normal_weight_for_you' => 'Siz uchun taklif qilinadigan normal vazn',
         'your_weight_is_small_than_normal' => 'Sizning vazningiz normal vazndan kichik. Sport bilan shug`ullaning. (Agar vazningizni noto`g`ri kiritgan bo`lsangiz qayta kiritishingiz mumkin)',
         'your_weight_is_equal_to_normal' => 'Sizning vazningiz normal vazn holatida. Sport bilan shug`ullaning. (Agar vazningizni noto`g`ri kiritgan bo`lsangiz qayta kiritishingiz mumkin)',
+        'your_weight_is_equal_to_goal_weight' => 'Vazningiz ko`zlangan vazn bilan teng holatda!',
+        'your_weight_is_small_than_goal_weight' => 'Vazningiz ko`zlangan vazndan kichikroq!',
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -24,5 +26,7 @@ return [
         'normal_weight_for_you' => 'Siz uchun taklif qilinadigan normal vazn ru',
         'your_weight_is_small_than_normal' => 'Sizning vazningiz normal vazndan kichik. Sport bilan shug`ullaning. (Agar vazningizni noto`g`ri kiritgan bo`lsangiz qayta kiritishingiz mumkin) ru',
         'your_weight_is_equal_to_normal' => 'Sizning vazningiz normal vazn holatida. Sport bilan shug`ullaning. (Agar vazningizni noto`g`ri kiritgan bo`lsangiz qayta kiritishingiz mumkin) ru',
+        'your_weight_is_equal_to_goal_weight' => 'Vazningiz ko`zlangan vazn bilan teng holatda! ru',
+        'your_weight_is_small_than_goal_weight' => 'Vazningiz ko`zlangan vazndan kichikroq! ru',
     ],
 ];

@@ -102,8 +102,16 @@ class TelegramUserInfoService
 
     public static function calculate_daily_spend_calories($chat)
     {
+        $calories = null;
         $userInfo = $chat->user_info;
-        $userInfo->daily_spend_calories = 2345;
+        if ($userInfo->gender) {
+            $calories = 66 + 13.7 * $userInfo->weight + 5 * $userInfo->tall - 6.76 * $userInfo->age;
+        } else {
+            $calories = 655 + 9.6 * $userInfo->weight + 1.8 * $userInfo->tall - 4.7 * $userInfo->age;
+        }
+        $activityType = $userInfo->activity_type;
+        $calories *= $activityType->coefficient;
+        $userInfo->daily_spend_calories = $calories;
         $userInfo->status = 10;
         $userInfo->update();
     }

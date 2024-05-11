@@ -9,4 +9,8 @@ class UserInfo extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function activity_type(){
+        return $this->belongsTo(ActivityType::class , 'activity_type_id' , 'id');
+    }
 }
