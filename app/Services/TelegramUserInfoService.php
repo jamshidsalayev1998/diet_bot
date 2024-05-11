@@ -49,7 +49,13 @@ class TelegramUserInfoService
                 break;
 
             case 5:
-                $text = self::lang('enter_goal_weight');
+                $normalWeight = self::calculate_average_goal_weight($userInfo);
+                if($normalWeight['status']){
+                    $text = self::lang('enter_goal_weight').PHP_EOL.self::lang('normal_weight_for_you').$normalWeight['weight'];
+                }
+                else{
+                    $text = self::lang('enter_goal_weight');
+                }
                 UserActionService::add($chat, 'entering_goal_weight');
                 $chat->html($text)->send();
                 break;
@@ -199,5 +205,23 @@ class TelegramUserInfoService
             $userInfo->update();
         }
         return $status;
+    }
+
+    public static function calculate_average_goal_weight($userInfo)
+    {
+        $status = 1;
+        $weight = 0;
+        if ($userInfo->gender && $userInfo->tall) {
+            $weight = 22 * $userInfo->tall * $userInfo->tall / 10000;
+            if ($userInfo->gender = 0) {
+                $weight -= 5;
+            }
+        } else {
+            $status = 0;
+        }
+        return [
+            'status' => $status,
+            'normal_weight' => $weight
+        ];
     }
 }
