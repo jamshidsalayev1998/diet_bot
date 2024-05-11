@@ -64,7 +64,7 @@ class TelegramUserInfoService
             case 6:
                 $text = self::lang('enter_age');
                 UserActionService::add($chat, 'entering_age');
-                $chat->html($text)->send();
+                $chat->html($text)->removeReplyKeyboard()->send();
                 break;
             case 7:
                 $text = self::lang('select_activity_type');
