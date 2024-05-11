@@ -213,7 +213,7 @@ class TelegramUserInfoService
         $weight = 0;
         if ($userInfo->gender != null && $userInfo->tall) {
             $weight = 22 * $userInfo->tall * $userInfo->tall / 10000;
-            if ($userInfo->gender = 0) {
+            if ($userInfo->gender == 0) {
                 $weight -= 5;
             }
         } else {
