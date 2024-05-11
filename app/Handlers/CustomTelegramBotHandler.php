@@ -80,6 +80,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->language = $lang;
         $userInfo->status = 2;
         $userInfo->update();
+        app()->setLocale($lang);
         TelegramUserInfoService::check_user_info($this->chat);
         $this->reply($this::lang('language_selected'));
     }
