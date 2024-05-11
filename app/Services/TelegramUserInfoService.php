@@ -38,18 +38,19 @@ class TelegramUserInfoService
                     ]))->send();
                 break;
             case 3:
+                $text = self::lang('enter_tall');
+                UserActionService::add($chat, 'entering_tall');
+                $chat->html($text)->send();
+                break;
+            case 4:
                 $text = self::lang('enter_weight');
                 UserActionService::add($chat, 'entering_weight');
                 $chat->html($text)->send();
                 break;
-            case 4:
+
+            case 5:
                 $text = self::lang('enter_goal_weight');
                 UserActionService::add($chat, 'entering_goal_weight');
-                $chat->html($text)->send();
-                break;
-            case 5:
-                $text = self::lang('enter_tall');
-                UserActionService::add($chat, 'entering_tall');
                 $chat->html($text)->send();
                 break;
             case 6:
@@ -63,7 +64,7 @@ class TelegramUserInfoService
                 $activityTypes = ActivityType::all();
                 $buttons = [];
                 foreach ($activityTypes as $activityType) {
-                    $title = json_decode($activityType->title,true);
+                    $title = json_decode($activityType->title, true);
                     array_push($buttons, Button::make($title[app()->getLocale()])->action('entering_activity_type')->param('activity_type_id', $activityType->id));
                 }
                 $chat->message($text)
