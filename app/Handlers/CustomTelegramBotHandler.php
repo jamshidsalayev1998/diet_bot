@@ -61,7 +61,6 @@ class CustomTelegramBotHandler extends WebhookHandler
             $userInfo = UserInfo::create([
                 'chat_id' => $this->chat->chat_id,
             ]);
-            sleep(3);
         }
         if ($userInfo->status < 9) {
             TelegramUserInfoService::check_user_info($this->chat, $userInfo);
