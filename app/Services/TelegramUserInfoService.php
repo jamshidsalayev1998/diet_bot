@@ -138,10 +138,10 @@ class TelegramUserInfoService
         } else {
             $normalWeight = self::calculate_average_goal_weight($userInfo);
             if ($normalWeight['status']) {
-                if ($normalWeight['normal_weight'] > $weight) {
+                if ($normalWeight['normal_weight'] > $weight->toFloat()) {
                     $chat->message(self::lang('your_weight_is_small_than_normal'))->send();
                     $status = 0;
-                } elseif ($normalWeight['normal_weight'] == $weight) {
+                } elseif ($normalWeight['normal_weight'] == $weight->toFloat()) {
                     $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
                     $status = 0;
                 } else {
