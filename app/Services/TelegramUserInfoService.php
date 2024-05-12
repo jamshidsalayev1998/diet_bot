@@ -277,6 +277,7 @@ class TelegramUserInfoService
         $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL . PHP_EOL;
         $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL . PHP_EOL;
         $text .= '⛹🏻 ' . self::lang('activity_type') . ' : ' . $titleActivity[app()->getLocale()] . PHP_EOL . PHP_EOL;
+        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_spend_calories . PHP_EOL . PHP_EOL;
         $chat->message($text)->keyboard(Keyboard::make()->buttons([
             Button::make(self::lang('confirm'))->action('confirm_user_info')->param('lang', 'uz'),
             Button::make(self::lang('start_again'))->action('start_again_user_info')->param('lang', 'ru'),

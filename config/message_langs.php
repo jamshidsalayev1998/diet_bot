@@ -27,6 +27,7 @@ return [
         'ru' => 'Ruscha',
         'confirm' => 'Tasdiqlash',
         'start_again' => 'Boshidan boshlash',
+        'daily_spend' => 'Kunlik kkaloriya sarfingiz',
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -50,5 +51,6 @@ return [
         'activity_type' => 'Aktivlik',
         'confirm' => 'Tasdiqlash',
         'start_again' => 'Boshidan boshlash',
+        'daily_spend' => 'Kunlik kkaloriya sarfingiz',
     ],
 ];
