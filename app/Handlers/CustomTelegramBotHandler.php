@@ -68,10 +68,8 @@ class CustomTelegramBotHandler extends WebhookHandler
         if ($userInfo->status < 9) {
             TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         } else {
-            $this->chat->message('your_user_info_stored')->replyKeyboard([
-                ReplyKeyboard::make()->button('adfsf')->resize(),
-                ReplyKeyboard::make()->button('adfsf')->resize()
-            ])->send();
+            $this->chat->message('your_user_info_stored')->replyKeyboard(
+                ReplyKeyboard::make()->button('adfsf')->resize())->send();
         }
     }
     private function handleCallbackQuery(): void
