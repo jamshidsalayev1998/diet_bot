@@ -28,6 +28,7 @@ return [
         'confirm' => 'Tasdiqlash',
         'start_again' => 'Boshidan boshlash',
         'daily_spend' => 'Kunlik kkaloriya sarfingiz',
+        'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz'
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -52,5 +53,6 @@ return [
         'confirm' => 'Tasdiqlash',
         'start_again' => 'Boshidan boshlash',
         'daily_spend' => 'Kunlik kkaloriya sarfingiz',
+        'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz'
     ],
 ];
