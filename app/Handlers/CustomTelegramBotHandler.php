@@ -10,6 +10,7 @@ use App\Services\UserActionService;
 use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
+use DefStudio\Telegraph\Keyboard\Button;
 use Illuminate\Support\Stringable;
 
 class CustomTelegramBotHandler extends WebhookHandler
@@ -118,6 +119,10 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo = $this->chat->user_info;
         $userInfo->status = 11;
         $userInfo->update();
+        $this->chat->message('your_user_info_stored')->keyboard([
+            Button::make('dasd'),
+            Button::make('dasd')
+        ])->send();
         $this->reply($this::lang('user_info_confirmed'));
     }
 }
