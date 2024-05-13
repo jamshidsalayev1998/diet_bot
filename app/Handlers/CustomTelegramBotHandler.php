@@ -11,6 +11,7 @@ use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\ReplyButton;
 use DefStudio\Telegraph\Keyboard\ReplyKeyboard;
 use Illuminate\Support\Stringable;
 
@@ -68,8 +69,15 @@ class CustomTelegramBotHandler extends WebhookHandler
         if ($userInfo->status < 9) {
             TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         } else {
-            $this->chat->message('your_user_info_stored')->replyKeyboard(
-                ReplyKeyboard::make()->button('adfsf')->resize())->send();
+            $keyboard = ReplyKeyboard::make()
+                ->row([
+                    ReplyButton::make('Send Contact')->requestContact(),
+                    ReplyButton::make('Send Location')->requestLocation(),
+                ])
+                ->row([
+                    ReplyButton::make('Quiz')->requestQuiz(),
+                ]);
+            $this->chat->message('your_user_info_stored')->replyKeyboard($keyboard)->send();
         }
     }
     private function handleCallbackQuery(): void
@@ -109,15 +117,17 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->reply($this::lang('gender_selected'));
     }
 
-    public function start_again_user_info(){
+    public function start_again_user_info()
+    {
         $userInfo = $this->chat->user_info;
         $userInfo->status = 2;
         $userInfo->update();
         UserActionService::add($this->chat, 'selecting_gender');
-        TelegramUserInfoService::check_user_info($this->chat , $userInfo);
+        TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         $this->reply($this::lang('started_again_user_info'));
     }
-    public function confirm_user_info(){
+    public function confirm_user_info()
+    {
         $userInfo = $this->chat->user_info;
         $userInfo->status = 11;
         $userInfo->update();
