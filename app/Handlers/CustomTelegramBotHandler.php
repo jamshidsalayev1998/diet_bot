@@ -72,11 +72,11 @@ class CustomTelegramBotHandler extends WebhookHandler
             $keyboard = ReplyKeyboard::make()
                 ->row([
                     ReplyButton::make($this->lang('menu')),
-                ])
+                ])->resize()
                 ->row([
                     ReplyButton::make($this->lang('settings')),
                     ReplyButton::make($this->lang('support')),
-                ]);
+                ])->resize();
             $this->chat->message('your_user_info_stored')->replyKeyboard($keyboard)->send();
         }
     }
