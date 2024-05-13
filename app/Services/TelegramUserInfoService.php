@@ -53,8 +53,8 @@ class TelegramUserInfoService
             case 5:
                 $normalWeight = self::calculate_average_goal_weight($userInfo);
                 if ($normalWeight['status']) {
-                    $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight'] . ' kg';
-                    $chat->message($text)->replyKeyboard(ReplyKeyboard::make()->button($normalWeight['normal_weight'])->resize()->oneTime())->send();
+                    $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight']['from']. ' - '. $normalWeight['normal_weight']['to'] . ' (kg)';
+                    $chat->message($text)->send();
                 } else {
                     $text = self::lang('enter_goal_weight');
                     $chat->html($text)->send();
@@ -147,10 +147,10 @@ class TelegramUserInfoService
         } else {
             $normalWeight = self::calculate_average_goal_weight($userInfo);
             if ($normalWeight['status']) {
-                if ($normalWeight['normal_weight'] > $weight->toFloat()) {
+                if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
                     $chat->message(self::lang('your_weight_is_small_than_normal'))->send();
                     $status = 0;
-                } elseif ($normalWeight['normal_weight'] == $weight->toFloat()) {
+                } elseif ($normalWeight['normal_weight']['from'] <= $weight->toFloat() && $normalWeight['normal_weight']['to'] >= $weight->toFloat()) {
                     $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
                     $status = 0;
                 } else {
@@ -246,18 +246,24 @@ class TelegramUserInfoService
     public static function calculate_average_goal_weight($userInfo)
     {
         $status = 1;
-        $weight = 0;
+        $weightFrom = 0;
+        $weightTo = 0;
         if ($userInfo->status >= 4) {
-            $weight = 22 * $userInfo->tall * $userInfo->tall / 10000;
+            $weightFrom = 18.5 * $userInfo->tall * $userInfo->tall / 10000;
+            $weightTo = 25 * $userInfo->tall * $userInfo->tall / 10000;
             if ($userInfo->gender == 0) {
-                $weight -= 5;
+                $weightFrom -= 5;
+                $weightTo -= 5;
             }
         } else {
             $status = 0;
         }
         return [
             'status' => $status,
-            'normal_weight' => round($weight)
+            'normal_weight' => [
+                'from' => round($weightFrom),
+                'to' => round($weightTo)
+            ]
         ];
     }
 
