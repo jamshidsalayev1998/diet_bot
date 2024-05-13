@@ -28,7 +28,10 @@ return [
         'confirm' => 'Tasdiqlash',
         'start_again' => 'Boshidan boshlash',
         'daily_spend' => 'Kunlik kkaloriya sarfingiz',
-        'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz'
+        'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz',
+        'menu' => 'Menyu',
+        'settings' => 'Sozlamalar',
+        'support' => 'Support'
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -53,6 +56,9 @@ return [
         'confirm' => 'Tasdiqlash',
         'start_again' => 'Boshidan boshlash',
         'daily_spend' => 'Kunlik kkaloriya sarfingiz',
-        'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz'
+        'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz',
+        'menu' => 'Menyu',
+        'settings' => 'Sozlamalar',
+        'support' => 'Support'
     ],
 ];
