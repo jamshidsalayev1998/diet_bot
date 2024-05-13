@@ -108,9 +108,9 @@ class CustomTelegramBotHandler extends WebhookHandler
 
     public function start_again_user_info(){
         $userInfo = $this->chat->user_info;
-        $userInfo->status = 1;
+        $userInfo->status = 2;
         $userInfo->update();
-        UserActionService::add($this->chat, 'entering_lang');
+        UserActionService::add($this->chat, 'selecting_gender');
         TelegramUserInfoService::check_user_info($this->chat , $userInfo);
         $this->reply($this::lang('started_again_user_info'));
     }
