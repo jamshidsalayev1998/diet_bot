@@ -31,7 +31,8 @@ return [
         'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz',
         'menu' => 'Menyu',
         'settings' => 'Sozlamalar',
-        'support' => 'Support'
+        'support' => 'Support',
+        'back' => 'Orqaga',
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -59,6 +60,7 @@ return [
         'your_goal_weight_is_small_than_normal' => 'Sizning vazningiz normal vazn oralig`idan kichik . Sport bilan shug`illanishni tavfsiya qilamiz',
         'menu' => 'Menyu',
         'settings' => 'Sozlamalar',
-        'support' => 'Support'
+        'support' => 'Support',
+        'back' => 'Orqaga',
     ],
 ];
