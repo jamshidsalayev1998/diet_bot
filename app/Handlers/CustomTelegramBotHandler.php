@@ -4,7 +4,6 @@ namespace App\Handlers;
 
 use App\Models\TempMessage;
 use App\Models\V1\ChildTelegramChat;
-use App\Models\V1\UserAction;
 use App\Models\V1\UserInfo;
 use App\Services\TelegramUserInfoService;
 use App\Services\UserActionService;
@@ -70,7 +69,15 @@ class CustomTelegramBotHandler extends WebhookHandler
         if ($userInfo->status < 9) {
             TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         } else {
-            $this->home();
+            $keyboard = ReplyKeyboard::make()
+                ->row([
+                    ReplyButton::make('🥘'.$this->lang('menu')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make('⚙️'.$this->lang('settings')),
+                    ReplyButton::make('👨‍💻'.$this->lang('support')),
+                ])->resize();
+            $this->chat->message('your_user_info_stored')->replyKeyboard($keyboard)->send();
         }
     }
     private function handleCallbackQuery(): void
@@ -124,38 +131,10 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo = $this->chat->user_info;
         $userInfo->status = 11;
         $userInfo->update();
-        UserAction::where('chat_id', $this->chat->chat_id)->delete();
         $this->chat->message('your_user_info_stored')->replyKeyboard([
             ReplyKeyboard::make()->button('adfsf')->resize(),
             ReplyKeyboard::make()->button('adfsf')->resize()
         ])->send();
         $this->reply($this::lang('user_info_confirmed'));
-    }
-
-    public function home()
-    {
-        $keyboard = ReplyKeyboard::make()
-            ->row([
-                ReplyButton::make('🥘' . $this->lang('menu')),
-            ])->resize()
-            ->row([
-                ReplyButton::make('⚙️' . $this->lang('settings')),
-                ReplyButton::make('👨‍💻' . $this->lang('support')),
-            ])->resize();
-        $this->chat->message('your_user_info_stored')->replyKeyboard($keyboard)->send();
-    }
-
-    public function menu()
-    {
-        $keyboard = ReplyKeyboard::make()
-            ->row([
-                ReplyButton::make('⚙️' . $this->lang('settings')),
-                ReplyButton::make('👨‍💻' . $this->lang('support')),
-            ])->resize()
-            ->row([
-                ReplyButton::make('🥘' . $this->lang('menu')),
-            ])->resize();
-
-        $this->chat->message('your_user_info_stored')->replyKeyboard($keyboard)->send();
     }
 }
