@@ -20,6 +20,9 @@ class CustomTelegramBotHandler extends WebhookHandler
     use TelegramMessageLangsTrait;
     protected function handleChatMessage(Stringable $text): void
     {
+        TempMessage::create([
+            'text_response' => 'keldi handle message ga'
+        ]);
         $userAction = $this->chat->user_action;
         if ($userAction) {
             switch ($userAction->screen) {
