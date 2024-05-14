@@ -37,8 +37,9 @@ class LangServiceProvider extends ServiceProvider
             $locale = $userInfo->language;
         }
         app()->setLocale($locale);
-        TempMessage::create([
-            'text_response' => json_encode($request->all())
-        ]);
+
+        // TempMessage::create([
+        //     'text_response' => json_encode($request->all())
+        // ]);
     }
 }
