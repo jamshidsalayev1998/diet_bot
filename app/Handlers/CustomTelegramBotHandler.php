@@ -58,6 +58,10 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
+        TempMessage::create([
+            'text_response' => 'keldi startga',
+            ''
+        ]);
 
         $userInfo = $this->chat->user_info;
         $this->chat->message('Hush kelibsiz')->removeReplyKeyboard()->send();
