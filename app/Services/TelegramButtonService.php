@@ -19,7 +19,7 @@ class TelegramButtonService
                 ReplyButton::make(self::buttonLang('settings')),
                 ReplyButton::make(self::buttonLang('support')),
             ])->resize();
-        $chat->replyKeyboard($keyboard)->send();
+        $chat->message(self::lang('welcome'))->replyKeyboard($keyboard)->send();
     }
 
     public static function menu($chat)
