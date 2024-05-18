@@ -9,7 +9,7 @@
     <div>
         @foreach ($menuParts as $menuPart)
             @php
-                $menuTypeTitle = $menuPart->menu_type->title[$lang] ?? 'Title Not Available';
+                $menuTypeTitle = $menuPart->menu_type->title->$lang;
             @endphp
             <div>
                 <h2>{{ $menuTypeTitle }}</h2>
