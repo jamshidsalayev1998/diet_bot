@@ -38,20 +38,20 @@ class BaseMenuImageGenerateCommand extends Command
         $menuSizes = MenuSize::all();
         $langs = ['uz', 'ru'];
         foreach ($menuSizes as $menuSize) {
-            $menuParts = MenuPart::where('menu_size_id', 1)->get();
+            $menuParts = MenuPart::where('menu_size_id', $menuSize->id)->get();
             $resultMenuParts = MenuPartUserShowResource::collection($menuParts);
-            $this->info(json_encode($resultMenuParts));
-            // if (count($menuParts)) {
-            //     foreach ($langs as $lang) {
+            // $this->info(json_encode($resultMenuParts));
+            if (count($menuParts)) {
+                foreach ($langs as $lang) {
 
-            //         $imagePath = storage_path('app/public/menu_images/' . $menuSize->id.'_'.$lang. '/base_menu.png');
-            //         $htmlContent = view('menu_images.base_menu_template', ['menuParts' => $menuParts , 'lang' => $lang])->render();
-            //         $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
-            //         file_put_contents($htmlFilePath, $htmlContent);
-            //         $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
-            //         shell_exec($command);
-            //     }
-            // }
+                    $imagePath = storage_path('app/public/menu_images/' . $menuSize->id.'_'.$lang. '/base_menu.png');
+                    $htmlContent = view('menu_images.base_menu_template', ['menuParts' => $resultMenuParts , 'lang' => $lang])->render();
+                    $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
+                    file_put_contents($htmlFilePath, $htmlContent);
+                    $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
+                    shell_exec($command);
+                }
+            }
         }
     }
 }
