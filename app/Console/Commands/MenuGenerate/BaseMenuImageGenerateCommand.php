@@ -57,6 +57,6 @@ class BaseMenuImageGenerateCommand extends Command
         shell_exec($command);
 
         // Return the path to the generated image
-        return response()->download($imagePath);
+        // return response()->download($imagePath);
     }
 }
