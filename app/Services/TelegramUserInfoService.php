@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\TempMessage;
 use App\Models\V1\ActivityType;
 use App\Models\V1\UserInfo;
 use DefStudio\Telegraph\Facades\Telegraph;
@@ -24,11 +25,15 @@ class TelegramUserInfoService
             case 1:
                 $text = self::lang('select_language');
                 UserActionService::add($chat, 'entering_lang');
-                $chat->message($text)
+                $ttt = $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
                         Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
                     ]))->send();
+                TempMessage::create([
+                    'text_response' => json_encode($ttt)
+                ]);
+
                 break;
             case 2:
                 $text = self::lang('select_gender');
@@ -53,7 +58,7 @@ class TelegramUserInfoService
             case 5:
                 $normalWeight = self::calculate_average_goal_weight($userInfo);
                 if ($normalWeight['status']) {
-                    $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight']['from']. ' - '. $normalWeight['normal_weight']['to'] . ' (kg)';
+                    $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight']['from'] . ' - ' . $normalWeight['normal_weight']['to'] . ' (kg)';
                     $chat->message($text)->send();
                 } else {
                     $text = self::lang('enter_goal_weight');
