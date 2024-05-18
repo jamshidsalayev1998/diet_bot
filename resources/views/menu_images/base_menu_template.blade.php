@@ -1,5 +1,6 @@
 <div>
     @foreach ($menuParts as $menuPart)
-        {{ $menuPart->menu_type->title['uz'] }}
+    <?php  $title = json_encode($menuPart->menu_type->title['uz']); ?>
+        {{ $title }}
     @endforeach
 </div>
