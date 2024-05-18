@@ -1,5 +1,5 @@
 <div>
     @foreach ($menuParts as $menuPart)
-        {{ $menuPart->menu_type->title[$lang] }}
+        {{ $menuPart->menu_type->title['uz'] }}
     @endforeach
 </div>
