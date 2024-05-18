@@ -16,7 +16,7 @@ class MenuTypeUserShowResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => json_decode($this->title),
+            'title' => json_decode($this->title,true),
             'time_from' => $this->time_from,
             'time_to' => $this->time_to,
         ];
