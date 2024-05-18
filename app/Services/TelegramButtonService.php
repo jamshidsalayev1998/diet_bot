@@ -33,7 +33,7 @@ class TelegramButtonService
                 ReplyButton::make(self::buttonLang('dinners')),
                 ReplyButton::make(self::buttonLang('home')),
             ])->resize();
-        $chat->replyKeyboard($keyboard)->send();
+        $chat->message(self::lang('welcome_menus_page'))->replyKeyboard($keyboard)->send();
     }
 
     public static function findMessageKeyword($text)
