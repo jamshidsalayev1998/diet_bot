@@ -39,7 +39,7 @@ class BaseMenuImageGenerateCommand extends Command
         foreach ($menuSizes as $menuSize) {
             $menuParts = MenuPart::where('menu_size_id', 1)->get();
             $resultMenuParts = MenuPartProductsUserShowResource::collection($menuParts);
-            $this->info($resultMenuParts);
+            $this->info(json_encode($resultMenuParts));
             // if (count($menuParts)) {
             //     foreach ($langs as $lang) {
 
