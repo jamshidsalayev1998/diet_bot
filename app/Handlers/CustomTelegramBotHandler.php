@@ -98,7 +98,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         app()->setLocale($lang);
         $this->chat->deleteMessages([$this->messageId , $this->messageId - 1 , $this->messageId - 2]);
         TelegramUserInfoService::check_user_info($this->chat);
-        $this->reply($this->lang('language_selected'));
+        $this->reply($this->lang($this->messageId));
     }
     public function entering_activity_type()
     {
