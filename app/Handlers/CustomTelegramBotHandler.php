@@ -20,9 +20,6 @@ class CustomTelegramBotHandler extends WebhookHandler
     use TelegramMessageLangsTrait;
     protected function handleChatMessage(Stringable $text): void
     {
-        TempMessage::create([
-            'text_response' => 'keldi handle message ga'
-        ]);
         $userAction = $this->chat->user_action;
         if ($userAction) {
             switch ($userAction->screen) {
@@ -100,7 +97,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->update();
         app()->setLocale($lang);
         TelegramUserInfoService::check_user_info($this->chat);
-        $this->reply($this::lang('language_selected'));
+        $this->reply($this->lang('language_selected'));
     }
     public function entering_activity_type()
     {
@@ -110,7 +107,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 8;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
-        $this->reply($this::lang('activity_type_selected'));
+        $this->reply($this->lang('activity_type_selected'));
     }
     public function selecting_gender()
     {
@@ -120,7 +117,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 3;
         $userInfo->update();
         TelegramUserInfoService::check_user_info($this->chat);
-        $this->reply($this::lang('gender_selected'));
+        $this->reply($this->lang('gender_selected'));
     }
 
     public function start_again_user_info()
@@ -130,7 +127,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->update();
         UserActionService::add($this->chat, 'selecting_gender');
         TelegramUserInfoService::check_user_info($this->chat, $userInfo);
-        $this->reply($this::lang('started_again_user_info'));
+        $this->reply($this->lang('started_again_user_info'));
     }
     public function confirm_user_info()
     {
@@ -141,6 +138,6 @@ class CustomTelegramBotHandler extends WebhookHandler
             ReplyKeyboard::make()->button('adfsf')->resize(),
             ReplyKeyboard::make()->button('adfsf')->resize()
         ])->send();
-        $this->reply($this::lang('user_info_confirmed'));
+        $this->reply($this->lang('user_info_confirmed'));
     }
 }
