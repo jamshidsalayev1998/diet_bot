@@ -41,11 +41,11 @@ class BaseMenuImageGenerateCommand extends Command
         // $image->toPng()->save(public_path().'/image/foo.png');
         // $fileUrl = FileSave::storeFile('/menu/base/'.date('Y-m-d') , $image);
         // $this->info($fileUrl);
-        $htmlContent = '<html><body><h1>Hello, World!</h1><p>This is an example HTML content.</p></body></html>';
+        // $htmlContent = '<html><body><h1>Hello, World!</h1><p>This is an example HTML content.</p></body></html>';
 
         // Save the HTML content to a temporary file
-        $htmlFilePath = storage_path('app/public/temp.html');
-        file_put_contents($htmlFilePath, $htmlContent);
+        $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
+        // file_put_contents($htmlFilePath, $htmlContent);
 
         // Define the path for the output image
         $imagePath = storage_path('app/public/output.png');
