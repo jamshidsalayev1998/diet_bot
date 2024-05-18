@@ -108,6 +108,8 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->activity_type_id = $activity_type_id;
         $userInfo->status = 8;
         $userInfo->update();
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
         $this->reply($this->lang('activity_type_selected'));
     }
@@ -118,6 +120,8 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->gender = $gender;
         $userInfo->status = 3;
         $userInfo->update();
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
         $this->reply($this->lang('gender_selected'));
     }
@@ -127,6 +131,8 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo = $this->chat->user_info;
         $userInfo->status = 2;
         $userInfo->update();
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
         UserActionService::add($this->chat, 'selecting_gender');
         TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         $this->reply($this->lang('started_again_user_info'));
@@ -136,6 +142,8 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo = $this->chat->user_info;
         $userInfo->status = 11;
         $userInfo->update();
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
         $this->reply($this->lang('user_info_confirmed'));
     }
 }
