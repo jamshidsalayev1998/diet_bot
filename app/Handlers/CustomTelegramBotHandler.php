@@ -59,7 +59,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     public function start()
     {
         // TempMessage::create([
-        //     'text_response' => 'keldi startga'
+        //     'text_response' => json_encode($this->message);
         // ]);
 
         $userInfo = $this->chat->user_info;
@@ -96,6 +96,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 2;
         $userInfo->update();
         app()->setLocale($lang);
+        $this->chat->deleteMessages([$this->messageId , $this->messageId - 1 , $this->messageId - 2]);
         TelegramUserInfoService::check_user_info($this->chat);
         $this->reply($this->lang('language_selected'));
     }
