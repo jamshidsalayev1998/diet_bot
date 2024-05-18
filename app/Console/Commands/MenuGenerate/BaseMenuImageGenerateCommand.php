@@ -38,7 +38,8 @@ class BaseMenuImageGenerateCommand extends Command
 
         // create new image 512x512 with grey background
         $image = $manager->create(512, 512)->fill('ccc');
-        $fileUrl = FileSave::storeFile('/menu/base/'.date('Y-m-d') , $image);
-        $this->info($fileUrl);
+        $image->toPng()->save('images/foo.png');
+        // $fileUrl = FileSave::storeFile('/menu/base/'.date('Y-m-d') , $image);
+        // $this->info($fileUrl);
     }
 }
