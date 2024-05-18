@@ -54,10 +54,9 @@ class CustomTelegramBotHandler extends WebhookHandler
             } else {
                 $keywordButton = TelegramButtonService::findMessageKeyword($text);
                 if ($keywordButton) {
-
-                    TelegramButtonService::$keywordButton();
+                    TelegramButtonService::$keywordButton($this->chat);
                 } else {
-                    $this->chat->message('topilmadi bu komanda')->removeReplyKeyboard()->send();
+                    $this->chat->message('topilmadi bu komanda')->send();
                 }
             }
         } else {
