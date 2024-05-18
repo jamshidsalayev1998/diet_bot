@@ -9,10 +9,10 @@
     <div>
         @foreach ($menuParts as $menuPart)
             @php
-                $menuTypeTitle = $menuPart['menu_type']['title']->$lang ?? 'Title Not Available';
+                $menuTypeTitleJson = json_decode($menuPart['menu_type']['title']);
             @endphp
             <div>
-                <h2>{{ $menuTypeTitle }}</h2>
+                <h2>{{ $menuTypeTitleJson->$lang }}</h2>
                 <ul>
                     @foreach ($menuPart->menu_part_products as $product)
                         @php
