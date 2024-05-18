@@ -13,4 +13,8 @@ return [
         'uz' => 'Mutaxasis',
         'ru' => 'Mutaxasis ru'
     ],
+    'home' => [
+        'uz' => 'Bosh sahifa',
+        'ru' => 'Bosh sahifa ru'
+    ]
 ];
