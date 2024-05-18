@@ -5,6 +5,7 @@ namespace App\Handlers;
 use App\Models\TempMessage;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
+use App\Services\TelegramButtonService;
 use App\Services\TelegramUserInfoService;
 use App\Services\UserActionService;
 use App\Traits\TelegramMessageLangsTrait;
@@ -21,32 +22,43 @@ class CustomTelegramBotHandler extends WebhookHandler
     protected function handleChatMessage(Stringable $text): void
     {
         $userAction = $this->chat->user_action;
+        $userInfo = $this->chat->user_info;
         if ($userAction) {
-            switch ($userAction->screen) {
-                case 'entering_weight':
-                    $statusStore = TelegramUserInfoService::store_weight($this->chat, $text);
-                    if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
-                    }
-                    break;
-                case 'entering_goal_weight':
-                    $statusStore = TelegramUserInfoService::store_goal_weight($this->chat, $text);
-                    if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
-                    }
-                    break;
-                case 'entering_tall':
-                    $statusStore = TelegramUserInfoService::store_tall($this->chat, $text);
-                    if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
-                    }
-                    break;
-                case 'entering_age':
-                    $statusStore = TelegramUserInfoService::store_age($this->chat, $text);
-                    if ($statusStore) {
-                        TelegramUserInfoService::check_user_info($this->chat);
-                    }
-                    break;
+            if ($userInfo->status < 9) {
+                switch ($userAction->screen) {
+                    case 'entering_weight':
+                        $statusStore = TelegramUserInfoService::store_weight($this->chat, $text);
+                        if ($statusStore) {
+                            TelegramUserInfoService::check_user_info($this->chat);
+                        }
+                        break;
+                    case 'entering_goal_weight':
+                        $statusStore = TelegramUserInfoService::store_goal_weight($this->chat, $text);
+                        if ($statusStore) {
+                            TelegramUserInfoService::check_user_info($this->chat);
+                        }
+                        break;
+                    case 'entering_tall':
+                        $statusStore = TelegramUserInfoService::store_tall($this->chat, $text);
+                        if ($statusStore) {
+                            TelegramUserInfoService::check_user_info($this->chat);
+                        }
+                        break;
+                    case 'entering_age':
+                        $statusStore = TelegramUserInfoService::store_age($this->chat, $text);
+                        if ($statusStore) {
+                            TelegramUserInfoService::check_user_info($this->chat);
+                        }
+                        break;
+                }
+            } else {
+                $keywordButton = TelegramButtonService::findMessageKeyword($text);
+                if ($keywordButton) {
+
+                    TelegramButtonService::$keywordButton();
+                } else {
+                    $this->chat->message('topilmadi bu komanda')->removeReplyKeyboard()->send();
+                }
             }
         } else {
             $this->chat->message('xatolik')->removeReplyKeyboard()->send();
@@ -58,10 +70,6 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
-        // TempMessage::create([
-        //     'text_response' => json_encode($this->message);
-        // ]);
-
         $userInfo = $this->chat->user_info;
         $this->chat->message('Hush kelibsiz')->removeReplyKeyboard()->send();
         if (!$userInfo) {
@@ -72,15 +80,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         if ($userInfo->status < 9) {
             TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         } else {
-            $keyboard = ReplyKeyboard::make()
-                ->row([
-                    ReplyButton::make('🥘'.$this->lang('menu')),
-                ])->resize()
-                ->row([
-                    ReplyButton::make('⚙️'.$this->lang('settings')),
-                    ReplyButton::make('👨‍💻'.$this->lang('support')),
-                ])->resize();
-            $ttt = $this->chat->message('your_user_info_stored')->replyKeyboard($keyboard)->send();
+            TelegramButtonService::home($this->chat);
         }
     }
     private function handleCallbackQuery(): void
