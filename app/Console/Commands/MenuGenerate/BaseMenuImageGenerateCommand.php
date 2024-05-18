@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands\MenuGenerate;
 
+use App\Http\Resources\V1\MenuPartProductsUserShowResource;
+use App\Models\V1\MenuPart;
+use App\Models\V1\MenuSize;
 use App\Services\FileSave;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -31,32 +34,23 @@ class BaseMenuImageGenerateCommand extends Command
      */
     public function handle()
     {
-        // $manager = new ImageManager(Driver::class);
+        $menuSizes = MenuSize::all();
+        $langs = ['uz', 'ru'];
+        foreach ($menuSizes as $menuSize) {
+            $menuParts = MenuPart::where('menu_size_id', 1)->get();
+            $resultMenuParts = MenuPartProductsUserShowResource::collection($menuParts);
+            $this->info($resultMenuParts);
+            // if (count($menuParts)) {
+            //     foreach ($langs as $lang) {
 
-        // // create new image 640x480
-        // $image = $manager->create(640, 480);
-
-        // // create new image 512x512 with grey background
-        // $image = $manager->create(512, 512)->fill('ccc');
-        // $image->toPng()->save(public_path().'/image/foo.png');
-        // $fileUrl = FileSave::storeFile('/menu/base/'.date('Y-m-d') , $image);
-        // $this->info($fileUrl);
-        // $htmlContent = '<html><body><h1>Hello, World!</h1><p>This is an example HTML content.</p></body></html>';
-
-        // Save the HTML content to a temporary file
-        $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
-        // file_put_contents($htmlFilePath, $htmlContent);
-
-        // Define the path for the output image
-        $imagePath = storage_path('app/public/output.png');
-
-        // Command to generate the image from HTML
-        $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
-
-        // Execute the command
-        shell_exec($command);
-
-        // Return the path to the generated image
-        // return response()->download($imagePath);
+            //         $imagePath = storage_path('app/public/menu_images/' . $menuSize->id.'_'.$lang. '/base_menu.png');
+            //         $htmlContent = view('menu_images.base_menu_template', ['menuParts' => $menuParts , 'lang' => $lang])->render();
+            //         $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
+            //         file_put_contents($htmlFilePath, $htmlContent);
+            //         $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
+            //         shell_exec($command);
+            //     }
+            // }
+        }
     }
 }
