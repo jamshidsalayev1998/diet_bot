@@ -3,6 +3,7 @@
 namespace App\Console\Commands\MenuGenerate;
 
 use App\Http\Resources\V1\MenuPartProductsUserShowResource;
+use App\Http\Resources\V1\MenuPartUserShowResource;
 use App\Models\V1\MenuPart;
 use App\Models\V1\MenuSize;
 use App\Services\FileSave;
@@ -38,7 +39,7 @@ class BaseMenuImageGenerateCommand extends Command
         $langs = ['uz', 'ru'];
         foreach ($menuSizes as $menuSize) {
             $menuParts = MenuPart::where('menu_size_id', 1)->get();
-            $resultMenuParts = MenuPartProductsUserShowResource::collection($menuParts);
+            $resultMenuParts = MenuPartUserShowResource::collection($menuParts);
             $this->info(json_encode($resultMenuParts));
             // if (count($menuParts)) {
             //     foreach ($langs as $lang) {
