@@ -19,7 +19,8 @@ class MenuPartUserShowResource extends JsonResource
             'menu_type' => new MenuTypeUserShowResource($this->menu_type),
             'menu_size' => new MenuSizeUserShowResource($this->menu_size),
             'calories' => $this->calories,
-            
+            'menu_part_products' => MenuPartProductsUserShowResource::collection($this->menu_part_products)
+
         ];
     }
 }
