@@ -14,13 +14,9 @@ class MenuTypeUserShowResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $title = json_decode($this->title , true);
         return [
             'id' => $this->id,
-            'title' => [
-                'uz' => $title['uz'],
-                'ru' => $title['ru']
-            ],
+            'title' => json_decode($this->title,true),
             'time_from' => $this->time_from,
             'time_to' => $this->time_to,
         ];
