@@ -134,10 +134,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo = $this->chat->user_info;
         $userInfo->status = 11;
         $userInfo->update();
-        $this->chat->message('your_user_info_stored')->replyKeyboard([
-            ReplyKeyboard::make()->button('adfsf')->resize(),
-            ReplyKeyboard::make()->button('adfsf')->resize()
-        ])->send();
+
         $this->reply($this->lang('user_info_confirmed'));
     }
 }
