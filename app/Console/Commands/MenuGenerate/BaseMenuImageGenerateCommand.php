@@ -42,7 +42,7 @@ class BaseMenuImageGenerateCommand extends Command
             $resultMenuParts = MenuPartUserShowResource::collection($menuParts);
             if (count($menuParts)) {
                 foreach ($langs as $lang) {
-                    $this->info(json_encode($resultMenuParts[0]['menu_type']['title']));
+                    $this->info(json_encode($resultMenuParts[0]['menu_type']['title']['uz']));
 
                     // $imagePath = storage_path('app/public/menu_images/' . $menuSize->id.'_'.$lang. '/base_menu.png');
                     // $htmlContent = view('menu_images.base_menu_template', ['menuParts' => $resultMenuParts , 'lang' => $lang])->render();
