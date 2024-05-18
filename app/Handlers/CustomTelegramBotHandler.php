@@ -53,12 +53,12 @@ class CustomTelegramBotHandler extends WebhookHandler
                 }
             } else {
                 $keywordButton = TelegramButtonService::findMessageKeyword($text);
-                $this->chat->message($keywordButton ? $keywordButton :'dddd')->send();
-                // if ($keywordButton) {
-                //     TelegramButtonService::$keywordButton($this->chat);
-                // } else {
-                //     $this->chat->message('topilmadi bu komanda')->send();
-                // }
+                // $this->chat->message($keywordButton ? $keywordButton :'dddd')->send();
+                if ($keywordButton) {
+                    TelegramButtonService::$keywordButton($this->chat);
+                } else {
+                    $this->chat->message('topilmadi bu komanda')->send();
+                }
             }
         } else {
             $this->chat->message('xatolik')->removeReplyKeyboard()->send();
