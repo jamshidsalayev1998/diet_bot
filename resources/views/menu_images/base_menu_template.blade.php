@@ -22,13 +22,15 @@
                                 $productTitle = json_decode($product['product']['title']);
                                 $productImage = $product['product']['image'];
                                 $measureTypeTitle = json_decode($product['product']['measure_type']['title']);
+                                $measureCupTitle = $product['product']['measure_cup'] ? json_decode($product['product']['measure_cup']['title']) : null;
                                 $permissionDescription = json_decode($product['product']['permission_description']);
                             @endphp
                             <li>
-                                <img src="{{ $productImage }}" alt="{{ $productTitle->$lang }}" width="50"
-                                    height="50">
-                                <strong>{{ $productTitle->$lang }}</strong> - {{ $measureTypeTitle->$lang }}
-                                {{-- <p>{{ $permissionDescription->$lang }}</p> --}}
+                                @if ($product['measure_cup_count'])
+                                    <strong>{{ $productTitle->$lang }}</strong> -{{ $product['measure_cup_count'] }} {{ $measureCupTitle ? $measureCupTitle->$lang :'' }}
+                                @else
+                                    <strong>{{ $productTitle->$lang }}</strong> -{{ $product['measure_type_count'] }} {{ $measureTypeTitle ? $measureTypeTitle->$lang:'' }}
+                                @endif
                             </li>
                         @endforeach
                     </ul>

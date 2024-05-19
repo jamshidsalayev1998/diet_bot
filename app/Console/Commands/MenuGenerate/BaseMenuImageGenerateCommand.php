@@ -54,7 +54,7 @@ class BaseMenuImageGenerateCommand extends Command
                         $ready[$menuType->id]['records'] = []; // or handle the missing key scenario appropriately
                     }
                 }
-                $this->info(json_encode($ready[1]['records'][0]['menu_type']));
+                // $this->info(json_encode($ready[1]['records'][0]));
                 foreach ($langs as $lang) {
                     $imagePath = storage_path('app/public/menu_images/' . $menuSize->id . '_' . $lang . '/base_menu.png');
                     $htmlContent = view('menu_images.base_menu_template', ['data' => $ready, 'lang' => $lang])->render();
