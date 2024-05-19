@@ -18,8 +18,8 @@
                         @php
                             $productTitle = json_decode($product['product']['title']);
                             $productImage = $product['product']['image'];
-                            $measureTypeTitle = $product['product']['measure_type']['title'];
-                            $permissionDescription = $product['product']['permission_description'] ?? 'Permission Description Not Available';
+                            $measureTypeTitle = json_decode($product['product']['measure_type']['title']);
+                            $permissionDescription = json_decode($product['product']['permission_description']) ;
                         @endphp
                         <li>
                             <img src="{{ $productImage }}" alt="{{ $productTitle->$lang }}" width="50" height="50">
