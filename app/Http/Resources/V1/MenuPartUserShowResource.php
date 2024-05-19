@@ -16,6 +16,7 @@ class MenuPartUserShowResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'menu_type_id' => $this->menu_type_id,
             'menu_type' => new MenuTypeUserShowResource($this->menu_type),
             'menu_size' => new MenuSizeUserShowResource($this->menu_size),
             'calories' => $this->calories,
