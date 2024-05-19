@@ -15,7 +15,7 @@
             @endphp
             <h2>{{ $menuTypeTitleJson->$lang }}</h2>
             @foreach ($item['records'] as $menuPart)
-                <div>
+                <div style="border: 1px solid black; padding: 4px">
                     <ul>
                         @foreach ($menuPart['menu_part_products'] as $product)
                             @php
