@@ -14,17 +14,17 @@
             <div>
                 <h2>{{ $menuTypeTitleJson->$lang }}</h2>
                 <ul>
-                    @foreach ($menuPart->menu_part_products as $product)
+                    @foreach ($menuPart['menu_part_products'] as $product)
                         @php
-                            $productTitle = $product->product->title[$lang] ?? 'Product Title Not Available';
-                            $productImage = $product->product->image;
-                            $measureTypeTitle = $product->product->measure_type->title[$lang] ?? 'Measure Type Not Available';
-                            $permissionDescription = $product->product->permission_description[$lang] ?? 'Permission Description Not Available';
+                            $productTitle = json_decode($product['product']['title']);
+                            $productImage = $product['product']['image'];
+                            $measureTypeTitle = $product['product']['measure_type']['title'];
+                            $permissionDescription = $product['product']['permission_description'] ?? 'Permission Description Not Available';
                         @endphp
                         <li>
-                            <img src="{{ $productImage }}" alt="{{ $productTitle }}" width="50" height="50">
-                            <strong>{{ $productTitle }}</strong> - {{ $measureTypeTitle }}
-                            <p>{{ $permissionDescription }}</p>
+                            <img src="{{ $productImage }}" alt="{{ $productTitle->$lang }}" width="50" height="50">
+                            <strong>{{ $productTitle->$lang }}</strong> - {{ $measureTypeTitle->$lang }}
+                            <p>{{ $permissionDescription->$lang }}</p>
                         </li>
                     @endforeach
                 </ul>
