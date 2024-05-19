@@ -7,6 +7,7 @@ use App\Http\Resources\V1\MenuPartUserShowResource;
 use App\Models\V1\MenuPart;
 use App\Models\V1\MenuSize;
 use App\Models\V1\MenuType;
+use App\Models\V1\UserInfo;
 use App\Services\FileSave;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -39,6 +40,7 @@ class BaseMenuImageGenerateCommand extends Command
         $menuSizes = MenuSize::all();
         $langs = ['uz', 'ru'];
         $menuTypes = MenuType::query()->orderBy('id', 'ASC')->get();
+        $userInfos = UserInfo::where('status' , 11)->get();
         foreach ($menuSizes as $menuSize) {
             $menuParts = MenuPart::where('menu_size_id', $menuSize->id)->get();
             $resultMenuParts = MenuPartUserShowResource::collection($menuParts);

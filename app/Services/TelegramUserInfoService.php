@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\TempMessage;
 use App\Models\V1\ActivityType;
+use App\Models\V1\MenuSize;
 use App\Models\V1\UserInfo;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
@@ -117,7 +118,15 @@ class TelegramUserInfoService
         }
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
-        $userInfo->daily_spend_calories = round($calories);
+        $spendCalories = round($calories);
+        $needCalories = round($calories)-500;
+        $userInfo->daily_spend_calories = $spendCalories;
+        $userInfo->daily_need_calories = $needCalories;
+        $firstMenu = MenuSize::where('calories' , '<=' , $needCalories)->orderBy('calories' , 'DESC')->first();
+        if(!$firstMenu){
+            $firstMenu = MenuSize::where('calories' , '>=' , $needCalories)->orderBy('calories' , 'DESC')->first();
+        }
+        $userInfo->menu_size_id = $firstMenu->id;
         $userInfo->status = 10;
         $userInfo->update();
     }
