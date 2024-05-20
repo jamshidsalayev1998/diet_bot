@@ -15,6 +15,7 @@ class MenuImageGeneratorService
         $status = 0;
         $url = '';
         $error = [];
+        $message = '';
         try {
             $menuTypes = MenuType::query()->orderBy('id', 'ASC')->get();
             $menuParts = MenuPart::where('menu_size_id', $userInfo->menu_size_id)->get();
@@ -32,7 +33,7 @@ class MenuImageGeneratorService
                     }
                 }
                 // $this->info(json_encode($ready[1]['records'][0]));
-                $url = 'app/public/menu_images/' . $userInfo->menu_size_id . '/' . $userInfo->language . '/base_menu.png';
+                $url = 'app/public/menu_images/'.date('Y-m-d').'/'. $userInfo->menu_size_id . '/' . $userInfo->id . '/'.$userInfo->language.'.png';
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
 
@@ -46,9 +47,22 @@ class MenuImageGeneratorService
                 $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
                 shell_exec($command);
             }
+            $status = 1;
+            $message = 'success';
 
         } catch (Exception $e) {
-
+            $message = 'error';
+            $error = [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ];
         }
+        return [
+            'status' => $status,
+            'message' => $message,
+            'error' => $error,
+            'url' => $url
+        ];
     }
 }
