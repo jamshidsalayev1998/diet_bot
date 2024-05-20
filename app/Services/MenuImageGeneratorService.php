@@ -33,7 +33,7 @@ class MenuImageGeneratorService
                     }
                 }
                 // $this->info(json_encode($ready[1]['records'][0]));
-                $url = 'app/public/menu_images/'.date('Y-m-d').'/'. $userInfo->menu_size_id . '/' . $userInfo->id . '/'.$userInfo->language.'.png';
+                $url = 'app/public/menu_images/'.date('Y-m-d').'/'. $userInfo->calories . '/' . $userInfo->id . '/'.$userInfo->language.'.png';
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
 
