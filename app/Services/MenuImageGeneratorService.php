@@ -21,6 +21,7 @@ class MenuImageGeneratorService
             $menuParts = MenuPart::where('menu_size_id', $userInfo->menu_size_id)->get();
             $resultMenuParts = MenuPartUserShowResource::collection($menuParts);
             $grouped = $resultMenuParts->groupBy('menu_type_id');
+            $menuSize = $userInfo->menu_size;
             $ready = [];
             if (count($menuParts)) {
                 foreach ($menuTypes as $menuType) {
@@ -33,7 +34,7 @@ class MenuImageGeneratorService
                     }
                 }
                 // $this->info(json_encode($ready[1]['records'][0]));
-                $url = 'app/public/menu_images/'.date('Y-m-d').'/'. $userInfo->calories . '/' . $userInfo->id . '/'.$userInfo->language.'.png';
+                $url = 'app/public/menu_images/'.date('Y-m-d').'/'. $menuSize->calories . '/' . $userInfo->id . '/'.$userInfo->language.'.png';
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
 
