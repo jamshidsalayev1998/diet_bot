@@ -74,7 +74,7 @@ class TelegramButtonService
             if ($userInfo->menu_part_images) {
                 $menuPartImages = json_decode($userInfo->menu_part_images, true);
                 if (key_exists(2, $menuPartImages)) {
-                    $breakfastPath = $menuPartImages[1];
+                    $breakfastPath = $menuPartImages[2];
                 } else {
                     $chat->message(self::lang('breakfasts_no'))->send();
                 }
@@ -99,10 +99,30 @@ class TelegramButtonService
             if ($userInfo->menu_part_images) {
                 $menuPartImages = json_decode($userInfo->menu_part_images, true);
                 if (key_exists(3, $menuPartImages)) {
-                    $breakfastPath = $menuPartImages[1];
+                    $breakfastPath = $menuPartImages[3];
                 } else {
                     $chat->message(self::lang('breakfasts_no'))->send();
                 }
+            } else {
+                $chat->message(self::lang('user_info_not_full'))->send();
+            }
+        } else {
+            $chat->message(self::lang('user_ino_not_found'))->send();
+        }
+        if ($breakfastPath) {
+            // $chat->message('https://bot.dieto.uz/storage'.$breakfastPath)->send();
+            $chat->photo('https://bot.dieto.uz/storage' . $breakfastPath)->send();
+        } else {
+            $chat->message(self::lang('something_error'))->send();
+        }
+    }
+    public static function full_menu($chat)
+    {
+        $userInfo = $chat->user_info;
+        $breakfastPath = '';
+        if ($userInfo) {
+            if ($userInfo->menu_image) {
+                $breakfastPath = $userInfo->menu_image;
             } else {
                 $chat->message(self::lang('user_info_not_full'))->send();
             }
