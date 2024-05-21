@@ -16,5 +16,9 @@ return [
     'home' => [
         'uz' => 'Bosh sahifa',
         'ru' => 'Bosh sahifa ru'
+    ],
+    'breakfasts' => [
+        'uz' => 'Nonushtalar',
+        'ru' => 'Nonushtalar ru'
     ]
 ];
