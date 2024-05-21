@@ -13,7 +13,7 @@ class MenuImageGeneratorService
     public static function generateMenuImageForOneUser($userInfo)
     {
         $status = 0;
-        $url = '';
+        $imageUrl = '';
         $error = [];
         $message = '';
         try {
@@ -34,7 +34,8 @@ class MenuImageGeneratorService
                     }
                 }
                 // $this->info(json_encode($ready[1]['records'][0]));
-                $url = 'app/public/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu/' . $userInfo->id . '/' . $userInfo->language . '.png';
+                $imageUrl = 'menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu/' . $userInfo->id . '/' . $userInfo->language . '.png';
+                $url = 'app/public/'.$imageUrl;
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
 
@@ -62,13 +63,13 @@ class MenuImageGeneratorService
             'status' => $status,
             'message' => $message,
             'error' => $error,
-            'url' => $url
+            'url' => $imageUrl
         ];
     }
     public static function generateMenuPartsImageForOneUser($userInfo)
     {
         $status = 0;
-        $url = '';
+        $imageUrl = '';
         $error = [];
         $message = '';
         $menu_part_images = $userInfo->menu_part_images ? json_decode($userInfo->menu_part_images,true):[];
@@ -89,7 +90,8 @@ class MenuImageGeneratorService
                         $ready[$menuType->id]['records'] = []; // or handle the missing key scenario appropriately
                     }
                     // $this->info(json_encode($ready[1]['records'][0]));
-                    $url = 'app/public/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/'.$menuType->id.'/'. $userInfo->id . '/' . $userInfo->language . '.png';
+                    $imageUrl = 'menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/'.$menuType->id.'/'. $userInfo->id . '/' . $userInfo->language . '.png';
+                    $url = 'app/public/'.$imageUrl;
                     $imagePath = storage_path($url);
                     $directoryPath = dirname($imagePath);
 
@@ -102,7 +104,7 @@ class MenuImageGeneratorService
                     file_put_contents($htmlFilePath, $htmlContent);
                     $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
                     shell_exec($command);
-                    $menu_part_images[$menuType->id] = $url;
+                    $menu_part_images[$menuType->id] = $imageUrl;
                 }
             }
             $userInfo->menu_part_images = json_encode($menu_part_images);
@@ -121,7 +123,7 @@ class MenuImageGeneratorService
             'status' => $status,
             'message' => $message,
             'error' => $error,
-            'url' => $url
+            'url' => $imageUrl
         ];
     }
 }
