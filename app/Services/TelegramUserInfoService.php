@@ -265,10 +265,6 @@ class TelegramUserInfoService
         if ($userInfo->status >= 4) {
             $weightFrom = 18.5 * $userInfo->tall * $userInfo->tall / 10000;
             $weightTo = 25 * $userInfo->tall * $userInfo->tall / 10000;
-            if ($userInfo->gender == 0) {
-                $weightFrom -= 5;
-                $weightTo -= 5;
-            }
         } else {
             $status = 0;
         }

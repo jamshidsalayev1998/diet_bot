@@ -44,10 +44,6 @@ class BaseMenuImageGenerateCommand extends Command
         $userInfos = UserInfo::where('status' , 11)->get();
         foreach($userInfos  as $userInfo){
             $resultGenerateImage = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
-            if($resultGenerateImage['status']){
-                $userInfo->menu_image = $resultGenerateImage['url'];
-                $userInfo->update();
-            }
             $this->info(json_encode($resultGenerateImage));
         }
     }

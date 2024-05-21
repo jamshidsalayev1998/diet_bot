@@ -5,6 +5,7 @@ namespace App\Handlers;
 use App\Models\TempMessage;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
+use App\Services\MenuImageGeneratorService;
 use App\Services\TelegramButtonService;
 use App\Services\TelegramUserInfoService;
 use App\Services\UserActionService;
@@ -148,5 +149,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
         $this->reply($this->lang('user_info_confirmed'));
+        MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
+        MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
     }
 }

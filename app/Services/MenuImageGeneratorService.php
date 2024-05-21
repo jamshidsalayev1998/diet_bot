@@ -48,6 +48,8 @@ class MenuImageGeneratorService
                 file_put_contents($htmlFilePath, $htmlContent);
                 $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
                 shell_exec($command);
+                $userInfo->menu_image = $imageUrl;
+                $userInfo->update();
             }
             $status = 1;
             $message = 'success';
