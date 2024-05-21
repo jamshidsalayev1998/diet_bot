@@ -88,7 +88,7 @@ class MenuImageGeneratorService
                         $ready[$menuType->id]['records'] = []; // or handle the missing key scenario appropriately
                     }
                     // $this->info(json_encode($ready[1]['records'][0]));
-                    $url = 'app/public/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/' . $userInfo->id . '/' . $userInfo->language . '.png';
+                    $url = 'app/public/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/'.$menuType->id.'/'. $userInfo->id . '/' . $userInfo->language . '.png';
                     $imagePath = storage_path($url);
                     $directoryPath = dirname($imagePath);
 
