@@ -59,8 +59,8 @@ class TelegramButtonService
             $chat->message(self::lang('user_ino_not_found'))->send();
         }
         if($breakfastPath){
-            $chat->message(Storage::path($breakfastPath))->send();
-            $chat->photo(Storage::path($breakfastPath))->send();
+            $chat->message('https://bot.dieto.uz/storage'.$breakfastPath)->send();
+            $chat->photo('https://bot.dieto.uz/storage'.$breakfastPath)->send();
         }else{
             $chat->message(self::lang('something_error'))->send();
 
