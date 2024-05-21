@@ -27,6 +27,10 @@ class TelegramButtonService
     {
         $keyboard = ReplyKeyboard::make()
             ->row([
+                ReplyButton::make(self::buttonLang('full_menu')),
+                ReplyButton::make(self::buttonLang('snacks')),
+            ])->resize()
+            ->row([
                 ReplyButton::make(self::buttonLang('breakfasts')),
                 ReplyButton::make(self::buttonLang('lunches')),
             ])->resize()
@@ -41,29 +45,25 @@ class TelegramButtonService
     {
         $userInfo = $chat->user_info;
         $breakfastPath = '';
-        if($userInfo){
-            if($userInfo->menu_part_images){
-                $menuPartImages = json_decode($userInfo->menu_part_images,true);
-                if(key_exists(1,$menuPartImages)){
+        if ($userInfo) {
+            if ($userInfo->menu_part_images) {
+                $menuPartImages = json_decode($userInfo->menu_part_images, true);
+                if (key_exists(1, $menuPartImages)) {
                     $breakfastPath = $menuPartImages[1];
-                }
-                else{
+                } else {
                     $chat->message(self::lang('breakfasts_no'))->send();
                 }
-            }
-            else{
+            } else {
                 $chat->message(self::lang('user_info_not_full'))->send();
             }
-        }
-        else{
+        } else {
             $chat->message(self::lang('user_ino_not_found'))->send();
         }
-        if($breakfastPath){
+        if ($breakfastPath) {
             // $chat->message('https://bot.dieto.uz/storage'.$breakfastPath)->send();
-            $chat->photo('https://bot.dieto.uz/storage'.$breakfastPath)->send();
-        }else{
+            $chat->photo('https://bot.dieto.uz/storage' . $breakfastPath)->send();
+        } else {
             $chat->message(self::lang('something_error'))->send();
-
         }
     }
 

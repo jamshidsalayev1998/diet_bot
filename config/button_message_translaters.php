@@ -20,5 +20,21 @@ return [
     'breakfasts' => [
         'uz' => 'Nonushtalar',
         'ru' => 'Nonushtalar ru'
-    ]
+    ],
+    'lunches' => [
+        'uz' => 'Tushliklar',
+        'ru' => 'Tushliklar ru'
+    ],
+    'dinners' => [
+        'uz' => 'Kechki ovqatlar',
+        'ru' => 'Kechki ovqatlar ru'
+    ],
+    'full_menu' => [
+        'uz' => 'Toliq menyu',
+        'ru' => 'Toliq menyu ru'
+    ],
+    'snacks' => [
+        'uz' => 'Perekuslar',
+        'ru' => 'Perekuslar ru'
+    ],
 ];

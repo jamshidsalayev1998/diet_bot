@@ -149,6 +149,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
         $this->reply($this->lang('user_info_confirmed'));
+        TelegramButtonService::home($this->chat);
         MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
         MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
     }
