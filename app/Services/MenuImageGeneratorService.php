@@ -34,8 +34,8 @@ class MenuImageGeneratorService
                     }
                 }
                 // $this->info(json_encode($ready[1]['records'][0]));
-                $imageUrl = 'menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu/' . $userInfo->id . '/' . $userInfo->language . '.png';
-                $url = 'app/public/'.$imageUrl;
+                $imageUrl = '/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu/' . $userInfo->id . '/' . $userInfo->language . '.png';
+                $url = 'app/public'.$imageUrl;
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
 
@@ -90,8 +90,8 @@ class MenuImageGeneratorService
                         $ready[$menuType->id]['records'] = []; // or handle the missing key scenario appropriately
                     }
                     // $this->info(json_encode($ready[1]['records'][0]));
-                    $imageUrl = 'menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/'.$menuType->id.'/'. $userInfo->id . '/' . $userInfo->language . '.png';
-                    $url = 'app/public/'.$imageUrl;
+                    $imageUrl = '/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/'.$menuType->id.'/'. $userInfo->id . '/' . $userInfo->language . '.png';
+                    $url = 'app/public'.$imageUrl;
                     $imagePath = storage_path($url);
                     $directoryPath = dirname($imagePath);
 
