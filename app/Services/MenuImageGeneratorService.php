@@ -34,7 +34,7 @@ class MenuImageGeneratorService
                     }
                 }
                 // $this->info(json_encode($ready[1]['records'][0]));
-                $url = 'app/public/menu_images/'.date('Y-m-d').'/'. $menuSize->calories . '/' . $userInfo->id . '/'.$userInfo->language.'.png';
+                $url = 'app/public/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu/' . $userInfo->id . '/' . $userInfo->language . '.png';
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
 
@@ -50,7 +50,61 @@ class MenuImageGeneratorService
             }
             $status = 1;
             $message = 'success';
+        } catch (Exception $e) {
+            $message = 'error';
+            $error = [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ];
+        }
+        return [
+            'status' => $status,
+            'message' => $message,
+            'error' => $error,
+            'url' => $url
+        ];
+    }
+    public static function generateMenuPartsImageForOneUser($userInfo)
+    {
+        $status = 0;
+        $url = '';
+        $error = [];
+        $message = '';
+        try {
+            $menuTypes = MenuType::query()->orderBy('id', 'ASC')->get();
+            foreach ($menuTypes as $menuType) {
+                $menuParts = MenuPart::where('menu_size_id', $userInfo->menu_size_id)->where('menu_type_id', $menuType->id)->get();
+                $resultMenuParts = MenuPartUserShowResource::collection($menuParts);
+                $grouped = $resultMenuParts->groupBy('menu_type_id');
+                $menuSize = $userInfo->menu_size;
+                $ready = [];
+                if (count($menuParts)) {
+                    $ready[$menuType->id]['type_title'] = $menuType->title;
+                    $ready[$menuType->id]['type_id'] = $menuType->id;
+                    if (isset($grouped[$menuType->id])) {
+                        $ready[$menuType->id]['records'] = $grouped[$menuType->id];
+                    } else {
+                        $ready[$menuType->id]['records'] = []; // or handle the missing key scenario appropriately
+                    }
+                    // $this->info(json_encode($ready[1]['records'][0]));
+                    $url = 'app/public/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/' . $userInfo->id . '/' . $userInfo->language . '.png';
+                    $imagePath = storage_path($url);
+                    $directoryPath = dirname($imagePath);
 
+                    // Check if the directory exists, and create it if it doesn't
+                    if (!File::isDirectory($directoryPath)) {
+                        File::makeDirectory($directoryPath, 0777, true, true);
+                    }
+                    $htmlContent = view('menu_images.base_menu_parts_template', ['data' => $ready, 'lang' => $userInfo->language, 'user_info' => $userInfo])->render();
+                    $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
+                    file_put_contents($htmlFilePath, $htmlContent);
+                    $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
+                    shell_exec($command);
+                }
+            }
+            $status = 1;
+            $message = 'success';
         } catch (Exception $e) {
             $message = 'error';
             $error = [
