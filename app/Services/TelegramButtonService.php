@@ -47,7 +47,16 @@ class TelegramButtonService
                 if(key_exists(1,$menuPartImages)){
                     $breakfastPath = $menuPartImages[1];
                 }
+                else{
+                    $chat->message(self::lang('breakfasts_no'))->send();
+                }
             }
+            else{
+                $chat->message(self::lang('user_info_not_full'))->send();
+            }
+        }
+        else{
+            $chat->message(self::lang('user_ino_not_found'))->send();
         }
         if($breakfastPath){
             $chat->photo(Storage::path($breakfastPath))->send();
