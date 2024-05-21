@@ -71,6 +71,7 @@ class MenuImageGeneratorService
         $url = '';
         $error = [];
         $message = '';
+        $menu_part_images = $userInfo->menu_part_images ? json_decode($userInfo->menu_part_images):[];
         try {
             $menuTypes = MenuType::query()->orderBy('id', 'ASC')->get();
             foreach ($menuTypes as $menuType) {
@@ -101,8 +102,11 @@ class MenuImageGeneratorService
                     file_put_contents($htmlFilePath, $htmlContent);
                     $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
                     shell_exec($command);
+                    $menu_part_images[$menuType->id] = $url;
                 }
             }
+            $userInfo->menu_part_images = json_encode($menu_part_images);
+            $userInfo->update();
             $status = 1;
             $message = 'success';
         } catch (Exception $e) {

@@ -31,6 +31,7 @@ class BaseMenuPartsImageGenerateCommand extends Command
         $userInfos = UserInfo::where('status' , 11)->get();
         foreach($userInfos  as $userInfo){
             $resultGenerateImage = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
+
             $this->info(json_encode($resultGenerateImage));
         }
     }
