@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Keyboard\ReplyButton;
 use DefStudio\Telegraph\Keyboard\ReplyKeyboard;
+use Illuminate\Support\Facades\Storage;
 
 class TelegramButtonService
 {
@@ -36,6 +37,26 @@ class TelegramButtonService
         $chat->message(self::lang('welcome_menus_page'))->replyKeyboard($keyboard)->send();
     }
 
+    public static function breakfasts($chat)
+    {
+        $userInfo = $chat->user_info;
+        $breakfastPath = '';
+        if($userInfo){
+            if($userInfo->menu_part_images){
+                $menuPartImages = json_decode($userInfo->menu_part_images,true);
+                if(key_exists(1,$menuPartImages)){
+                    $breakfastPath = $menuPartImages[1];
+                }
+            }
+        }
+        if($breakfastPath){
+            $chat->photo(Storage::path($breakfastPath))->send();
+        }else{
+            $chat->message(self::lang('something_error'))->send();
+
+        }
+    }
+
     public static function findMessageKeyword($text)
     {
         $buttonTexts = config('button_message_translaters');
@@ -44,8 +65,8 @@ class TelegramButtonService
             foreach ($buttonText as $buttonTextLang) {
                 if ($buttonTextLang == $text) {
                     $keyword = $key;
-                    break;
                 }
+                break;
             }
             if ($keyword) break;
         }
