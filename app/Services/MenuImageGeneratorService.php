@@ -71,7 +71,7 @@ class MenuImageGeneratorService
         $url = '';
         $error = [];
         $message = '';
-        $menu_part_images = $userInfo->menu_part_images ? json_decode($userInfo->menu_part_images):[];
+        $menu_part_images = $userInfo->menu_part_images ? json_decode($userInfo->menu_part_images,true):[];
         try {
             $menuTypes = MenuType::query()->orderBy('id', 'ASC')->get();
             foreach ($menuTypes as $menuType) {
