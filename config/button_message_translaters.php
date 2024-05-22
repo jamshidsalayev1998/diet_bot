@@ -37,4 +37,12 @@ return [
         'uz' => 'Perekuslar',
         'ru' => 'Perekuslar ru'
     ],
+    'my_user_info' => [
+        'uz' => 'Ma`lumotlarim',
+        'ru' => 'Ma`lumotlarim ru'
+    ],
+    'change_user_info' => [
+        'uz' => 'O`zgartirish',
+        'ru' => 'O`zgartirish ru'
+    ],
 ];

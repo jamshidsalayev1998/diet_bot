@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Traits\TelegramMessageLangsTrait;
+use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
 use DefStudio\Telegraph\Keyboard\ReplyButton;
 use DefStudio\Telegraph\Keyboard\ReplyKeyboard;
 use Illuminate\Support\Facades\Storage;
@@ -143,6 +145,49 @@ class TelegramButtonService
         $chat->message(self::lang('soon'))->send();
     }
 
+    public static function settings($chat)
+    {
+        $keyboard = ReplyKeyboard::make()
+            ->row([
+                ReplyButton::make(self::buttonLang('my_user_info')),
+                ReplyButton::make(self::buttonLang('change_user_info')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('home')),
+            ])->resize();
+        $chat->message(self::lang('welcome_settings_page'))->replyKeyboard($keyboard)->send();
+    }
+
+    public static function my_user_info($chat)
+    {
+        $userInfo = $chat->user_info;
+        $text = self::make_user_info_text($userInfo);
+        $chat->message($text)->send();
+    }
+
+    public static function change_user_info($chat){
+        $userInfo = $chat->user_info;
+        $text = self::make_user_info_text($userInfo);
+        $text = 'Qaysi ma`lumotni o`zgartirmoqchisiz ?'.PHP_EOL.$text;
+        $keyboard = Keyboard::make()
+            ->row([
+                Button::make(self::lang('language'))->action('change_language')->param('settings_button' , 'change_language'),
+                Button::make(self::lang('gender'))->action('change_gender')->param('settings_button' , 'change_gender'),
+            ])
+            ->row([
+                Button::make(self::lang('tall'))->action('change_tall')->param('settings_button' , 'change_tall'),
+                Button::make(self::lang('weight'))->action('change_weight')->param('settings_button' , 'change_weight'),
+            ])
+            ->row([
+                Button::make(self::lang('goal_weight'))->action('change_goal_weight')->param('settings_button' , 'change_goal_weight'),
+                Button::make(self::lang('age'))->action('change_age')->param('settings_button' , 'change_age')
+            ])
+            ->row([
+                Button::make(self::lang('activity_type'))->action('change_activity_type')->param('settings_button' , 'change_activity_type'),
+            ]);
+        $chat->message($text)->keyboard($keyboard)->send();
+    }
+
     public static function findMessageKeyword($text)
     {
         $buttonTexts = config('button_message_translaters');
@@ -151,11 +196,28 @@ class TelegramButtonService
             foreach ($buttonText as $buttonTextLang) {
                 if ($buttonTextLang == $text) {
                     $keyword = $key;
+                    break;
                 }
-                break;
             }
             if ($keyword) break;
         }
         return $keyword;
+    }
+
+    public static function make_user_info_text($userInfo){
+        $titleActivity = json_decode($userInfo->activity_type->title, true);
+        if ($userInfo->gender) {
+            $genderTitle = self::lang('man');
+        } else {
+            $genderTitle = self::lang('woman');
+        }
+        $text = '🇺🇿 ' . self::lang('language') . ' : ' . self::lang($userInfo->language) . PHP_EOL . PHP_EOL;
+        $text .= '👬 ' . self::lang('gender') . ' : ' . $genderTitle . PHP_EOL . PHP_EOL;
+        $text .= '↕️ ' . self::lang('tall') . ' : ' . $userInfo->tall . ' sm' . PHP_EOL . PHP_EOL;
+        $text .= '⚖️ ' . self::lang('weight') . ' : ' . $userInfo->weight . ' kg' . PHP_EOL . PHP_EOL;
+        $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL . PHP_EOL;
+        $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL . PHP_EOL;
+        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_spend_calories . PHP_EOL . PHP_EOL;
+        return $text;
     }
 }

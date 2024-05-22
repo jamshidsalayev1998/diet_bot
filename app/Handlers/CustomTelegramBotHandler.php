@@ -152,5 +152,6 @@ class CustomTelegramBotHandler extends WebhookHandler
         TelegramButtonService::home($this->chat);
         MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
         MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
+        TelegramButtonService::full_menu($this->chat);
     }
 }
