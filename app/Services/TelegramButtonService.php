@@ -217,7 +217,7 @@ class TelegramButtonService
         $text .= '⚖️ ' . self::lang('weight') . ' : ' . $userInfo->weight . ' kg' . PHP_EOL . PHP_EOL;
         $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL . PHP_EOL;
         $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL . PHP_EOL;
-        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_spend_calories . PHP_EOL . PHP_EOL;
+        $text .= '' . self::lang('daily_need') . ' : ' . $userInfo->daily_need_calories . PHP_EOL . PHP_EOL;
         return $text;
     }
 }

@@ -13,6 +13,7 @@ use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
 use DefStudio\Telegraph\Keyboard\ReplyButton;
 use DefStudio\Telegraph\Keyboard\ReplyKeyboard;
 use Illuminate\Support\Stringable;
@@ -49,6 +50,45 @@ class CustomTelegramBotHandler extends WebhookHandler
                         $statusStore = TelegramUserInfoService::store_age($this->chat, $text);
                         if ($statusStore) {
                             TelegramUserInfoService::check_user_info($this->chat);
+                        }
+                        break;
+                }
+            } elseif ($userInfo->status == 12) {
+                switch ($userAction->screen) {
+                    case 'changing_tall':
+                        $statusStore = TelegramUserInfoService::change_tall($this->chat, $text);
+                        if ($statusStore) {
+                            $userInfo->status = 11;
+                            $userInfo->update();
+                            TelegramButtonService::change_user_info($this->chat);
+                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                        }
+                        break;
+                    case 'changing_weight':
+                        $statusStore = TelegramUserInfoService::change_weight($this->chat, $text);
+                        if ($statusStore) {
+                            $userInfo->status = 11;
+                            $userInfo->update();
+                            TelegramButtonService::change_user_info($this->chat);
+                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                        }
+                        break;
+                    case 'changing_goal_weight':
+                        $statusStore = TelegramUserInfoService::change_goal_weight($this->chat, $text);
+                        if ($statusStore) {
+                            $userInfo->status = 11;
+                            $userInfo->update();
+                            TelegramButtonService::change_user_info($this->chat);
+                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                        }
+                        break;
+                    case 'changing_age':
+                        $statusStore = TelegramUserInfoService::change_age($this->chat, $text);
+                        if ($statusStore) {
+                            $userInfo->status = 11;
+                            $userInfo->update();
+                            TelegramButtonService::change_user_info($this->chat);
+                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
                         }
                         break;
                 }
@@ -153,5 +193,112 @@ class CustomTelegramBotHandler extends WebhookHandler
         MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
         MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
         TelegramButtonService::full_menu($this->chat);
+    }
+
+    public function change_language()
+    {
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        UserActionService::add($this->chat, 'changing_language');
+        $text = self::lang('select_language');
+        $ttt = $this->chat->message($text)
+            ->keyboard(Keyboard::make()->buttons([
+                Button::make('UZ')->action('changing_lang')->param('lang', 'uz'),
+                Button::make('RU')->action('changing_lang')->param('lang', 'ru'),
+            ]))->send();
+        $this->reply($this->lang('language_changing'));
+    }
+    public function change_gender()
+    {
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        UserActionService::add($this->chat, 'changing_gender');
+        $text = self::lang('select_gender');
+        $this->chat->message($text)
+            ->keyboard(Keyboard::make()->buttons([
+                Button::make('Ayol')->action('changing_gender')->param('gender', '0'),
+                Button::make('Erkak')->action('changing_gender')->param('gender', '1'),
+            ]))->send();
+        $this->reply($this->lang('gender_changing'));
+    }
+
+    public function change_tall()
+    {
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        $userInfo = $this->chat->user_info;
+        $userInfo->status = 12;
+        $userInfo->update();
+        $this->reply($this->lang('tall_changing'));
+        $text = self::lang('enter_tall');
+        UserActionService::add($this->chat, 'changing_tall');
+        $this->chat->html($text)->send();
+
+    }
+    public function change_weight()
+    {
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        $userInfo = $this->chat->user_info;
+        $userInfo->status = 12;
+        $userInfo->update();
+        $this->reply($this->lang('weight_changing'));
+        $text = self::lang('enter_weight');
+        UserActionService::add($this->chat, 'changing_weight');
+        $this->chat->html($text)->send();
+    }
+    public function change_age()
+    {
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        $userInfo = $this->chat->user_info;
+        $userInfo->status = 12;
+        $userInfo->update();
+        $this->reply($this->lang('age_changing'));
+        $text = self::lang('enter_age');
+        UserActionService::add($this->chat, 'changing_age');
+        $this->chat->html($text)->send();
+    }
+    public function change_goal_weight()
+    {
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        $userInfo = $this->chat->user_info;
+        $userInfo->status = 12;
+        $userInfo->update();
+        $this->reply($this->lang('goal_weight_changing'));
+        $normalWeight = TelegramUserInfoService::calculate_average_goal_weight($userInfo);
+        if ($normalWeight['status']) {
+            $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight']['from'] . ' - ' . $normalWeight['normal_weight']['to'] . ' (kg)';
+        } else {
+            $text = self::lang('enter_goal_weight');
+        }
+        UserActionService::add($this->chat, 'changing_goal_weight');
+        $this->chat->html($text)->send();
+    }
+
+    public function changing_lang()
+    {
+        $userInfo = $this->chat->user_info;
+        $lang = $this->data->get('lang');
+        $userInfo->language = $lang;
+        $userInfo->update();
+        app()->setLocale($lang);
+        $deletedMessages = [$this->messageId];
+        $this->reply($this->lang('language_changed'));
+        $this->chat->deleteMessages($deletedMessages)->send();
+        TelegramButtonService::change_user_info($this->chat);
+    }
+    public function changing_gender()
+    {
+        $userInfo = $this->chat->user_info;
+        $gender = $this->data->get('gender');
+        $userInfo->gender = $gender;
+        $userInfo->update();
+        $deletedMessages = [$this->messageId];
+        TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+        $this->reply($this->lang('gender_changed'));
+        $this->chat->deleteMessages($deletedMessages)->send();
+        TelegramButtonService::change_user_info($this->chat);
     }
 }

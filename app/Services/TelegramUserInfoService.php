@@ -31,9 +31,7 @@ class TelegramUserInfoService
                         Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
                     ]))->send();
-                TempMessage::create([
-                    'text_response' => json_encode($ttt)
-                ]);
+              
 
                 break;
             case 2:
@@ -176,6 +174,39 @@ class TelegramUserInfoService
         }
         return $status;
     }
+    public static function change_weight($chat, $weight)
+    {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:20,200']
+        ]);
+        if ($validator->fails()) {
+            $status = 0;
+            $errors = $validator->errors()->all();
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $normalWeight = self::calculate_average_goal_weight($userInfo);
+            if ($normalWeight['status']) {
+                if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
+                    $chat->message(self::lang('your_weight_is_small_than_normal'))->send();
+                    $status = 0;
+                } elseif ($normalWeight['normal_weight']['from'] <= $weight->toFloat() && $normalWeight['normal_weight']['to'] >= $weight->toFloat()) {
+                    $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
+                    $status = 0;
+                } else {
+                    $userInfo->weight = $weight;
+                    $userInfo->update();
+                }
+            }
+        }
+        return $status;
+    }
     public static function store_goal_weight($chat, $weight)
     {
         $weightString = (string) $weight;
@@ -212,6 +243,41 @@ class TelegramUserInfoService
         }
         return $status;
     }
+    public static function change_goal_weight($chat, $weight)
+    {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:20,200']
+        ]);
+        if ($validator->failed()) {
+            $status = 0;
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $normalWeight = self::calculate_average_goal_weight($userInfo);
+            if ($normalWeight['status']) {
+                if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
+                    $status = 0;
+                    $chat->message(self::lang('your_goal_weight_is_small_than_normal'))->send();
+                } elseif ($userInfo->weight < $weight->toFloat()) {
+                    $status = 0;
+                    $chat->message(self::lang('your_weight_is_small_than_goal_weight'))->send();
+                } elseif ($userInfo->weight == $weight->toFloat()) {
+                    $status = 0;
+                    $chat->message(self::lang('your_weight_is_equal_to_goal_weight'))->send();
+                } else {
+                    $userInfo->goal_weight = $weight;
+                    $userInfo->update();
+                }
+            }
+        }
+        return $status;
+    }
     public static function store_tall($chat, $weight)
     {
         $weightString = (string) $weight;
@@ -234,6 +300,28 @@ class TelegramUserInfoService
         }
         return $status;
     }
+
+    public static function change_tall($chat, $tall)
+    {
+        $weightString = (string) $tall;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:40,300']
+        ]);
+        if ($validator->failed()) {
+            $status = 0;
+            $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $userInfo->tall = $tall;
+            $userInfo->update();
+        }
+        return $status;
+    }
     public static function store_age($chat, $weight)
     {
         $weightString = (string) $weight;
@@ -252,6 +340,27 @@ class TelegramUserInfoService
         } else {
             $userInfo->age = $weight;
             $userInfo->status = 7;
+            $userInfo->update();
+        }
+        return $status;
+    }
+    public static function change_age($chat, $weight)
+    {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:10,80']
+        ]);
+        if ($validator->failed()) {
+            $status = 0;
+            $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $userInfo->age = $weight;
             $userInfo->update();
         }
         return $status;
@@ -293,7 +402,7 @@ class TelegramUserInfoService
         $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL . PHP_EOL;
         $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL . PHP_EOL;
         $text .= '⛹🏻 ' . self::lang('activity_type') . ' : ' . $titleActivity[app()->getLocale()] . PHP_EOL . PHP_EOL;
-        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_spend_calories . PHP_EOL . PHP_EOL;
+        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_need_calories . PHP_EOL . PHP_EOL;
         $chat->message($text)->keyboard(Keyboard::make()->buttons([
             Button::make(self::lang('confirm'))->action('confirm_user_info')->param('lang', 'uz'),
             Button::make(self::lang('start_again'))->action('start_again_user_info')->param('lang', 'ru'),
