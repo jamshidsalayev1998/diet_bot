@@ -60,8 +60,8 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramButtonService::change_user_info($this->chat);
                             TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
                     case 'changing_weight':
@@ -69,8 +69,8 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramButtonService::change_user_info($this->chat);
                             TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
                     case 'changing_goal_weight':
@@ -78,8 +78,8 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramButtonService::change_user_info($this->chat);
                             TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
                     case 'changing_age':
@@ -87,8 +87,8 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramButtonService::change_user_info($this->chat);
                             TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
                 }
