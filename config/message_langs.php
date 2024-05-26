@@ -33,7 +33,8 @@ return [
         'settings' => 'Sozlamalar',
         'support' => 'Support',
         'soon' => 'Tez orada',
-        'daily_need' => 'Kunlik olishingiz kerak bo`lgan kaloriya'
+        'daily_need' => 'Kunlik olishingiz kerak bo`lgan kaloriya',
+        'back' => 'Orqaga',
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -63,6 +64,7 @@ return [
         'settings' => 'Sozlamalar',
         'support' => 'Support',
         'soon' => 'Tez orada',
-        'daily_need' => 'Kunlik olishingiz kerak bo`lgan kaloriya ru'
+        'daily_need' => 'Kunlik olishingiz kerak bo`lgan kaloriya ru',
+        'back' => 'Orqaga',
     ],
 ];
