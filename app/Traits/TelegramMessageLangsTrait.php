@@ -14,4 +14,14 @@ trait TelegramMessageLangsTrait
             return $messageKeyWord;
         }
     }
+    public static function buttonLang($messageKeyWord)
+    {
+        $messages = config('button_message_translaters');
+        $locale = app()->getLocale() ? app()->getLocale() : 'uz';
+        if (key_exists($messageKeyWord, $messages)) {
+            return $messages[$messageKeyWord][$locale];
+        } else {
+            return $messageKeyWord;
+        }
+    }
 }

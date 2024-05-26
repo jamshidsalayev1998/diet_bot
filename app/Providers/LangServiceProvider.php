@@ -23,9 +23,7 @@ class LangServiceProvider extends ServiceProvider
      */
     public function boot(Request $request): void
     {
-        TempMessage::create([
-            'text_response' => json_encode($request->all())
-        ]);
+
         $data = $request->all();
         $userInfo = null;
         if (key_exists('message', $data)) {
@@ -39,5 +37,9 @@ class LangServiceProvider extends ServiceProvider
             $locale = $userInfo->language;
         }
         app()->setLocale($locale);
+
+        // TempMessage::create([
+        //     'text_response' => json_encode($request->all())
+        // ]);
     }
 }

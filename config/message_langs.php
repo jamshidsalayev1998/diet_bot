@@ -32,6 +32,8 @@ return [
         'menu' => 'Menyu',
         'settings' => 'Sozlamalar',
         'support' => 'Support',
+        'soon' => 'Tez orada',
+        'daily_need' => 'Kunlik olishingiz kerak bo`lgan kaloriya',
         'back' => 'Orqaga',
     ],
     'ru' => [
@@ -61,6 +63,8 @@ return [
         'menu' => 'Menyu',
         'settings' => 'Sozlamalar',
         'support' => 'Support',
+        'soon' => 'Tez orada',
+        'daily_need' => 'Kunlik olishingiz kerak bo`lgan kaloriya ru',
         'back' => 'Orqaga',
     ],
 ];

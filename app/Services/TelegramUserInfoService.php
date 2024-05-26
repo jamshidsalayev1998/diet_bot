@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\TempMessage;
 use App\Models\V1\ActivityType;
+use App\Models\V1\MenuSize;
 use App\Models\V1\UserInfo;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
@@ -24,11 +26,13 @@ class TelegramUserInfoService
             case 1:
                 $text = self::lang('select_language');
                 UserActionService::add($chat, 'entering_lang');
-                $chat->message($text)
+                $ttt = $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
                         Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
                     ]))->send();
+
+
                 break;
             case 2:
                 $text = self::lang('select_gender');
@@ -53,7 +57,7 @@ class TelegramUserInfoService
             case 5:
                 $normalWeight = self::calculate_average_goal_weight($userInfo);
                 if ($normalWeight['status']) {
-                    $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight']['from']. ' - '. $normalWeight['normal_weight']['to'] . ' (kg)';
+                    $text = self::lang('enter_goal_weight') . PHP_EOL . self::lang('normal_weight_for_you') . ' : ' . $normalWeight['normal_weight']['from'] . ' - ' . $normalWeight['normal_weight']['to'] . ' (kg)';
                     $chat->message($text)->send();
                 } else {
                     $text = self::lang('enter_goal_weight');
@@ -112,7 +116,15 @@ class TelegramUserInfoService
         }
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
-        $userInfo->daily_spend_calories = round($calories);
+        $spendCalories = round($calories);
+        $needCalories = round($calories)-500;
+        $userInfo->daily_spend_calories = $spendCalories;
+        $userInfo->daily_need_calories = $needCalories;
+        $firstMenu = MenuSize::where('calories' , '<=' , $needCalories)->orderBy('calories' , 'DESC')->first();
+        if(!$firstMenu){
+            $firstMenu = MenuSize::where('calories' , '>=' , $needCalories)->orderBy('calories' , 'DESC')->first();
+        }
+        $userInfo->menu_size_id = $firstMenu->id;
         $userInfo->status = 10;
         $userInfo->update();
     }
@@ -154,8 +166,41 @@ class TelegramUserInfoService
                     $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
                     $status = 0;
                 } else {
-                    $userInfo->weight = $weight;
+                    $userInfo->weight = $weightString;
                     $userInfo->status = 5;
+                    $userInfo->update();
+                }
+            }
+        }
+        return $status;
+    }
+    public static function change_weight($chat, $weight)
+    {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:20,200']
+        ]);
+        if ($validator->fails()) {
+            $status = 0;
+            $errors = $validator->errors()->all();
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $normalWeight = self::calculate_average_goal_weight($userInfo);
+            if ($normalWeight['status']) {
+                if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
+                    $chat->message(self::lang('your_weight_is_small_than_normal'))->send();
+                    $status = 0;
+                } elseif ($normalWeight['normal_weight']['from'] <= $weight->toFloat() && $normalWeight['normal_weight']['to'] >= $weight->toFloat()) {
+                    $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
+                    $status = 0;
+                } else {
+                    $userInfo->weight = $weightString;
                     $userInfo->update();
                 }
             }
@@ -198,6 +243,41 @@ class TelegramUserInfoService
         }
         return $status;
     }
+    public static function change_goal_weight($chat, $weight)
+    {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:20,200']
+        ]);
+        if ($validator->failed()) {
+            $status = 0;
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $normalWeight = self::calculate_average_goal_weight($userInfo);
+            if ($normalWeight['status']) {
+                if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
+                    $status = 0;
+                    $chat->message(self::lang('your_goal_weight_is_small_than_normal'))->send();
+                } elseif ($userInfo->weight < $weight->toFloat()) {
+                    $status = 0;
+                    $chat->message(self::lang('your_weight_is_small_than_goal_weight'))->send();
+                } elseif ($userInfo->weight == $weight->toFloat()) {
+                    $status = 0;
+                    $chat->message(self::lang('your_weight_is_equal_to_goal_weight'))->send();
+                } else {
+                    $userInfo->goal_weight = $weight;
+                    $userInfo->update();
+                }
+            }
+        }
+        return $status;
+    }
     public static function store_tall($chat, $weight)
     {
         $weightString = (string) $weight;
@@ -214,8 +294,30 @@ class TelegramUserInfoService
             $status = 0;
             $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $userInfo->tall = $weight;
+            $userInfo->tall = $weightString;
             $userInfo->status = 4;
+            $userInfo->update();
+        }
+        return $status;
+    }
+
+    public static function change_tall($chat, $tall)
+    {
+        $weightString = (string) $tall;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:40,300']
+        ]);
+        if ($validator->failed()) {
+            $status = 0;
+            $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $userInfo->tall = $weightString;
             $userInfo->update();
         }
         return $status;
@@ -236,8 +338,29 @@ class TelegramUserInfoService
             $status = 0;
             $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $userInfo->age = $weight;
+            $userInfo->age = $weightInteger;
             $userInfo->status = 7;
+            $userInfo->update();
+        }
+        return $status;
+    }
+    public static function change_age($chat, $weight)
+    {
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:10,80']
+        ]);
+        if ($validator->failed()) {
+            $status = 0;
+            $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $userInfo->age = $weightInteger;
             $userInfo->update();
         }
         return $status;
@@ -251,10 +374,6 @@ class TelegramUserInfoService
         if ($userInfo->status >= 4) {
             $weightFrom = 18.5 * $userInfo->tall * $userInfo->tall / 10000;
             $weightTo = 25 * $userInfo->tall * $userInfo->tall / 10000;
-            if ($userInfo->gender == 0) {
-                $weightFrom -= 5;
-                $weightTo -= 5;
-            }
         } else {
             $status = 0;
         }
@@ -283,10 +402,33 @@ class TelegramUserInfoService
         $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL . PHP_EOL;
         $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL . PHP_EOL;
         $text .= '⛹🏻 ' . self::lang('activity_type') . ' : ' . $titleActivity[app()->getLocale()] . PHP_EOL . PHP_EOL;
-        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_spend_calories . PHP_EOL . PHP_EOL;
+        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_need_calories . PHP_EOL . PHP_EOL;
         $chat->message($text)->keyboard(Keyboard::make()->buttons([
             Button::make(self::lang('confirm'))->action('confirm_user_info')->param('lang', 'uz'),
             Button::make(self::lang('start_again'))->action('start_again_user_info')->param('lang', 'ru'),
         ]))->send();
+    }
+
+    public static function this_action_for_premium($chat){
+        $text = self::lang('for_this_action_need_premium');
+        $chat->message($text)->send();
+    }
+
+    public static function track_message(){
+        $text = self::lang('did_you_follow_a_diet_today');
+        $keyboard = Keyboard::make()
+        ->row([
+            Button::make(self::lang('full_follow_a_diet'))->action('daily_track_request')->param('answer' , '2024-05-26|2'),
+        ])
+        ->row([
+            Button::make(self::lang('partially_follow_a_diet'))->action('daily_track_request')->param('answer' , '2024-05-26|1'),
+        ])
+        ->row([
+            Button::make(self::lang('did_not_follow_a_diet'))->action('daily_track_request')->param('answer' , '2024-05-26|0'),
+        ]);
+        return [
+            'text' => $text,
+            'keyboard' => $keyboard
+        ];
     }
 }
