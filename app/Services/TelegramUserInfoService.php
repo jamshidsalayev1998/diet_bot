@@ -338,7 +338,7 @@ class TelegramUserInfoService
             $status = 0;
             $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $userInfo->age = $weight;
+            $userInfo->age = $weightInteger;
             $userInfo->status = 7;
             $userInfo->update();
         }
@@ -360,7 +360,7 @@ class TelegramUserInfoService
             $status = 0;
             $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $userInfo->age = $weight;
+            $userInfo->age = $weightInteger;
             $userInfo->update();
         }
         return $status;
