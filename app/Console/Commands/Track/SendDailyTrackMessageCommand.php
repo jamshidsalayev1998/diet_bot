@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Track;
 
 use App\Models\V1\UserInfo;
+use App\Services\TelegramUserInfoService;
 use Illuminate\Console\Command;
 
 class SendDailyTrackMessageCommand extends Command
@@ -30,7 +31,8 @@ class SendDailyTrackMessageCommand extends Command
         foreach($users as $user){
             $chat = $user->chat;
             $text = 'something';
-            $chat->message($text)->send();
+            $dataTrack = TelegramUserInfoService::track_message();
+            $chat->message($dataTrack['text'])->keyboard($dataTrack['keyboard'])->send();
         }
     }
 }

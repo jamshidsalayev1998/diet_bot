@@ -3,6 +3,7 @@
 namespace App\Handlers;
 
 use App\Models\TempMessage;
+use App\Models\Track\DailyTrackReport;
 use App\Models\V1\ActivityType;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
@@ -336,5 +337,23 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->reply($this->lang('activity_type_changed'));
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramButtonService::change_user_info($this->chat);
+    }
+
+    public function daily_track_request(){
+        $data = $this->data->get('answer');
+        $dataParsed = explode('|' , $data);
+        $report = DailyTrackReport::where('date_report' , $dataParsed[0])->where('chat_id' , $this->chat->chat_id)->first();
+        if(!$report){
+            $report = DailyTrackReport::create([
+                'chat_id' => $this->chat->chat_id,
+                'date_report' => $dataParsed[0],
+                'answer' => 0
+            ]);
+        }
+        $report->answer = $dataParsed[1];
+        $report->update();
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        $this->reply($this->lang('track_stored'));
     }
 }
