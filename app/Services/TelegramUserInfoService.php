@@ -31,7 +31,7 @@ class TelegramUserInfoService
                         Button::make('UZ')->action('entering_lang')->param('lang', 'uz'),
                         Button::make('RU')->action('entering_lang')->param('lang', 'ru'),
                     ]))->send();
-              
+
 
                 break;
             case 2:
@@ -166,7 +166,7 @@ class TelegramUserInfoService
                     $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
                     $status = 0;
                 } else {
-                    $userInfo->weight = $weight;
+                    $userInfo->weight = $weightString;
                     $userInfo->status = 5;
                     $userInfo->update();
                 }
@@ -200,7 +200,7 @@ class TelegramUserInfoService
                     $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
                     $status = 0;
                 } else {
-                    $userInfo->weight = $weight;
+                    $userInfo->weight = $weightString;
                     $userInfo->update();
                 }
             }
@@ -294,7 +294,7 @@ class TelegramUserInfoService
             $status = 0;
             $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $userInfo->tall = $weight;
+            $userInfo->tall = $weightString;
             $userInfo->status = 4;
             $userInfo->update();
         }
@@ -317,7 +317,7 @@ class TelegramUserInfoService
             $status = 0;
             $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $userInfo->tall = $tall;
+            $userInfo->tall = $weightString;
             $userInfo->update();
         }
         return $status;
