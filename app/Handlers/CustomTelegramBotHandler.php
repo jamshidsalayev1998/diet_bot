@@ -190,8 +190,14 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->chat->deleteMessages($deletedMessages)->send();
         $this->reply($this->lang('user_info_confirmed'));
         TelegramButtonService::home($this->chat);
-        MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
-        MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
+        $resultMenuImage = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
+        $menuPartImage = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
+        TempMessage::create([
+            'text_response' => json_encode($resultMenuImage)
+        ]);
+        TempMessage::create([
+            'text_response' => json_encode($menuPartImage)
+        ]);
         TelegramButtonService::full_menu($this->chat);
     }
 
