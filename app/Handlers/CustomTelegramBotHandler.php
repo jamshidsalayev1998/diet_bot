@@ -352,6 +352,17 @@ class CustomTelegramBotHandler extends WebhookHandler
         }
         $report->answer = $dataParsed[1];
         $report->update();
+        $text = '';
+        if($dataParsed[1] == 0){
+            $text = 'next_time_follow';
+        }
+        elseif($dataParsed[1] == 1){
+            $text = 'next_time_be_more_active';
+        }
+        else{
+            $text = 'next_time_also_be_active';
+        }
+        $this->chat->message(self::lang($text))->send();
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
         $this->reply($this->lang('track_stored'));
