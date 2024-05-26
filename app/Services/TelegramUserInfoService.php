@@ -408,4 +408,9 @@ class TelegramUserInfoService
             Button::make(self::lang('start_again'))->action('start_again_user_info')->param('lang', 'ru'),
         ]))->send();
     }
+
+    public static function this_action_for_premium($chat){
+        $text = self::lang('for_this_action_need_premium');
+        $chat->message($text)->send();
+    }
 }

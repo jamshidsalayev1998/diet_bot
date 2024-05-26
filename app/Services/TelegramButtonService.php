@@ -220,4 +220,15 @@ class TelegramButtonService
         $text .= '' . self::lang('daily_need') . ' : ' . $userInfo->daily_need_calories . PHP_EOL . PHP_EOL;
         return $text;
     }
+
+    public static function support($chat){
+        $userInfo = $chat->user_info;
+        if(!$userInfo->is_premium){
+            TelegramUserInfoService::this_action_for_premium($chat);
+        }
+        else{
+            $text = self::lang('welcome_support_page');
+            $chat->message($text)->send();
+        }
+    }
 }
