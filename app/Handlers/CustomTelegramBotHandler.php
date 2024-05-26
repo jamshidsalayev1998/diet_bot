@@ -3,6 +3,7 @@
 namespace App\Handlers;
 
 use App\Models\TempMessage;
+use App\Models\V1\ActivityType;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
 use App\Services\MenuImageGeneratorService;
@@ -239,7 +240,6 @@ class CustomTelegramBotHandler extends WebhookHandler
         $text = self::lang('enter_tall');
         UserActionService::add($this->chat, 'changing_tall');
         $this->chat->html($text)->send();
-
     }
     public function change_weight()
     {
@@ -304,6 +304,36 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
         $this->reply($this->lang('gender_changed'));
+        $this->chat->deleteMessages($deletedMessages)->send();
+        TelegramButtonService::change_user_info($this->chat);
+    }
+    public function change_activity_type()
+    {
+
+        $deletedMessages = [$this->messageId];
+        $this->chat->deleteMessages($deletedMessages)->send();
+        UserActionService::add($this->chat, 'changing_activity_type');
+        $text = self::lang('select_activity_type');
+        $activityTypes = ActivityType::all();
+        $buttons = [];
+        foreach ($activityTypes as $activityType) {
+            $title = json_decode($activityType->title, true);
+            array_push($buttons, Button::make($title[app()->getLocale()])->action('changing_activity_type')->param('activity_type_id', $activityType->id));
+        }
+        $this->chat->message($text)
+            ->keyboard(Keyboard::make()->buttons($buttons))->send();
+        $this->reply($this->lang('activity_type_changing'));
+    }
+
+    public function changing_activity_type()
+    {
+        $userInfo = $this->chat->user_info;
+        $activity_type_id = $this->data->get('activity_type_id');
+        $userInfo->activity_type_id = $activity_type_id;
+        $userInfo->update();
+        $deletedMessages = [$this->messageId];
+        TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+        $this->reply($this->lang('activity_type_changed'));
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramButtonService::change_user_info($this->chat);
     }
