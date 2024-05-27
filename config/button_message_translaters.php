@@ -45,4 +45,16 @@ return [
         'uz' => 'O`zgartirish',
         'ru' => 'O`zgartirish ru'
     ],
+    'my_results' => [
+        'uz' => 'Mening natijalarim',
+        'ru' => 'Mening natijalarim ru'
+    ],
+    'my_own_results' => [
+        'uz' => 'Shaxsiy natijalarim',
+        'ru' => 'Shaxsiy natijalarim ru'
+    ],
+    'liga_results' => [
+        'uz' => 'Liga ko`rsatkichi',
+        'ru' => 'Liga ko`rsatkichi ru'
+    ],
 ];

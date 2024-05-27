@@ -21,6 +21,24 @@ class TelegramButtonService
             ->row([
                 ReplyButton::make(self::buttonLang('settings')),
                 ReplyButton::make(self::buttonLang('support')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('my_results')),
+            ])->resize();
+        $chat->message(self::lang('welcome'))->replyKeyboard($keyboard)->send();
+    }
+
+    public static function my_results($chat)
+    {
+        $keyboard = ReplyKeyboard::make()
+            ->row([
+                ReplyButton::make(self::buttonLang('my_own_results')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('liga_results')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('home')),
             ])->resize();
         $chat->message(self::lang('welcome'))->replyKeyboard($keyboard)->send();
     }
@@ -165,25 +183,26 @@ class TelegramButtonService
         $chat->message($text)->send();
     }
 
-    public static function change_user_info($chat){
+    public static function change_user_info($chat)
+    {
         $userInfo = $chat->user_info;
         $text = self::make_user_info_text($userInfo);
-        $text = 'Qaysi ma`lumotni o`zgartirmoqchisiz ?'.PHP_EOL.$text;
+        $text = 'Qaysi ma`lumotni o`zgartirmoqchisiz ?' . PHP_EOL . $text;
         $keyboard = Keyboard::make()
             ->row([
-                Button::make(self::lang('language'))->action('change_language')->param('settings_button' , 'change_language'),
-                Button::make(self::lang('gender'))->action('change_gender')->param('settings_button' , 'change_gender'),
+                Button::make(self::lang('language'))->action('change_language')->param('settings_button', 'change_language'),
+                Button::make(self::lang('gender'))->action('change_gender')->param('settings_button', 'change_gender'),
             ])
             ->row([
-                Button::make(self::lang('tall'))->action('change_tall')->param('settings_button' , 'change_tall'),
-                Button::make(self::lang('weight'))->action('change_weight')->param('settings_button' , 'change_weight'),
+                Button::make(self::lang('tall'))->action('change_tall')->param('settings_button', 'change_tall'),
+                Button::make(self::lang('weight'))->action('change_weight')->param('settings_button', 'change_weight'),
             ])
             ->row([
-                Button::make(self::lang('goal_weight'))->action('change_goal_weight')->param('settings_button' , 'change_goal_weight'),
-                Button::make(self::lang('age'))->action('change_age')->param('settings_button' , 'change_age')
+                Button::make(self::lang('goal_weight'))->action('change_goal_weight')->param('settings_button', 'change_goal_weight'),
+                Button::make(self::lang('age'))->action('change_age')->param('settings_button', 'change_age')
             ])
             ->row([
-                Button::make(self::lang('activity_type'))->action('change_activity_type')->param('settings_button' , 'change_activity_type'),
+                Button::make(self::lang('activity_type'))->action('change_activity_type')->param('settings_button', 'change_activity_type'),
             ]);
         $chat->message($text)->keyboard($keyboard)->send();
     }
@@ -204,7 +223,8 @@ class TelegramButtonService
         return $keyword;
     }
 
-    public static function make_user_info_text($userInfo){
+    public static function make_user_info_text($userInfo)
+    {
         $titleActivity = json_decode($userInfo->activity_type->title, true);
         if ($userInfo->gender) {
             $genderTitle = self::lang('man');
@@ -221,12 +241,12 @@ class TelegramButtonService
         return $text;
     }
 
-    public static function support($chat){
+    public static function support($chat)
+    {
         $userInfo = $chat->user_info;
-        if(!$userInfo->is_premium){
+        if (!$userInfo->is_premium) {
             TelegramUserInfoService::this_action_for_premium($chat);
-        }
-        else{
+        } else {
             $text = self::lang('welcome_support_page');
             $chat->message($text)->send();
         }
