@@ -46,7 +46,7 @@ class MenuImageGeneratorService
                 $htmlContent = view('menu_images.base_menu_template', ['data' => $ready, 'lang' => $userInfo->language, 'user_info' => $userInfo])->render();
                 $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
                 file_put_contents($htmlFilePath, $htmlContent);
-                $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
+                $command = "wkhtmltoimage --quality 50 {$htmlFilePath} {$imagePath}";
                 shell_exec($command);
                 $userInfo->menu_image = $imageUrl;
                 $userInfo->update();
