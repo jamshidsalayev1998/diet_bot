@@ -29,7 +29,7 @@ class TestMenuGenerateCommand extends Command
         $url = 'app/public' . $imageUrl;
         $imagePath = storage_path($url);
         $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
-        $command = "wkhtmltoimage --width 800 --height 1200 --quality 50 {$htmlFilePath} {$imagePath}";
+        $command = "wkhtmltoimage --width 800  --quality 50 {$htmlFilePath} {$imagePath}";
         shell_exec($command);
     }
 }
