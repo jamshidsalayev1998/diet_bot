@@ -162,10 +162,10 @@ class TelegramButtonService
             try{
 
                 $chat->document('https://bot.dieto.uz/storage'.$breakfastPath)->send();
+                $chat->photo('https://bot.dieto.uz/storage'.$breakfastPath)->send();
             }catch(Exception $e){
-                $chat->message($e->getMessage())->send();
+                $chat->message('$e->getMessage()')->send();
             }
-            $chat->photo('https://bot.dieto.uz/storage'.$breakfastPath)->send();
         } else {
             $chat->message(self::lang('something_error'))->send();
         }
