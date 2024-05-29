@@ -158,7 +158,7 @@ class TelegramButtonService
         }
         if ($breakfastPath) {
             $chat->message('https://bot.dieto.uz/storage'.$breakfastPath)->send();
-            $chat->photo('https://bot.dieto.uz/storage' . $breakfastPath)->send();
+            $chat->photo('https://bot.dieto.uz/storage'.$breakfastPath)->send();
         } else {
             $chat->message(self::lang('something_error'))->send();
         }
