@@ -8,6 +8,7 @@ use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use DefStudio\Telegraph\Keyboard\ReplyButton;
 use DefStudio\Telegraph\Keyboard\ReplyKeyboard;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 
 class TelegramButtonService
@@ -158,7 +159,12 @@ class TelegramButtonService
         }
         if ($breakfastPath) {
             $chat->message('https://bot.dieto.uz/storage'.$breakfastPath)->send();
-            $chat->document('https://bot.dieto.uz/storage'.$breakfastPath)->send();
+            try{
+
+                $chat->document('https://bot.dieto.uz/storage'.$breakfastPath)->send();
+            }catch(Exception $e){
+                $chat->message($e->getMessage())->send();
+            }
             $chat->photo('https://bot.dieto.uz/storage'.$breakfastPath)->send();
         } else {
             $chat->message(self::lang('something_error'))->send();
