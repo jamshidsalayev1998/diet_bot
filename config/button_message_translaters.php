@@ -50,12 +50,12 @@ return [
         'ru' => 'Men va boshqalar natijasi ru'
     ],
     'my_own_results' => [
-        'uz' => 'Shaxsiy natijalarim',
-        'ru' => 'Shaxsiy natijalarim ru'
+        'uz' => 'Mening natijalarim',
+        'ru' => 'Mening natijalarim ru'
     ],
     'liga_results' => [
-        'uz' => 'Liga ko`rsatkichi',
-        'ru' => 'Liga ko`rsatkichi ru'
+        'uz' => 'Boshqalarning natijalari',
+        'ru' => 'Boshqalarning natijalari ru'
     ],
     'calc_dieto' => [
         'uz' => 'Ovqat yoki mahsulot kaloriyasini bilish',
