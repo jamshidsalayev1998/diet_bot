@@ -55,7 +55,19 @@ class CustomTelegramBotHandler extends WebhookHandler
                         }
                         break;
                 }
-            } elseif ($userInfo->status == 12) {
+            } elseif ($userInfo->status == 11) {
+                switch ($userAction->screen) {
+                    case 'entering_changing_of_weight':
+                        $statusStore = TelegramUserInfoService::enter_weight_history($this->chat, $text);
+                        if ($statusStore) {
+                            $text = self::lang('weight_changing_history_stored');
+                            TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
+                            $this->chat->message($text)->send();
+                            TelegramButtonService::my_user_info($this->chat);
+                        }
+                        break;
+                }
+            }elseif ($userInfo->status == 12) {
                 switch ($userAction->screen) {
                     case 'changing_tall':
                         $statusStore = TelegramUserInfoService::change_tall($this->chat, $text);
@@ -94,20 +106,19 @@ class CustomTelegramBotHandler extends WebhookHandler
                         }
                         break;
                 }
-            } else {
-                $keywordButton = TelegramButtonService::findMessageKeyword($text);
-                // $this->chat->message($keywordButton ? $keywordButton :'dddd')->send();
-                if ($keywordButton) {
-                    if (method_exists(TelegramButtonService::class, $keywordButton))
-                        TelegramButtonService::$keywordButton($this->chat);
-                    else
-                        $this->chat->message('topilmadi bu komanda')->send();
-                } else {
-                    $this->chat->message('topilmadi bu komanda')->send();
-                }
             }
         } else {
-            $this->chat->message('xatolik')->removeReplyKeyboard()->send();
+
+            $keywordButton = TelegramButtonService::findMessageKeyword($text);
+            // $this->chat->message($keywordButton ? $keywordButton :'dddd')->send();
+            if ($keywordButton) {
+                if (method_exists(TelegramButtonService::class, $keywordButton))
+                    TelegramButtonService::$keywordButton($this->chat);
+                else
+                    $this->chat->message('topilmadi bu komanda')->send();
+            } else {
+                $this->chat->message('topilmadi bu komanda')->send();
+            }
         }
     }
     protected function handleUnknownCommand(Stringable $text): void
@@ -142,6 +153,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 2;
         $userInfo->update();
         app()->setLocale($lang);
+        UserActionService::remove($this->chat);
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
@@ -155,6 +167,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 8;
         $userInfo->update();
         $deletedMessages = [$this->messageId];
+        UserActionService::remove($this->chat);
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
         $this->reply($this->lang('activity_type_selected'));
@@ -167,6 +180,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 3;
         $userInfo->update();
         $deletedMessages = [$this->messageId];
+        UserActionService::remove($this->chat);
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
         $this->reply($this->lang('gender_selected'));
@@ -179,6 +193,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->update();
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
+        UserActionService::remove($this->chat);
         UserActionService::add($this->chat, 'selecting_gender');
         TelegramUserInfoService::check_user_info($this->chat, $userInfo);
         $this->reply($this->lang('started_again_user_info'));
@@ -191,6 +206,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
         $this->reply($this->lang('user_info_confirmed'));
+        UserActionService::remove($this->chat);
         TelegramButtonService::home($this->chat);
         $resultMenuImage = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
         $menuPartImage = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
@@ -207,6 +223,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     {
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
+        UserActionService::remove($this->chat);
         UserActionService::add($this->chat, 'changing_language');
         $text = self::lang('select_language');
         $ttt = $this->chat->message($text)
@@ -220,6 +237,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     {
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
+        UserActionService::remove($this->chat);
         UserActionService::add($this->chat, 'changing_gender');
         $text = self::lang('select_gender');
         $this->chat->message($text)
@@ -239,6 +257,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->update();
         $this->reply($this->lang('tall_changing'));
         $text = self::lang('enter_tall');
+        UserActionService::remove($this->chat);
         UserActionService::add($this->chat, 'changing_tall');
         $this->chat->html($text)->send();
     }
@@ -251,6 +270,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->update();
         $this->reply($this->lang('weight_changing'));
         $text = self::lang('enter_weight');
+        UserActionService::remove($this->chat);
         UserActionService::add($this->chat, 'changing_weight');
         $this->chat->html($text)->send();
     }
@@ -263,6 +283,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->update();
         $this->reply($this->lang('age_changing'));
         $text = self::lang('enter_age');
+        UserActionService::remove($this->chat);
         UserActionService::add($this->chat, 'changing_age');
         $this->chat->html($text)->send();
     }
@@ -280,6 +301,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         } else {
             $text = self::lang('enter_goal_weight');
         }
+        UserActionService::remove($this->chat);
         UserActionService::add($this->chat, 'changing_goal_weight');
         $this->chat->html($text)->send();
     }
@@ -294,7 +316,9 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         $this->reply($this->lang('language_changed'));
         $this->chat->deleteMessages($deletedMessages)->send();
-        TelegramButtonService::change_user_info($this->chat);
+        TelegramButtonService::profile($this->chat);
+        TelegramButtonService::my_user_info($this->chat);
+        UserActionService::remove($this->chat);
     }
     public function changing_gender()
     {
@@ -339,11 +363,12 @@ class CustomTelegramBotHandler extends WebhookHandler
         TelegramButtonService::change_user_info($this->chat);
     }
 
-    public function daily_track_request(){
+    public function daily_track_request()
+    {
         $data = $this->data->get('answer');
-        $dataParsed = explode('|' , $data);
-        $report = DailyTrackReport::where('date_report' , $dataParsed[0])->where('chat_id' , $this->chat->chat_id)->first();
-        if(!$report){
+        $dataParsed = explode('|', $data);
+        $report = DailyTrackReport::where('date_report', $dataParsed[0])->where('chat_id', $this->chat->chat_id)->first();
+        if (!$report) {
             $report = DailyTrackReport::create([
                 'chat_id' => $this->chat->chat_id,
                 'date_report' => $dataParsed[0],
@@ -353,13 +378,11 @@ class CustomTelegramBotHandler extends WebhookHandler
         $report->answer = $dataParsed[1];
         $report->update();
         $text = '';
-        if($dataParsed[1] == 0){
+        if ($dataParsed[1] == 0) {
             $text = 'next_time_follow';
-        }
-        elseif($dataParsed[1] == 1){
+        } elseif ($dataParsed[1] == 1) {
             $text = 'next_time_be_more_active';
-        }
-        else{
+        } else {
             $text = 'next_time_also_be_active';
         }
         $this->chat->message(self::lang($text))->send();

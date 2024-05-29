@@ -6,6 +6,7 @@ use App\Models\TempMessage;
 use App\Models\V1\ActivityType;
 use App\Models\V1\MenuSize;
 use App\Models\V1\UserInfo;
+use App\Models\V1\UserWeightHistory;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -25,6 +26,7 @@ class TelegramUserInfoService
         switch ($userInfo->status) {
             case 1:
                 $text = self::lang('select_language');
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_lang');
                 $ttt = $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
@@ -36,6 +38,7 @@ class TelegramUserInfoService
                 break;
             case 2:
                 $text = self::lang('select_gender');
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'selecting_gender');
                 $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
@@ -45,11 +48,13 @@ class TelegramUserInfoService
                 break;
             case 3:
                 $text = self::lang('enter_tall');
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_tall');
                 $chat->html($text)->send();
                 break;
             case 4:
                 $text = self::lang('enter_weight');
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_weight');
                 $chat->html($text)->send();
                 break;
@@ -63,15 +68,18 @@ class TelegramUserInfoService
                     $text = self::lang('enter_goal_weight');
                     $chat->html($text)->send();
                 }
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_goal_weight');
                 break;
             case 6:
                 $text = self::lang('enter_age');
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_age');
                 $chat->html($text)->removeReplyKeyboard()->send();
                 break;
             case 7:
                 $text = self::lang('select_activity_type');
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_activity_type');
                 $activityTypes = ActivityType::all();
                 $buttons = [];
@@ -89,6 +97,7 @@ class TelegramUserInfoService
                 break;
             default:
                 $text = self::lang('select_language');
+                UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_lang');
                 $chat->message($text)
                     ->keyboard(Keyboard::make()->buttons([
@@ -117,15 +126,38 @@ class TelegramUserInfoService
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
         $spendCalories = round($calories);
-        $needCalories = round($calories)-500;
+        $needCalories = round($calories) - 500;
         $userInfo->daily_spend_calories = $spendCalories;
         $userInfo->daily_need_calories = $needCalories;
-        $firstMenu = MenuSize::where('calories' , '<=' , $needCalories)->orderBy('calories' , 'DESC')->first();
-        if(!$firstMenu){
-            $firstMenu = MenuSize::where('calories' , '>=' , $needCalories)->orderBy('calories' , 'DESC')->first();
+        $firstMenu = MenuSize::where('calories', '<=', $needCalories)->orderBy('calories', 'DESC')->first();
+        if (!$firstMenu) {
+            $firstMenu = MenuSize::where('calories', '>=', $needCalories)->orderBy('calories', 'DESC')->first();
         }
         $userInfo->menu_size_id = $firstMenu->id;
         $userInfo->status = 10;
+        $userInfo->update();
+    }
+
+    public static function re_calculate_daily_spend_calories($chat)
+    {
+        $calories = null;
+        $userInfo = $chat->user_info;
+        if ($userInfo->gender) {
+            $calories = 66 + 13.7 * $userInfo->weight + 5 * $userInfo->tall - 6.76 * $userInfo->age;
+        } else {
+            $calories = 655 + 9.6 * $userInfo->weight + 1.8 * $userInfo->tall - 4.7 * $userInfo->age;
+        }
+        $activityType = $userInfo->activity_type;
+        $calories *= $activityType->coefficient;
+        $spendCalories = round($calories);
+        $needCalories = round($calories) - 500;
+        $userInfo->daily_spend_calories = $spendCalories;
+        $userInfo->daily_need_calories = $needCalories;
+        $firstMenu = MenuSize::where('calories', '<=', $needCalories)->orderBy('calories', 'DESC')->first();
+        if (!$firstMenu) {
+            $firstMenu = MenuSize::where('calories', '>=', $needCalories)->orderBy('calories', 'DESC')->first();
+        }
+        $userInfo->menu_size_id = $firstMenu->id;
         $userInfo->update();
     }
 
@@ -169,6 +201,7 @@ class TelegramUserInfoService
                     $userInfo->weight = $weightString;
                     $userInfo->status = 5;
                     $userInfo->update();
+                    UserActionService::remove($chat);
                 }
             }
         }
@@ -202,6 +235,7 @@ class TelegramUserInfoService
                 } else {
                     $userInfo->weight = $weightString;
                     $userInfo->update();
+                    UserActionService::remove($chat);
                 }
             }
         }
@@ -238,6 +272,7 @@ class TelegramUserInfoService
                     $userInfo->goal_weight = $weight;
                     $userInfo->status = 6;
                     $userInfo->update();
+                    UserActionService::remove($chat);
                 }
             }
         }
@@ -273,6 +308,7 @@ class TelegramUserInfoService
                 } else {
                     $userInfo->goal_weight = $weight;
                     $userInfo->update();
+                    UserActionService::remove($chat);
                 }
             }
         }
@@ -297,6 +333,7 @@ class TelegramUserInfoService
             $userInfo->tall = $weightString;
             $userInfo->status = 4;
             $userInfo->update();
+            UserActionService::remove($chat);
         }
         return $status;
     }
@@ -319,6 +356,7 @@ class TelegramUserInfoService
         } else {
             $userInfo->tall = $weightString;
             $userInfo->update();
+            UserActionService::remove($chat);
         }
         return $status;
     }
@@ -341,6 +379,7 @@ class TelegramUserInfoService
             $userInfo->age = $weightInteger;
             $userInfo->status = 7;
             $userInfo->update();
+            UserActionService::remove($chat);
         }
         return $status;
     }
@@ -362,6 +401,7 @@ class TelegramUserInfoService
         } else {
             $userInfo->age = $weightInteger;
             $userInfo->update();
+            UserActionService::remove($chat);
         }
         return $status;
     }
@@ -409,26 +449,65 @@ class TelegramUserInfoService
         ]))->send();
     }
 
-    public static function this_action_for_premium($chat){
+    public static function this_action_for_premium($chat)
+    {
         $text = self::lang('for_this_action_need_premium');
         $chat->message($text)->send();
     }
 
-    public static function track_message(){
-        $text = self::lang('did_you_follow_a_diet_today');
+    public static function track_message($text)
+    {
         $keyboard = Keyboard::make()
-        ->row([
-            Button::make(self::lang('full_follow_a_diet'))->action('daily_track_request')->param('answer' , '2024-05-26|2'),
-        ])
-        ->row([
-            Button::make(self::lang('partially_follow_a_diet'))->action('daily_track_request')->param('answer' , '2024-05-26|1'),
-        ])
-        ->row([
-            Button::make(self::lang('did_not_follow_a_diet'))->action('daily_track_request')->param('answer' , '2024-05-26|0'),
-        ]);
+            ->row([
+                Button::make(self::lang('full_follow_a_diet'))->action('daily_track_request')->param('answer', '2024-05-26|2'),
+            ])
+            ->row([
+                Button::make(self::lang('partially_follow_a_diet'))->action('daily_track_request')->param('answer', '2024-05-26|1'),
+            ])
+            ->row([
+                Button::make(self::lang('did_not_follow_a_diet'))->action('daily_track_request')->param('answer', '2024-05-26|0'),
+            ]);
         return [
             'text' => $text,
             'keyboard' => $keyboard
         ];
+    }
+
+    public static function enter_weight_history($chat, $weight)
+    {
+        $userInfo = $chat->user_info;
+        $weightString = (string) $weight;
+        $weightInteger = intval($weightString);
+        $status = 1;
+        $userInfo = $chat->user_info;
+        $validator = Validator::make([
+            'weight' => $weightInteger,
+
+        ], [
+            'weight' => ['required', 'integer', 'between:20,200']
+        ]);
+        if ($validator->fails()) {
+            $status = 0;
+            $errors = $validator->errors()->all();
+            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+        } else {
+            $oldWeight = $userInfo->weight;
+            if (!UserWeightHistory::where('weight', $oldWeight)->where('chat_id', $chat->chat_id)->exists()) {
+                UserWeightHistory::create([
+                    'chat_id' => $chat->chat_id,
+                    'weight' => $oldWeight
+                ]);
+            }
+            if (!UserWeightHistory::where('weight', $weight)->where('chat_id', $chat->chat_id)->exists()) {
+                UserWeightHistory::create([
+                    'chat_id' => $chat->chat_id,
+                    'weight' =>  $weightString
+                ]);
+            }
+            $userInfo->weight =  $weightString ;
+            $userInfo->update();
+            UserActionService::remove($chat);
+        }
+        return $status;
     }
 }

@@ -10,4 +10,7 @@ class UserActionService {
             'screen' => $screen
         ]);
     }
+    public static function remove($chat){
+        UserAction::query()->where('chat_id' , $chat->chat_id)->delete();
+    }
 }

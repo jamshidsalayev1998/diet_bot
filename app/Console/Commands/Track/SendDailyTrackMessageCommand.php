@@ -31,7 +31,8 @@ class SendDailyTrackMessageCommand extends Command
         foreach($users as $user){
             $chat = $user->chat;
             $text = 'something';
-            $dataTrack = TelegramUserInfoService::track_message();
+            $text = date('Y-m-d').' '.self::lang('for_this_day_how_did_you_follow').PHP_EOL.self::lang('you_must_not_eat_until_tomorrow');
+            $dataTrack = TelegramUserInfoService::track_message($text);
             $chat->message($dataTrack['text'])->keyboard($dataTrack['keyboard'])->send();
         }
     }

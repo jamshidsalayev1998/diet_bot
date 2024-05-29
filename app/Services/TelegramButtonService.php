@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Track\DailyTrackReport;
 use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -16,14 +17,20 @@ class TelegramButtonService
     {
         $keyboard = ReplyKeyboard::make()
             ->row([
-                ReplyButton::make(self::buttonLang('menu')),
+                ReplyButton::make(self::buttonLang('calc_dieto')),
             ])->resize()
             ->row([
-                ReplyButton::make(self::buttonLang('settings')),
-                ReplyButton::make(self::buttonLang('support')),
+                ReplyButton::make(self::buttonLang('send_today_track_report')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('menu')),
+                ReplyButton::make(self::buttonLang('profile')),
             ])->resize()
             ->row([
                 ReplyButton::make(self::buttonLang('my_results')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('support')),
             ])->resize();
         $chat->message(self::lang('welcome'))->replyKeyboard($keyboard)->send();
     }
@@ -163,12 +170,18 @@ class TelegramButtonService
         $chat->message(self::lang('soon'))->send();
     }
 
-    public static function settings($chat)
+    public static function profile($chat)
     {
         $keyboard = ReplyKeyboard::make()
             ->row([
-                ReplyButton::make(self::buttonLang('my_user_info')),
+                // ReplyButton::make(self::buttonLang('my_user_info')),
+                ReplyButton::make(self::buttonLang('enter_changing_of_weight')),
+            ])->resize()
+            ->row([
                 ReplyButton::make(self::buttonLang('change_user_info')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('enter_bot_language')),
             ])->resize()
             ->row([
                 ReplyButton::make(self::buttonLang('home')),
@@ -190,18 +203,15 @@ class TelegramButtonService
         $text = 'Qaysi ma`lumotni o`zgartirmoqchisiz ?' . PHP_EOL . $text;
         $keyboard = Keyboard::make()
             ->row([
-                Button::make(self::lang('language'))->action('change_language')->param('settings_button', 'change_language'),
                 Button::make(self::lang('gender'))->action('change_gender')->param('settings_button', 'change_gender'),
-            ])
-            ->row([
                 Button::make(self::lang('tall'))->action('change_tall')->param('settings_button', 'change_tall'),
+            ])
+            ->row([
                 Button::make(self::lang('weight'))->action('change_weight')->param('settings_button', 'change_weight'),
-            ])
-            ->row([
                 Button::make(self::lang('goal_weight'))->action('change_goal_weight')->param('settings_button', 'change_goal_weight'),
-                Button::make(self::lang('age'))->action('change_age')->param('settings_button', 'change_age')
             ])
             ->row([
+                Button::make(self::lang('age'))->action('change_age')->param('settings_button', 'change_age'),
                 Button::make(self::lang('activity_type'))->action('change_activity_type')->param('settings_button', 'change_activity_type'),
             ]);
         $chat->message($text)->keyboard($keyboard)->send();
@@ -250,5 +260,39 @@ class TelegramButtonService
             $text = self::lang('welcome_support_page');
             $chat->message($text)->send();
         }
+    }
+
+    public static function send_today_track_report($chat)
+    {
+        $time = date('HH:ii');
+        if ($time >= '19:00') {
+            $dailyTrackReport = DailyTrackReport::query()->where('date_report', date('Y-m-d'))->where('chat_id', $chat->chat_id)->orderBy('id', 'DESC');
+            $text = date('Y-m-d') . ' ' . self::lang('for_this_day_how_did_you_follow') . PHP_EOL . self::lang('you_must_not_eat_until_tomorrow');
+            $dataTrack = TelegramUserInfoService::track_message($text);
+            $chat->message($dataTrack['text'])->keyboard($dataTrack['keyboard'])->send();
+        } else {
+            $text = self::lang('track_report_after_19_every_day');
+            $chat->message($text)->send();
+        }
+    }
+
+    public static function enter_changing_of_weight($chat)
+    {
+        UserActionService::remove($chat);
+        UserActionService::add($chat, 'entering_changing_of_weight');
+        $text = self::lang('enter_weight_of_right_now');
+        $chat->message($text)->send();
+    }
+
+    public static function enter_bot_language($chat)
+    {
+        UserActionService::remove($chat);
+        UserActionService::add($chat, 'changing_language');
+        $text = self::lang('select_language');
+        $chat->message($text)
+            ->keyboard(Keyboard::make()->buttons([
+                Button::make('UZ')->action('changing_lang')->param('lang', 'uz'),
+                Button::make('RU')->action('changing_lang')->param('lang', 'ru'),
+            ]))->send();
     }
 }

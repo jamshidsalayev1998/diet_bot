@@ -5,9 +5,9 @@ return [
         'uz' => 'Menyu',
         'ru' => 'Menyu ru'
     ],
-    'settings' => [
-        'uz' => 'Sozlamalar',
-        'ru' => 'Sozlamalar ru'
+    'profile' => [
+        'uz' => 'Profil',
+        'ru' => 'Profil ru'
     ],
     'support' => [
         'uz' => 'Mutaxasis',
@@ -46,8 +46,8 @@ return [
         'ru' => 'O`zgartirish ru'
     ],
     'my_results' => [
-        'uz' => 'Mening natijalarim',
-        'ru' => 'Mening natijalarim ru'
+        'uz' => 'Men va boshqalar natijasi',
+        'ru' => 'Men va boshqalar natijasi ru'
     ],
     'my_own_results' => [
         'uz' => 'Shaxsiy natijalarim',
@@ -57,4 +57,20 @@ return [
         'uz' => 'Liga ko`rsatkichi',
         'ru' => 'Liga ko`rsatkichi ru'
     ],
+    'calc_dieto' => [
+        'uz' => 'Ovqat yoki mahsulot kaloriyasini bilish',
+        'ru' => 'Ovqat yoki mahsulot kaloriyasini bilish ru'
+    ],
+    'send_today_track_report' => [
+        'uz' => 'Bugungi kun uchun hisobot jo\'natish',
+        'ru' => 'Bugungi kun uchun hisobot jo\'natish ru'
+    ],
+    'enter_changing_of_weight' => [
+        'uz' => 'Vazn o\'zgarishini kiritish',
+        'ru' => 'Vazn o\'zgarishini kiritish ru',
+    ],
+    'enter_bot_language' => [
+        'uz' => 'Foydalanish tili',
+        'ru' => 'Foydalanish tili ru'
+    ]
 ];
