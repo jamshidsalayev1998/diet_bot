@@ -262,7 +262,7 @@ class TelegramUserInfoService
                 if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
                     $status = 0;
                     $chat->message(self::lang('your_goal_weight_is_small_than_normal'))->send();
-                }if ($normalWeight['normal_weight']['to'] < $weight->toFloat()) {
+                }elseif ($normalWeight['normal_weight']['to'] < $weight->toFloat()) {
                     $status = 0;
                     $chat->message(self::lang('your_goal_weight_is_big_than_normal'))->send();
                 }elseif ($userInfo->weight == $weight->toFloat()) {
