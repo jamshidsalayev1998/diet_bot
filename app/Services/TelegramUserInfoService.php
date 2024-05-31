@@ -189,21 +189,21 @@ class TelegramUserInfoService
             $errors = $validator->errors()->all();
             $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
-            $normalWeight = self::calculate_average_goal_weight($userInfo);
-            if ($normalWeight['status']) {
-                if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
-                    $chat->message(self::lang('your_weight_is_small_than_normal'))->send();
-                    $status = 0;
-                } elseif ($normalWeight['normal_weight']['from'] <= $weight->toFloat() && $normalWeight['normal_weight']['to'] >= $weight->toFloat()) {
-                    $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
-                    $status = 0;
-                } else {
-                    $userInfo->weight = $weightString;
-                    $userInfo->status = 5;
-                    $userInfo->update();
-                    UserActionService::remove($chat);
-                }
-            }
+            // $normalWeight = self::calculate_average_goal_weight($userInfo);
+            // if ($normalWeight['status']) {
+            // if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
+            //     $chat->message(self::lang('your_weight_is_small_than_normal'))->send();
+            //     $status = 0;
+            // } elseif ($normalWeight['normal_weight']['from'] <= $weight->toFloat() && $normalWeight['normal_weight']['to'] >= $weight->toFloat()) {
+            //     $chat->message(self::lang('your_weight_is_equal_to_normal'))->send();
+            //     $status = 0;
+            // } else {
+            $userInfo->weight = $weightString;
+            $userInfo->status = 5;
+            $userInfo->update();
+            UserActionService::remove($chat);
+            // }
+            // }
         }
         return $status;
     }
@@ -460,13 +460,13 @@ class TelegramUserInfoService
         if ($date == null) $date = date('Y-m-d');
         $keyboard = Keyboard::make()
             ->row([
-                Button::make(self::lang('full_follow_a_diet'))->action('daily_track_request')->param('answer', $date.'|2'),
+                Button::make(self::lang('full_follow_a_diet'))->action('daily_track_request')->param('answer', $date . '|2'),
             ])
             ->row([
-                Button::make(self::lang('partially_follow_a_diet'))->action('daily_track_request')->param('answer', $date.'|1'),
+                Button::make(self::lang('partially_follow_a_diet'))->action('daily_track_request')->param('answer', $date . '|1'),
             ])
             ->row([
-                Button::make(self::lang('did_not_follow_a_diet'))->action('daily_track_request')->param('answer', $date.'|0'),
+                Button::make(self::lang('did_not_follow_a_diet'))->action('daily_track_request')->param('answer', $date . '|0'),
             ]);
         return [
             'text' => $text,
