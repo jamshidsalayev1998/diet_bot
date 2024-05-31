@@ -365,8 +365,10 @@ class CustomTelegramBotHandler extends WebhookHandler
 
     public function daily_track_request()
     {
+        $userInfo = $this->chat->user_info;
         $data = $this->data->get('answer');
         $dataParsed = explode('|', $data);
+        // $this->chat->message($dataParsed[0])->send();
         $report = DailyTrackReport::where('date_report', $dataParsed[0])->where('chat_id', $this->chat->chat_id)->first();
         if (!$report) {
             $report = DailyTrackReport::create([
@@ -375,7 +377,13 @@ class CustomTelegramBotHandler extends WebhookHandler
                 'answer' => 0
             ]);
         }
+        else{
+            $oldAnswer = $report->answer;
+            $userInfo->track_scores -= $oldAnswer;
+        }
+        $userInfo->track_scores += $dataParsed[1];
         $report->answer = $dataParsed[1];
+        $userInfo->update();
         $report->update();
         $text = '';
         if ($dataParsed[1] == 0) {

@@ -34,7 +34,7 @@ class MenuImageGeneratorService
                     }
                 }
                 // $this->info(json_encode($ready[1]['records'][0]));
-                $imageUrl = '/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu/' . $userInfo->id . '/' . $userInfo->language . '.png';
+                $imageUrl = '/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu/' . $userInfo->id . '/' . $userInfo->language . '.jpg';
                 $url = 'app/public'.$imageUrl;
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
@@ -46,7 +46,7 @@ class MenuImageGeneratorService
                 $htmlContent = view('menu_images.base_menu_template', ['data' => $ready, 'lang' => $userInfo->language, 'user_info' => $userInfo])->render();
                 $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
                 file_put_contents($htmlFilePath, $htmlContent);
-                $command = "wkhtmltoimage --quality 50 {$htmlFilePath} {$imagePath}";
+                $command = "wkhtmltoimage --width 1000  --quality 50 {$htmlFilePath} {$imagePath}";
                 shell_exec($command);
                 $userInfo->menu_image = $imageUrl;
                 $userInfo->update();
@@ -92,7 +92,7 @@ class MenuImageGeneratorService
                         $ready[$menuType->id]['records'] = []; // or handle the missing key scenario appropriately
                     }
                     // $this->info(json_encode($ready[1]['records'][0]));
-                    $imageUrl = '/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/'.$menuType->id.'/'. $userInfo->id . '/' . $userInfo->language . '.png';
+                    $imageUrl = '/menu_images/' . date('Y-m-d') . '/' . $menuSize->calories . '/menu_parts/'.$menuType->id.'/'. $userInfo->id . '/' . $userInfo->language . '.jpg';
                     $url = 'app/public'.$imageUrl;
                     $imagePath = storage_path($url);
                     $directoryPath = dirname($imagePath);
@@ -104,7 +104,7 @@ class MenuImageGeneratorService
                     $htmlContent = view('menu_images.base_menu_parts_template', ['data' => $ready, 'lang' => $userInfo->language, 'user_info' => $userInfo])->render();
                     $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
                     file_put_contents($htmlFilePath, $htmlContent);
-                    $command = "wkhtmltoimage {$htmlFilePath} {$imagePath}";
+                    $command = "wkhtmltoimage --width 1000  --quality 50 {$htmlFilePath} {$imagePath}";
                     shell_exec($command);
                     $menu_part_images[$menuType->id] = $imageUrl;
                 }

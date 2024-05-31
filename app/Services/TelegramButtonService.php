@@ -300,4 +300,9 @@ class TelegramButtonService
                 Button::make('RU')->action('changing_lang')->param('lang', 'ru'),
             ]))->send();
     }
+
+    public static function my_own_results($chat){
+        $text = UserDailyTrackService::my_results_text($chat->user_info);
+        $chat->message($text)->send();
+    }
 }

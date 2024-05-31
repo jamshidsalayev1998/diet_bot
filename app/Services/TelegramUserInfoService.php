@@ -455,17 +455,18 @@ class TelegramUserInfoService
         $chat->message($text)->send();
     }
 
-    public static function track_message($text)
+    public static function track_message($text, $date = null)
     {
+        if ($date == null) $date = date('Y-m-d');
         $keyboard = Keyboard::make()
             ->row([
-                Button::make(self::lang('full_follow_a_diet'))->action('daily_track_request')->param('answer', '2024-05-26|2'),
+                Button::make(self::lang('full_follow_a_diet'))->action('daily_track_request')->param('answer', $date.'|2'),
             ])
             ->row([
-                Button::make(self::lang('partially_follow_a_diet'))->action('daily_track_request')->param('answer', '2024-05-26|1'),
+                Button::make(self::lang('partially_follow_a_diet'))->action('daily_track_request')->param('answer', $date.'|1'),
             ])
             ->row([
-                Button::make(self::lang('did_not_follow_a_diet'))->action('daily_track_request')->param('answer', '2024-05-26|0'),
+                Button::make(self::lang('did_not_follow_a_diet'))->action('daily_track_request')->param('answer', $date.'|0'),
             ]);
         return [
             'text' => $text,
@@ -504,7 +505,7 @@ class TelegramUserInfoService
                     'weight' =>  $weightString
                 ]);
             }
-            $userInfo->weight =  $weightString ;
+            $userInfo->weight =  $weightString;
             $userInfo->update();
             UserActionService::remove($chat);
         }
