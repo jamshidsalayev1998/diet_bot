@@ -67,7 +67,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                         }
                         break;
                 }
-            }elseif ($userInfo->status == 12) {
+            } elseif ($userInfo->status == 12) {
                 switch ($userAction->screen) {
                     case 'changing_tall':
                         $statusStore = TelegramUserInfoService::change_tall($this->chat, $text);
@@ -136,7 +136,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         if (!$userInfo) {
             $userInfo = UserInfo::create([
                 'chat_id' => $this->chat->chat_id,
-                'fio' => $dataRequest['message']['from']['last_name'].' '.$dataRequest['message']['from']['first_name']
+                'fio' => key_exists('last_name', $dataRequest['message']['from']) ? $dataRequest['message']['from']['last_name'] . ' ' . $dataRequest['message']['from']['first_name'] : $this->chat->name
             ]);
         }
         if ($userInfo->status < 9) {
@@ -381,8 +381,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                 'date_report' => $dataParsed[0],
                 'answer' => 0
             ]);
-        }
-        else{
+        } else {
             $oldAnswer = $report->answer;
             $userInfo->track_scores -= $oldAnswer;
         }
