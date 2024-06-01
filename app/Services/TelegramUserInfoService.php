@@ -335,7 +335,7 @@ class TelegramUserInfoService
             'weight' => $weightString,
 
         ], [
-            'weight' => ['required', 'integer', 'min:50' , 'max:300']
+            'weight' => ['required', 'numeric', 'min:50', 'max:300']
         ]);
         if ($validator->failed()) {
             $status = 0;
