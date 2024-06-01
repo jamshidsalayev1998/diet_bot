@@ -330,8 +330,9 @@ class TelegramUserInfoService
         $weightInteger = intval($weightString);
         $status = 1;
         $userInfo = $chat->user_info;
+        $chat->message($weightInteger)->send();
         $validator = Validator::make([
-            'weight' => $weightInteger,
+            'weight' => $weightString,
 
         ], [
             'weight' => ['required', 'integer', 'min:50' , 'max:300']
