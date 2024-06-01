@@ -126,10 +126,9 @@ class TelegramUserInfoService
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
         $spendCalories = round($calories);
-        if($userInfo->weight > $userInfo->goal_weight){
+        if ($userInfo->weight > $userInfo->goal_weight) {
             $needCalories = round($calories) - 500;
-        }
-        else{
+        } else {
             $needCalories = round($calories) + 500;
         }
         $userInfo->daily_spend_calories = $spendCalories;
@@ -155,10 +154,9 @@ class TelegramUserInfoService
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
         $spendCalories = round($calories);
-        if($userInfo->weight > $userInfo->goal_weight){
+        if ($userInfo->weight > $userInfo->goal_weight) {
             $needCalories = round($calories) - 500;
-        }
-        else{
+        } else {
             $needCalories = round($calories) + 500;
         }
         $userInfo->daily_spend_calories = $spendCalories;
@@ -272,10 +270,10 @@ class TelegramUserInfoService
                 if ($normalWeight['normal_weight']['from'] > $weight->toFloat()) {
                     $status = 0;
                     $chat->message(self::lang('your_goal_weight_is_small_than_normal'))->send();
-                }elseif ($normalWeight['normal_weight']['to'] < $weight->toFloat()) {
+                } elseif ($normalWeight['normal_weight']['to'] < $weight->toFloat()) {
                     $status = 0;
                     $chat->message(self::lang('your_goal_weight_is_big_than_normal'))->send();
-                }elseif ($userInfo->weight == $weight->toFloat()) {
+                } elseif ($userInfo->weight == $weight->toFloat()) {
                     $status = 0;
                     $chat->message(self::lang('your_weight_is_equal_to_goal_weight'))->send();
                 } else {
@@ -324,24 +322,22 @@ class TelegramUserInfoService
         }
         return $status;
     }
-    public static function store_tall($chat, $weight)
+    public static function store_tall($chat, $tall)
     {
-        $weightString = (string) $weight;
-        $weightInteger = intval($weightString);
+        $tallString = (string) $tall;
         $status = 1;
         $userInfo = $chat->user_info;
-        $chat->message( (int)$weightString)->send();
+        // $chat->message($tallString)->send();
         $validator = Validator::make([
-            'weight' => (int)$weightString,
-
+            'tall' => $tallString,
         ], [
-            'weight' => ['required', 'integer', 'min:50', 'max:300']
+            'tall' => ['required', 'integer', 'min:50', 'max:300']
         ]);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $status = 0;
-            $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting! (santimetrlarda misol uchun  165)')->send();
         } else {
-            $userInfo->tall = $weightString;
+            $userInfo->tall = $tallString;
             $userInfo->status = 4;
             $userInfo->update();
             UserActionService::remove($chat);
