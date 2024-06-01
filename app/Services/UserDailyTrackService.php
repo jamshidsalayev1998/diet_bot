@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Track\DailyTrackReport;
+use App\Models\V1\UserInfo;
 use App\Traits\TelegramMessageLangsTrait;
 
 class UserDailyTrackService
@@ -65,5 +66,58 @@ class UserDailyTrackService
             $text .= WeekDayService::get_week_day_on_word($dayOfCurrentWeek) . ': ' . self::lang($textResultDay) . PHP_EOL . PHP_EOL;
         }
         return $text;
+    }
+
+    public static function liga_results_text($userInfo)
+    {
+        $topUsers = UserInfo::orderBy('track_scores', 'desc')->take(10)->get();
+
+        // Retrieve the special user
+        $specialUser = $userInfo;
+
+        // // Calculate the rank of the special user
+        $specialUserRank = UserInfo::where('track_scores', '>', $specialUser->track_scores)->count() + 1;
+
+        // // Check if the special user is already in the top 10
+        $isSpecialUserInTop10 = $topUsers->contains('chat_id', $userInfo->chat_id);
+
+        if (!$isSpecialUserInTop10) {
+            // Add special user to the list with their rank
+            $topUsers->push($specialUser);
+        }
+        $text = '';
+        $index = 1;
+        foreach ($topUsers as $topUser) {
+            $text .= $index . ' - ';
+            switch ($index) {
+                case 1:
+                    $text .= '🥇';
+                    break;
+                case 2:
+                    $text .= '🥈';
+                    break;
+                case 3:
+                    $text .= '🥉';
+                    break;
+                default:
+            }
+            if ($topUser->chat_id == $userInfo->chat_id) {
+                $text .= '<strong>' . $topUser->fio . '</strong>' . PHP_EOL . PHP_EOL;
+            } else {
+                $text .= $topUser->fio . PHP_EOL . PHP_EOL;
+            }
+            $index++;
+        }
+        return $text;
+        // return json_encode($topUsers[0]->fio);
+
+        // return response()->json([
+        //     'status' => 'success',
+        //     'top_users' => $topUsers,
+        //     'special_user' => [
+        //         'user' => $specialUser,
+        //         'rank' => $specialUserRank,
+        //     ]
+        // ]);
     }
 }

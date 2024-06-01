@@ -305,4 +305,9 @@ class TelegramButtonService
         $text = UserDailyTrackService::my_results_text($chat->user_info);
         $chat->message($text)->send();
     }
+
+    public static function liga_results($chat){
+        $text = UserDailyTrackService::liga_results_text($chat->user_info);
+        $chat->message($text)->send();
+    }
 }

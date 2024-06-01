@@ -127,11 +127,16 @@ class CustomTelegramBotHandler extends WebhookHandler
     }
     public function start()
     {
+        TempMessage::create([
+            'text_response' => json_encode($this->request->all())
+        ]);
+        $dataRequest = $this->request->all();
         $userInfo = $this->chat->user_info;
         $this->chat->message('Hush kelibsiz')->removeReplyKeyboard()->send();
         if (!$userInfo) {
             $userInfo = UserInfo::create([
                 'chat_id' => $this->chat->chat_id,
+                'fio' => $dataRequest['message']['from']['last_name'].' '.$dataRequest['message']['from']['first_name']
             ]);
         }
         if ($userInfo->status < 9) {
@@ -210,12 +215,12 @@ class CustomTelegramBotHandler extends WebhookHandler
         TelegramButtonService::home($this->chat);
         $resultMenuImage = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
         $menuPartImage = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
-        TempMessage::create([
-            'text_response' => json_encode($resultMenuImage)
-        ]);
-        TempMessage::create([
-            'text_response' => json_encode($menuPartImage)
-        ]);
+        // TempMessage::create([
+        //     'text_response' => json_encode($resultMenuImage)
+        // ]);
+        // TempMessage::create([
+        //     'text_response' => json_encode($menuPartImage)
+        // ]);
         TelegramButtonService::full_menu($this->chat);
     }
 

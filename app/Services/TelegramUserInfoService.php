@@ -126,7 +126,12 @@ class TelegramUserInfoService
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
         $spendCalories = round($calories);
-        $needCalories = round($calories) - 500;
+        if($userInfo->weight > $userInfo->goal_weight){
+            $needCalories = round($calories) - 500;
+        }
+        else{
+            $needCalories = round($calories) + 500;
+        }
         $userInfo->daily_spend_calories = $spendCalories;
         $userInfo->daily_need_calories = $needCalories;
         $firstMenu = MenuSize::where('calories', '<=', $needCalories)->orderBy('calories', 'DESC')->first();
@@ -150,7 +155,12 @@ class TelegramUserInfoService
         $activityType = $userInfo->activity_type;
         $calories *= $activityType->coefficient;
         $spendCalories = round($calories);
-        $needCalories = round($calories) - 500;
+        if($userInfo->weight > $userInfo->goal_weight){
+            $needCalories = round($calories) - 500;
+        }
+        else{
+            $needCalories = round($calories) + 500;
+        }
         $userInfo->daily_spend_calories = $spendCalories;
         $userInfo->daily_need_calories = $needCalories;
         $firstMenu = MenuSize::where('calories', '<=', $needCalories)->orderBy('calories', 'DESC')->first();
