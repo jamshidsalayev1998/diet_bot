@@ -261,7 +261,7 @@ class TelegramUserInfoService
         ], [
             'weight' => ['required', 'integer', 'between:20,200']
         ]);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $status = 0;
             $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
@@ -298,7 +298,7 @@ class TelegramUserInfoService
         ], [
             'weight' => ['required', 'integer', 'between:20,200']
         ]);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $status = 0;
             $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
@@ -357,7 +357,7 @@ class TelegramUserInfoService
         ], [
             'weight' => ['required', 'integer', 'between:40,300']
         ]);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $status = 0;
             $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
@@ -379,7 +379,7 @@ class TelegramUserInfoService
         ], [
             'weight' => ['required', 'integer', 'between:10,80']
         ]);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $status = 0;
             $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {
@@ -402,7 +402,7 @@ class TelegramUserInfoService
         ], [
             'weight' => ['required', 'integer', 'between:10,80']
         ]);
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             $status = 0;
             $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
         } else {

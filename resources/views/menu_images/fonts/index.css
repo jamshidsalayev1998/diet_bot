@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Gotham Pro';
+  src: url('./GothamPro-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham Pro';
+  src: url('./GothamPro.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+/*
+  @font-face {
+    font-family: "NeueMachina";
+    src: url("./NeueMachina-Medium.woff2") format("woff2"),
+      url("./NeueMachina-Medium.woff") format("woff");
+    font-weight: 500;
+    font-display: "swap";
+  }
+  
+  @font-face {
+    font-family: "KharkivTone";
+    src: url("./KharkivTone.ttf") format("truetype");
+    font-weight: normal;
+    font-display: "swap";
+  } */
