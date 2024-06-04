@@ -29,7 +29,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files":[
-            "app/Helpers/date_helper.php"
+            "app/Helpers/date_helper.php",
+            "app/Helpers/lang_helper.php"
         ]
     },
     "autoload-dev": {

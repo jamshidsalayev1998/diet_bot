@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TestMenuGenerateViewController;
 use DefStudio\Telegraph\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    phpinfo();
-});
+Route::get('/', [TestMenuGenerateViewController::class,'test']);
 

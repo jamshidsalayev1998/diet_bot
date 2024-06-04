@@ -14,5 +14,27 @@ return [
         'User info toliq',
         'User info tasdiqlangan',
         'User info o`zgartirilmoqda'
+    ],
+    'menu_rules' => [
+        [
+            'uz' => 'Osh har haftada 1 marta yeyish mumkin',
+            'ru' => 'Osh har haftada 1 marta yeyish mumkin',
+        ],
+        [
+            'uz' => 'Har safar ovqatlanmasdan oldin suv ichish kerak',
+            'ru' => 'Har safar ovqatlanmasdan oldin suv ichish kerak',
+        ],
+        [
+            'uz' => 'Kunlik suv nomrasini kechgi 20:00 gacha tugatish kerak',
+            'ru' => 'Kunlik suv nomrasini kechgi 20:00 gacha tugatish kerak',
+        ],
+        [
+            'uz' => 'Gazli ichimliklar mumkin emas',
+            'ru' => 'Gazli ichimliklar mumkin emas',
+        ],
+        [
+            'uz' => 'Shirinliklar yeyish mumkin emas',
+            'ru' => 'Shirinliklar yeyish mumkin emas',
+        ],
     ]
 ];
