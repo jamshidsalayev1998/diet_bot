@@ -195,7 +195,7 @@ class TelegramUserInfoService
         if ($validator->fails()) {
             $status = 0;
             $errors = $validator->errors()->all();
-            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format'))->send();
         } else {
             // $normalWeight = self::calculate_average_goal_weight($userInfo);
             // if ($normalWeight['status']) {
@@ -230,7 +230,7 @@ class TelegramUserInfoService
         if ($validator->fails()) {
             $status = 0;
             $errors = $validator->errors()->all();
-            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format'))->send();
         } else {
             $normalWeight = self::calculate_average_goal_weight($userInfo);
             if ($normalWeight['status']) {
@@ -263,7 +263,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->fails()) {
             $status = 0;
-            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format'))->send();
         } else {
             $normalWeight = self::calculate_average_goal_weight($userInfo);
             if ($normalWeight['status']) {
@@ -300,7 +300,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->fails()) {
             $status = 0;
-            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format'))->send();
         } else {
             $normalWeight = self::calculate_average_goal_weight($userInfo);
             if ($normalWeight['status']) {
@@ -335,7 +335,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->fails()) {
             $status = 0;
-            $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting! (santimetrlarda misol uchun  165)')->send();
+            $chat->message(self::lang('enter_the_correct_format_of_tall'))->send();
         } else {
             $userInfo->tall = $tallString;
             $userInfo->status = 4;
@@ -359,7 +359,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->fails()) {
             $status = 0;
-            $chat->message('Bo`yni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format_of_tall'))->send();
         } else {
             $userInfo->tall = $weightString;
             $userInfo->update();
@@ -381,7 +381,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->fails()) {
             $status = 0;
-            $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format'))->send();
         } else {
             $userInfo->age = $weightInteger;
             $userInfo->status = 7;
@@ -404,7 +404,7 @@ class TelegramUserInfoService
         ]);
         if ($validator->fails()) {
             $status = 0;
-            $chat->message('Yoshni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format'))->send();
         } else {
             $userInfo->age = $weightInteger;
             $userInfo->update();
@@ -449,7 +449,7 @@ class TelegramUserInfoService
         $text .= '🥇 ' . self::lang('goal_weight') . ' : ' . $userInfo->goal_weight . ' kg' . PHP_EOL . PHP_EOL;
         $text .= '🎂 ' . self::lang('age') . ' : ' . $userInfo->age . PHP_EOL . PHP_EOL;
         $text .= '⛹🏻 ' . self::lang('activity_type') . ' : ' . $titleActivity[app()->getLocale()] . PHP_EOL . PHP_EOL;
-        $text .= '' . self::lang('daily_spend') . ' : ' . $userInfo->daily_need_calories . ' kkal' . PHP_EOL . PHP_EOL;
+        $text .= '' . self::lang('daily_need') . ' : ' . $userInfo->daily_need_calories . ' kkal' . PHP_EOL . PHP_EOL;
         $chat->message($text)->keyboard(Keyboard::make()->buttons([
             Button::make(self::lang('confirm'))->action('confirm_user_info')->param('lang', 'uz'),
             Button::make(self::lang('start_again'))->action('start_again_user_info')->param('lang', 'ru'),
@@ -497,7 +497,7 @@ class TelegramUserInfoService
         if ($validator->fails()) {
             $status = 0;
             $errors = $validator->errors()->all();
-            $chat->message('Vaznni kiritishda xatolik iltimos butun son kiriting!')->send();
+            $chat->message(self::lang('enter_the_correct_format'))->send();
         } else {
             $oldWeight = $userInfo->weight;
             if (!UserWeightHistory::where('weight', $oldWeight)->where('chat_id', $chat->chat_id)->exists()) {

@@ -229,7 +229,6 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
         UserActionService::remove($this->chat);
-        UserActionService::add($this->chat, 'changing_language');
         $text = self::lang('select_language');
         $ttt = $this->chat->message($text)
             ->keyboard(Keyboard::make()->buttons([
@@ -243,7 +242,6 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
         UserActionService::remove($this->chat);
-        UserActionService::add($this->chat, 'changing_gender');
         $text = self::lang('select_gender');
         $this->chat->message($text)
             ->keyboard(Keyboard::make()->buttons([
@@ -343,7 +341,6 @@ class CustomTelegramBotHandler extends WebhookHandler
 
         $deletedMessages = [$this->messageId];
         $this->chat->deleteMessages($deletedMessages)->send();
-        UserActionService::add($this->chat, 'changing_activity_type');
         $text = self::lang('select_activity_type');
         $activityTypes = ActivityType::all();
         $buttons = [];

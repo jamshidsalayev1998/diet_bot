@@ -2,8 +2,8 @@
 
 return [
     'menu' => [
-        'uz' => 'Menyu',
-        'ru' => 'Menyu ru'
+        'uz' => 'Menyular',
+        'ru' => 'Menyular ru'
     ],
     'profile' => [
         'uz' => 'Profil',
@@ -18,19 +18,19 @@ return [
         'ru' => 'Bosh sahifa ru'
     ],
     'breakfasts' => [
-        'uz' => 'Nonushtalar',
-        'ru' => 'Nonushtalar ru'
+        'uz' => 'Nonushta',
+        'ru' => 'Nonushta ru'
     ],
     'lunches' => [
-        'uz' => 'Tushliklar',
-        'ru' => 'Tushliklar ru'
+        'uz' => 'Tushlik',
+        'ru' => 'Tushlik ru'
     ],
     'dinners' => [
-        'uz' => 'Kechki ovqatlar',
-        'ru' => 'Kechki ovqatlar ru'
+        'uz' => 'Kechki ovqat',
+        'ru' => 'Kechki ovqat ru'
     ],
     'full_menu' => [
-        'uz' => 'Toliq menyu',
+        'uz' => 'To\'liq menyu',
         'ru' => 'Toliq menyu ru'
     ],
     'snacks' => [
@@ -42,12 +42,12 @@ return [
         'ru' => 'Ma`lumotlarim ru'
     ],
     'change_user_info' => [
-        'uz' => 'O`zgartirish',
-        'ru' => 'O`zgartirish ru'
+        'uz' => 'Ma`lumotlarni o`zgartirish',
+        'ru' => 'Ma`lumotlarni o`zgartirish ru'
     ],
     'my_results' => [
-        'uz' => 'Men va boshqalar natijasi',
-        'ru' => 'Men va boshqalar natijasi ru'
+        'uz' => 'Men va boshqalarning natijasi',
+        'ru' => 'Men va boshqalarning natijasi ru'
     ],
     'my_own_results' => [
         'uz' => 'Mening natijalarim',
@@ -58,8 +58,8 @@ return [
         'ru' => 'Boshqalarning natijalari ru'
     ],
     'calc_dieto' => [
-        'uz' => 'Ovqat yoki mahsulot kaloriyasini bilish',
-        'ru' => 'Ovqat yoki mahsulot kaloriyasini bilish ru'
+        'uz' => 'Ovqat yoki mahsulot kaloriyasini aniqlash',
+        'ru' => 'Ovqat yoki mahsulot kaloriyasini aniqlash ru'
     ],
     'send_today_track_report' => [
         'uz' => 'Bugungi kun uchun hisobot jo\'natish',

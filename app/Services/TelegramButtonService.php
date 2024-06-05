@@ -29,10 +29,10 @@ class TelegramButtonService
             ])->resize()
             ->row([
                 ReplyButton::make(self::buttonLang('my_results')),
-            ])->resize()
-            ->row([
-                ReplyButton::make(self::buttonLang('support')),
             ])->resize();
+            // ->row([
+            //     ReplyButton::make(self::buttonLang('support')),
+            // ])->resize();
         $chat->message(self::lang('welcome_to_home_for_old_user'))->replyKeyboard($keyboard)->send();
     }
 
@@ -159,9 +159,9 @@ class TelegramButtonService
         }
         if ($breakfastPath) {
             // $chat->message('https://bot.dieto.uz/storage'.$breakfastPath)->send();
-            try{
-                $chat->photo('https://bot.dieto.uz/storage'.$breakfastPath)->send();
-            }catch(Exception $e){
+            try {
+                $chat->photo('https://bot.dieto.uz/storage' . $breakfastPath)->send();
+            } catch (Exception $e) {
                 $chat->message($e->getMessage())->send();
             }
         } else {
@@ -205,7 +205,7 @@ class TelegramButtonService
     {
         $userInfo = $chat->user_info;
         $text = self::make_user_info_text($userInfo);
-        $text = 'Qaysi ma`lumotni o`zgartirmoqchisiz ?' . PHP_EOL . $text;
+        $text = $text . PHP_EOL . PHP_EOL . self::lang('tap_on_button_which_you_want_to_change');
         $keyboard = Keyboard::make()
             ->row([
                 Button::make(self::lang('gender'))->action('change_gender')->param('settings_button', 'change_gender'),
@@ -233,7 +233,8 @@ class TelegramButtonService
                     break;
                 }
             }
-            if ($keyword) break;
+            if ($keyword)
+                break;
         }
         return $keyword;
     }
@@ -292,21 +293,23 @@ class TelegramButtonService
     public static function enter_bot_language($chat)
     {
         UserActionService::remove($chat);
-        UserActionService::add($chat, 'changing_language');
+        // UserActionService::add($chat, 'changing_language');
         $text = self::lang('select_language');
         $chat->message($text)
             ->keyboard(Keyboard::make()->buttons([
-                Button::make('UZ')->action('changing_lang')->param('lang', 'uz'),
-                Button::make('RU')->action('changing_lang')->param('lang', 'ru'),
+                Button::make(self::lang('uz'))->action('changing_lang')->param('lang', 'uz'),
+                Button::make(self::lang('ru'))->action('changing_lang')->param('lang', 'ru'),
             ]))->send();
     }
 
-    public static function my_own_results($chat){
+    public static function my_own_results($chat)
+    {
         $text = UserDailyTrackService::my_results_text($chat->user_info);
         $chat->message($text)->send();
     }
 
-    public static function liga_results($chat){
+    public static function liga_results($chat)
+    {
         $text = UserDailyTrackService::liga_results_text($chat->user_info);
         $chat->message($text)->send();
     }

@@ -47,14 +47,14 @@ return [
         'track_status_satisfactory' => '🥉 qoniqarli',
         'track_status_good' => '🥈 yaxshi',
         'track_status_super' => '🥇 super',
-        'for_this_day_how_did_you_follow' => 'Bu kunda tavfsiya qilingan menyularga qay darajada amal qildingiz ?',
-        'you_must_not_eat_until_tomorrow' => 'Esingizda bo`lsin kechgi 6 dan ertalabgacha hech narsa istemol qilish mumkin emas',
+        'for_this_day_how_did_you_follow' => "Bugun tavfsiya qilingan menyularga qay darajada amal qildingiz ? \n",
+        'you_must_not_eat_until_tomorrow' => 'Esingizda bo`lsin 19:00 dan ertalabgacha hech narsa istemol qilish mumkin emas',
         'full_follow_a_diet' => '🤩 To\'liq amal qildim',
         'partially_follow_a_diet' => '🙂 qisman amal qildim',
         'did_not_follow_a_diet' => '☹️ amal qilmadim',
-        'next_time_be_more_active' => 'Keyingi safar yanada masuliyatli bo\'ling va menyularga to\'liq amal qiling 🙂',
-        'next_time_also_be_active' => 'Juda zo\'r keyingi kunlarda ham shunday davom eting 🤩',
-        'next_time_follow' => 'Keyingi kun albatta menyularga amal qiling. Natijaga erishishning eng asosiy unsuri bu menyularga to\'liq amal qilishdir!',
+        'next_time_be_more_active' => "Siz 1 ball qo\'lga kiritdingiz. \n\n" . "Keyingi safar yanada masuliyatli bo\'ling va menyularga to\'liq amal qiling 🙂",
+        'next_time_also_be_active' => "Juda zo\'r siz 2 ball qo\'lga kiritdingiz. \n\n" . "Keyingi kunlarda ham shunday davom eting 🤩",
+        'next_time_follow' => "Keyingi kun albatta menyularga qatiyan amal qiling.\n\n",
         'track_report_after_19_every_day' => 'Kunlik hisobotlar har kuni soat 19:00 dan keyin beriladi',
         'welcome_for_new_user' => "Sizni bizning Dieto botimizda ko'rishdan mamnunmiz\n\n" .
             "Bu bot sizga ozish yoki semirish uchun yordam beradi\n\n" .
@@ -64,7 +64,14 @@ return [
             "- ✅ Ovqat yoki mahsulot kaloriyasini aniqlash\n" .
             "- ✅ Har kuni ovqatlanishingizni nazorat qilish\n\n" .
             "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin.",
-        'welcome_to_home_for_old_user' => 'Bosh sahifa'
+        'welcome_to_home_for_old_user' => 'Bosh sahifa',
+        'welcome_menus_page' => 'Kerakli menyuni tanlang',
+        'welcome_settings_page' => 'Profil',
+        'enter_weight_of_right_now' => 'Hozirgi vazningizni kiriting ',
+        'weight_changing_history_stored' => 'Saqlandi',
+        'tap_on_button_which_you_want_to_change' => 'O\'zgartirmoqchi bo\'lgan ma\'lumotingiz ustiga bosing 👇👇👇',
+        'enter_the_correct_format' => 'To\'g\'ri formatda kiriting',
+        'enter_the_correct_format_of_tall' => 'Bo\'yingizni to\'g\'ri formatda kiriting (misol uchun: 168)',
     ],
     'ru' => [
         'select_language' => 'Foydalanish tilini tanlang',
