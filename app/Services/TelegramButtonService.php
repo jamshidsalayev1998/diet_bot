@@ -33,7 +33,7 @@ class TelegramButtonService
             ->row([
                 ReplyButton::make(self::buttonLang('support')),
             ])->resize();
-        $chat->replyKeyboard($keyboard)->send();
+        $chat->message(self::lang('welcome_to_home_for_old_user'))->replyKeyboard($keyboard)->send();
     }
 
     public static function my_results($chat)

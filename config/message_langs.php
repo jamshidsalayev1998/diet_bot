@@ -63,7 +63,8 @@ return [
             "- ✅ Kunlik kaloriya hisob-kitobi\n" .
             "- ✅ Ovqat yoki mahsulot kaloriyasini aniqlash\n" .
             "- ✅ Har kuni ovqatlanishingizni nazorat qilish\n\n" .
-            "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin."
+            "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin.",
+        'welcome_to_home_for_old_user' => 'Bosh sahifa'
     ],
     'ru' => [
         'select_language' => 'Foydalanish tilini tanlang',
@@ -123,6 +124,7 @@ return [
             "- ✅ Kunlik kaloriya hisob-kitobi\n" .
             "- ✅ Ovqat yoki mahsulot kaloriyasini aniqlash\n" .
             "- ✅ Har kuni ovqatlanishingizni nazorat qilish\n\n" .
-            "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin."
+            "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin.",
+        'welcome_to_home_for_old_user' => 'Bosh sahifa'
     ],
 ];
