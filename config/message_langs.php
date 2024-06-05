@@ -2,11 +2,11 @@
 
 return [
     'uz' => [
-        'select_language' => 'Tilni tanlang',
+        'select_language' => 'Foydalanish tilini tanlang',
         'enter_weight' => 'Vazningizni kiriting',
         'select_gender' => 'Jinsingizni tanlang',
-        'enter_goal_weight' => 'Ko`zlangan vaznni kiriting',
-        'enter_tall' => 'Bo`yingizni kiriting',
+        'enter_goal_weight' => 'Ko\'zlangan vaznni kiriting',
+        'enter_tall' => 'Bo\'yingizni kiriting (santimetrlarda misol uchun: 168)',
         'enter_age' => 'Yoshingizni kiriting',
         'select_activity_type' => 'Aktivlik turini tanlang',
         'normal_weight_for_you' => 'Siz uchun taklif qilinadigan normal vazn oralig`i',
@@ -66,11 +66,11 @@ return [
             "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin."
     ],
     'ru' => [
-        'select_language' => 'Tilni tanlang ru',
+        'select_language' => 'Foydalanish tilini tanlang',
         'enter_weight' => 'Vazningizni kiriting ru',
         'select_gender' => 'Jinsingizni tanlang ru',
-        'enter_goal_weight' => 'Ko`zlangan vaznni kiriting ru',
-        'enter_tall' => 'Bo`yingizni kiriting ru',
+        'enter_goal_weight' => 'Ko\'zlangan vaznni kiriting ru',
+        'enter_tall' => 'Bo\'yingizni kiriting (santimetrlarda misol uchun: 168)',
         'enter_age' => 'Yoshingizni kiriting ru',
         'select_activity_type' => 'Aktivlik turini tanlang ru',
         'normal_weight_for_you' => 'Siz uchun taklif qilinadigan normal vazn oralig`i ru',
