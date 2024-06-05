@@ -55,7 +55,15 @@ return [
         'next_time_be_more_active' => 'Keyingi safar yanada masuliyatli bo\'ling va menyularga to\'liq amal qiling 🙂',
         'next_time_also_be_active' => 'Juda zo\'r keyingi kunlarda ham shunday davom eting 🤩',
         'next_time_follow' => 'Keyingi kun albatta menyularga amal qiling. Natijaga erishishning eng asosiy unsuri bu menyularga to\'liq amal qilishdir!',
-        'track_report_after_19_every_day' => 'Kunlik hisobotlar har kuni soat 19:00 dan keyin beriladi'
+        'track_report_after_19_every_day' => 'Kunlik hisobotlar har kuni soat 19:00 dan keyin beriladi',
+        'welcome_for_new_user' => "Sizni bizning Dieto botimizda ko'rishdan mamnunmiz\n\n" .
+            "Bu bot sizga ozish yoki semirish uchun yordam beradi\n\n" .
+            "Bu bot sizga quyidagi xizmatlarni taqdim etadi:\n" .
+            "- ✅ Vazn yo'qotish yoki yig'ish uchun mos menyular\n" .
+            "- ✅ Kunlik kaloriya hisob-kitobi\n" .
+            "- ✅ Ovqat yoki mahsulot kaloriyasini aniqlash\n" .
+            "- ✅ Har kuni ovqatlanishingizni nazorat qilish\n\n" .
+            "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin."
     ],
     'ru' => [
         'select_language' => 'Tilni tanlang ru',
@@ -107,6 +115,14 @@ return [
         'next_time_be_more_active' => 'Keyingi safar yanada masuliyatli bo\'ling va menyularga to\'liq amal qiling 🙂',
         'next_time_also_be_active' => 'Juda zo\'r keyingi kunlarda ham shunday davom eting 🤩',
         'next_time_follow' => 'Keyingi kun albatta menyularga amal qiling. Natijaga erishishning eng asosiy unsuri bu menyularga to\'liq amal qilishdir!',
-        'track_report_after_19_every_day' => 'Kunlik hisobotlar har kuni soat 19:00 dan keyin beriladi'
+        'track_report_after_19_every_day' => 'Kunlik hisobotlar har kuni soat 19:00 dan keyin beriladi',
+        'welcome_for_new_user' => "Sizni bizning Dieto botimizda ko'rishdan mamnunmiz\n\n" .
+            "Bu bot sizga ozish yoki semirish uchun yordam beradi\n\n" .
+            "Bu bot sizga quyidagi xizmatlarni taqdim etadi:\n" .
+            "- ✅ Vazn yo'qotish yoki yig'ish uchun mos menyular\n" .
+            "- ✅ Kunlik kaloriya hisob-kitobi\n" .
+            "- ✅ Ovqat yoki mahsulot kaloriyasini aniqlash\n" .
+            "- ✅ Har kuni ovqatlanishingizni nazorat qilish\n\n" .
+            "Siz botdan tekin foydalanishingiz yoki premium obuna orqali qo'shimcha xizmatlardan foydalanishingiz mumkin."
     ],
 ];

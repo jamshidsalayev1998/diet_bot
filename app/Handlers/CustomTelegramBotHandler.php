@@ -132,7 +132,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         ]);
         $dataRequest = $this->request->all();
         $userInfo = $this->chat->user_info;
-        $this->chat->message('Hush kelibsiz')->removeReplyKeyboard()->send();
+        $this->chat->message($this->lang('welcome_for_new_user'))->removeReplyKeyboard()->send();
         if (!$userInfo) {
             $userInfo = UserInfo::create([
                 'chat_id' => $this->chat->chat_id,
@@ -336,6 +336,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->reply($this->lang('gender_changed'));
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramButtonService::change_user_info($this->chat);
+        UserActionService::remove($this->chat);
     }
     public function change_activity_type()
     {
@@ -366,6 +367,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->reply($this->lang('activity_type_changed'));
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramButtonService::change_user_info($this->chat);
+        UserActionService::remove($this->chat);
     }
 
     public function daily_track_request()
