@@ -148,7 +148,7 @@
                 </div>
             </div>
 
-            <div class="menu-item perekus">
+            {{-- <div class="menu-item perekus">
                 <div class="menu-header">Perekuslar</div>
 
                 <div class="item-bottom">
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
