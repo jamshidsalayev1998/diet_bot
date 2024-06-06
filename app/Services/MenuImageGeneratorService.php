@@ -60,7 +60,7 @@ class MenuImageGeneratorService
                 $userInfo->update();
             }
             $status = 1;
-            $message = 'success';
+            // $message = 'success';
         } catch (Exception $e) {
             $message = 'error';
             $error = [
