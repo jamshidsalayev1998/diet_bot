@@ -43,6 +43,7 @@ class MenuImageGeneratorService
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
                 if(File::exists($imagePath)){
+                    $message = 'file_exists';
                     File::delete($imagePath);
                 }
 
