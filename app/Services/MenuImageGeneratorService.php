@@ -42,8 +42,8 @@ class MenuImageGeneratorService
                 $url = 'app/public' . $imageUrl;
                 $imagePath = storage_path($url);
                 $directoryPath = dirname($imagePath);
-                if(File::exists($url)){
-                    File::delete($url);
+                if(File::exists($imagePath)){
+                    File::delete($imagePath);
                 }
 
                 // Check if the directory exists, and create it if it doesn't
