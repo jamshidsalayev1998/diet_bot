@@ -12,8 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('track:sendDailyTrackMessage')->dailyAt('20:22');
-        $schedule->command('track:sendDailyTrackMessage')->everyMinute();
+        $schedule->command('track:sendDailyTrackMessage')->dailyAt('19:01');
+        // $schedule->command('track:sendDailyTrackMessage')->everyMinute();
     }
 
     /**
