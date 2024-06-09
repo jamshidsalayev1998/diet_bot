@@ -72,6 +72,9 @@ return [
         'tap_on_button_which_you_want_to_change' => 'O\'zgartirmoqchi bo\'lgan ma\'lumotingiz ustiga bosing 👇👇👇',
         'enter_the_correct_format' => 'To\'g\'ri formatda kiriting',
         'enter_the_correct_format_of_tall' => 'Bo\'yingizni to\'g\'ri formatda kiriting (misol uchun: 168)',
+        'buy_premium_message' => "Premium obuna sotib olish uchun quyidagi kartaga kerakli summani o\'tqazishingiz va chekini va shaxsiy raqamingizni :bill_check_admin ga jo\'natishingiz kerak.\n\n Bir oylik obuna narxi: <code>:premium_price</code> so'm \n\n Karta: <code>:card_number</code> \n Shaxsiy raqamingiz: <code>:chat_id</code>",
+        'status_of_subscribe_premium' => "Siz <strong>Premium</strong> obunadasiz. \n\n Obunangiz tugash sanasi :premium_ending_date",
+        'status_of_subscribe_base' => "Siz <strong>Base</strong> obunadasiz.\n\n",
     ],
     'ru' => [
         'select_language' => 'Foydalanish tilini tanlang',

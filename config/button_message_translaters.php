@@ -72,5 +72,13 @@ return [
     'enter_bot_language' => [
         'uz' => 'Foydalanish tili',
         'ru' => 'Foydalanish tili ru'
+    ],
+    'buy_premium' => [
+        'uz' => 'Premium sotib olish',
+        'ru' => 'Premium sotib olish'
+    ],
+    'status_of_subscribe' => [
+        'uz' => 'Obuna',
+        'ru' => 'Obuna'
     ]
 ];

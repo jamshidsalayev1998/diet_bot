@@ -518,4 +518,17 @@ class TelegramUserInfoService
         }
         return $status;
     }
+
+    public static function send_group_link($chat, $userInfo)
+    {
+        $linkGroup = config('projectDefaultValues.group_link');
+        if ($userInfo->gender) {
+            $text = self::lang('group_link_text_for_man');
+        } else {
+            $text = self::lang('group_link_text_for_woman');
+        }
+        $chat->message($text)->keyboard(Keyboard::make()->buttons([
+            Button::make(self::lang('enter_the_group'))->url($linkGroup[$userInfo->gender]),
+        ]))->send();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Track\DailyTrackReport;
+use App\Models\V1\UserInfoPayment;
 use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -16,24 +17,47 @@ class TelegramButtonService
     use TelegramMessageLangsTrait;
     public static function home($chat)
     {
-        $keyboard = ReplyKeyboard::make()
-            ->row([
-                ReplyButton::make(self::buttonLang('calc_dieto')),
-            ])->resize()
-            ->row([
-                ReplyButton::make(self::buttonLang('send_today_track_report')),
-            ])->resize()
-            ->row([
-                ReplyButton::make(self::buttonLang('menu')),
-                ReplyButton::make(self::buttonLang('profile')),
-            ])->resize()
-            ->row([
-                ReplyButton::make(self::buttonLang('my_results')),
-            ])->resize();
+        $userInfo = $chat->user_info;
+        if ($userInfo->is_premium) {
+
+            $keyboard = ReplyKeyboard::make()
+                ->row([
+                    ReplyButton::make(self::buttonLang('calc_dieto')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('send_today_track_report')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('menu')),
+                    ReplyButton::make(self::buttonLang('profile')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('my_results')),
+                ])->resize();
             // ->row([
             //     ReplyButton::make(self::buttonLang('support')),
             // ])->resize();
+        } else {
+            $keyboard = ReplyKeyboard::make()
+                ->row([
+                    ReplyButton::make(self::buttonLang('buy_premium')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('calc_dieto')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('send_today_track_report')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('menu')),
+                    ReplyButton::make(self::buttonLang('profile')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('my_results')),
+                ])->resize();
+        }
         $chat->message(self::lang('welcome_to_home_for_old_user'))->replyKeyboard($keyboard)->send();
+        // TelegramUserInfoService::send_group_link($chat,$userInfo);
     }
 
     public static function my_results($chat)
@@ -187,6 +211,7 @@ class TelegramButtonService
             ])->resize()
             ->row([
                 ReplyButton::make(self::buttonLang('enter_bot_language')),
+                ReplyButton::make(self::buttonLang('status_of_subscribe')),
             ])->resize()
             ->row([
                 ReplyButton::make(self::buttonLang('home')),
@@ -312,5 +337,29 @@ class TelegramButtonService
     {
         $text = UserDailyTrackService::liga_results_text($chat->user_info);
         $chat->message($text)->send();
+    }
+
+    public static function buy_premium($chat)
+    {
+        $bill_card_number = config('projectDefaultValues.bill_card_number');
+        $bill_check_admin = config('projectDefaultValues.bill_check_admin');
+        $premium_price = config('projectDefaultValues.premium_price');
+        $text = self::lang('buy_premium_message', ['card_number' => $bill_card_number, 'bill_check_admin' => $bill_check_admin, 'chat_id' => $chat->chat_id, 'premium_price' => $premium_price]);
+        $chat->html($text)->send();
+    }
+    public static function status_of_subscribe($chat)
+    {
+        $userInfo = $chat->user_info;
+        if ($userInfo->is_premium) {
+            $lastPayment = UserInfoPayment::where('chat_id', $chat->chat_id)->orderBy('id', 'DESC')->first();
+            $text = self::lang('status_of_subscribe_premium', ['premium_ending_date' => $userInfo->premium_ending_date]);
+        } else {
+            $text = self::lang('status_of_subscribe_base');
+            $bill_card_number = config('projectDefaultValues.bill_card_number');
+            $bill_check_admin = config('projectDefaultValues.bill_check_admin');
+            $premium_price = config('projectDefaultValues.premium_price');
+            $text .= self::lang('buy_premium_message', ['card_number' => $bill_card_number, 'bill_check_admin' => $bill_check_admin, 'chat_id' => $chat->chat_id, 'premium_price' => $premium_price]);
+        }
+        $chat->html($text)->send();
     }
 }

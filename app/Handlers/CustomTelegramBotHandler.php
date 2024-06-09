@@ -18,11 +18,13 @@ use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use DefStudio\Telegraph\Keyboard\ReplyButton;
 use DefStudio\Telegraph\Keyboard\ReplyKeyboard;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Stringable;
 
 class CustomTelegramBotHandler extends WebhookHandler
 {
     use TelegramMessageLangsTrait;
+
     protected function handleChatMessage(Stringable $text): void
     {
         $userAction = $this->chat->user_action;
@@ -33,24 +35,28 @@ class CustomTelegramBotHandler extends WebhookHandler
                     case 'entering_weight':
                         $statusStore = TelegramUserInfoService::store_weight($this->chat, $text);
                         if ($statusStore) {
+                            $this->chat->message($this->lang('saved'))->send();
                             TelegramUserInfoService::check_user_info($this->chat);
                         }
                         break;
                     case 'entering_goal_weight':
                         $statusStore = TelegramUserInfoService::store_goal_weight($this->chat, $text);
                         if ($statusStore) {
+                            $this->chat->message($this->lang('saved'))->send();
                             TelegramUserInfoService::check_user_info($this->chat);
                         }
                         break;
                     case 'entering_tall':
                         $statusStore = TelegramUserInfoService::store_tall($this->chat, $text);
                         if ($statusStore) {
+                            $this->chat->message($this->lang('saved'))->send();
                             TelegramUserInfoService::check_user_info($this->chat);
                         }
                         break;
                     case 'entering_age':
                         $statusStore = TelegramUserInfoService::store_age($this->chat, $text);
                         if ($statusStore) {
+                            $this->chat->message($this->lang('saved'))->send();
                             TelegramUserInfoService::check_user_info($this->chat);
                         }
                         break;
@@ -108,16 +114,20 @@ class CustomTelegramBotHandler extends WebhookHandler
                 }
             }
         } else {
-
             $keywordButton = TelegramButtonService::findMessageKeyword($text);
-            // $this->chat->message($keywordButton ? $keywordButton :'dddd')->send();
             if ($keywordButton) {
-                if (method_exists(TelegramButtonService::class, $keywordButton))
+                if (method_exists(TelegramButtonService::class, $keywordButton)) {
                     TelegramButtonService::$keywordButton($this->chat);
-                else
+                } else {
                     $this->chat->message('topilmadi bu komanda')->send();
+                }
             } else {
-                $this->chat->message('topilmadi bu komanda')->send();
+                TempMessage::create([
+                    'text_response' => 'wh - ' . json_encode($this->message->photos()[3]->id())
+                ]);
+                $photo = $this->message->photos()[1];
+                Telegraph::store($photo, Storage::path('/bot/images'), 'new_photo_image.jpg');
+                $this->chat->message('topilmadi bu komanda ')->send();
             }
         }
     }
@@ -160,6 +170,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         app()->setLocale($lang);
         UserActionService::remove($this->chat);
         $deletedMessages = [$this->messageId];
+        $this->chat->message($this->lang('saved'))->send();
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
         $this->reply($this->lang(json_encode($deletedMessages)));
@@ -172,6 +183,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 8;
         $userInfo->update();
         $deletedMessages = [$this->messageId];
+        $this->chat->message($this->lang('saved'))->send();
         UserActionService::remove($this->chat);
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
@@ -185,6 +197,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 3;
         $userInfo->update();
         $deletedMessages = [$this->messageId];
+        $this->chat->message($this->lang('saved'))->send();
         UserActionService::remove($this->chat);
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
@@ -213,15 +226,10 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->reply($this->lang('user_info_confirmed'));
         UserActionService::remove($this->chat);
         TelegramButtonService::home($this->chat);
-        $resultMenuImage = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
-        $menuPartImage = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
-        // TempMessage::create([
-        //     'text_response' => json_encode($resultMenuImage)
-        // ]);
-        // TempMessage::create([
-        //     'text_response' => json_encode($menuPartImage)
-        // ]);
+        MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
+        MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
         TelegramButtonService::full_menu($this->chat);
+        TelegramUserInfoService::send_group_link($this->chat, $userInfo);
     }
 
     public function change_language()

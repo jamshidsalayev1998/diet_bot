@@ -36,5 +36,12 @@ return [
             'uz' => 'Shirinliklar yeyish mumkin emas',
             'ru' => 'Shirinliklar yeyish mumkin emas',
         ],
-    ]
+    ],
+    'group_link' => [
+        1 => 'https://t.me/+JstKL4zZJnkwMDhi',
+        0 => 'https://t.me/+4Sm4puRTI783ZTBi'
+    ],
+    'bill_check_admin' => '@Laravellll',
+    'bill_card_number' => '1234',
+    'premium_price' => '30,000'
 ];
