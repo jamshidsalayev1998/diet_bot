@@ -4,10 +4,12 @@ namespace App\Console\Commands\Track;
 
 use App\Models\V1\UserInfo;
 use App\Services\TelegramUserInfoService;
+use App\Traits\TelegramMessageLangsTrait;
 use Illuminate\Console\Command;
 
 class SendDailyTrackMessageCommand extends Command
 {
+    use TelegramMessageLangsTrait;
     /**
      * The name and signature of the console command.
      *
