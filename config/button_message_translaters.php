@@ -80,5 +80,13 @@ return [
     'status_of_subscribe' => [
         'uz' => 'Obuna',
         'ru' => 'Obuna'
+    ],
+    'start_calc_ai_conversation' => [
+        'uz' => 'Suniy intelekt bilan muloqotni boshlash',
+        'ru' => 'Suniy intelekt bilan muloqotni boshlash'
+    ],
+    'stop_calc_ai_conversation' => [
+        'uz' => 'Suniy intelekt bilan muloqotni tugatish',
+        'ru' => 'Suniy intelekt bilan muloqotni tugatish'
     ]
 ];

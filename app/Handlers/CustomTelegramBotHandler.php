@@ -7,6 +7,7 @@ use App\Models\Track\DailyTrackReport;
 use App\Models\V1\ActivityType;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
+use App\Services\CalcAi\CalcAiService;
 use App\Services\MenuImageGeneratorService;
 use App\Services\TelegramButtonService;
 use App\Services\TelegramUserInfoService;
@@ -29,6 +30,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     {
         $userAction = $this->chat->user_action;
         $userInfo = $this->chat->user_info;
+        $calc_ai_conversation = $this->chat->calc_ai_conversation;
         if ($userAction) {
             if ($userInfo->status < 9) {
                 switch ($userAction->screen) {
@@ -80,7 +82,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
                             TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
@@ -89,7 +91,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
                             TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
@@ -98,7 +100,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
                             TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
@@ -107,7 +109,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                         if ($statusStore) {
                             $userInfo->status = 11;
                             $userInfo->update();
-                            TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
+                            TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
                             TelegramButtonService::change_user_info($this->chat);
                         }
                         break;
@@ -122,12 +124,11 @@ class CustomTelegramBotHandler extends WebhookHandler
                     $this->chat->message('topilmadi bu komanda')->send();
                 }
             } else {
-                TempMessage::create([
-                    'text_response' => 'wh - ' . json_encode($this->message->photos()[3]->id())
-                ]);
-                $photo = $this->message->photos()[1];
-                Telegraph::store($photo, Storage::path('/bot/images'), 'new_photo_image.jpg');
-                $this->chat->message('topilmadi bu komanda ')->send();
+                if ($calc_ai_conversation) {
+                    CalcAiService::message_to_ai($this->chat, $text, $this->message->photos(), $calc_ai_conversation,$this->bot->token);
+                } else {
+                    $this->chat->message('topilmadi bu komanda ')->send();
+                }
             }
         }
     }

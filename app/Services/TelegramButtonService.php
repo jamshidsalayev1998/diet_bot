@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Track\DailyTrackReport;
+use App\Models\V1\CalcAiConversation;
 use App\Models\V1\UserInfoPayment;
 use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Keyboard\Button;
@@ -361,5 +362,50 @@ class TelegramButtonService
             $text .= self::lang('buy_premium_message', ['card_number' => $bill_card_number, 'bill_check_admin' => $bill_check_admin, 'chat_id' => $chat->chat_id, 'premium_price' => $premium_price]);
         }
         $chat->html($text)->send();
+    }
+
+    public static function calc_dieto($chat)
+    {
+        $calc_ai_conversation = $chat->calc_ai_conversation;
+        if ($calc_ai_conversation) {
+            $keyboard = ReplyKeyboard::make()
+                ->row([
+                    ReplyButton::make(self::buttonLang('stop_calc_ai_conversation')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('home')),
+                ])->resize();
+            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
+        } else {
+            $keyboard = ReplyKeyboard::make()
+                ->row([
+                    ReplyButton::make(self::buttonLang('start_calc_ai_conversation')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('home')),
+                ])->resize();
+            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
+        }
+    }
+
+    public static function start_calc_ai_conversation($chat)
+    {
+        $calc_ai_conversation = $chat->calc_ai_conversation;
+        if (!$calc_ai_conversation) {
+            CalcAiConversation::create([
+                'chat_id' => $chat->chat_id,
+                'status' => 1
+            ]);
+            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->removeReplyKeyboard()->send();
+        } else {
+            $keyboard = ReplyKeyboard::make()
+                ->row([
+                    ReplyButton::make(self::buttonLang('start_calc_ai_conversation')),
+                ])->resize()
+                ->row([
+                    ReplyButton::make(self::buttonLang('home')),
+                ])->resize();
+            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
+        }
     }
 }

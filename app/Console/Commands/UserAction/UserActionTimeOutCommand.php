@@ -13,7 +13,7 @@ class UserActionTimeOutCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:user-action-time-out-command';
+    protected $signature = 'userAction:timeOutDelete';
 
     /**
      * The console command description.

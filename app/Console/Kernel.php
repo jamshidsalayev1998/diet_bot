@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('track:sendDailyTrackMessage')->dailyAt('19:01');
+        $schedule->command('userAction:timeOutDelete')->everyMinute();
         // $schedule->command('track:sendDailyTrackMessage')->everyMinute();
     }
 

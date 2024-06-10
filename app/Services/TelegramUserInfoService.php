@@ -314,7 +314,7 @@ class TelegramUserInfoService
                     $status = 0;
                     $chat->message(self::lang('your_weight_is_equal_to_goal_weight'))->send();
                 } else {
-                    $userInfo->goal_weight = $weight;
+                    $userInfo->goal_weight = $weightString;
                     $userInfo->update();
                     UserActionService::remove($chat);
                 }
