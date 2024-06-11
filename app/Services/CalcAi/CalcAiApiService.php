@@ -26,7 +26,7 @@ class CalcAiApiService
                 $response = $client->post($base_url . $url, [
                     RequestOptions::MULTIPART => $body
                 ]);
-                $data = $response->getBody()->getContents();
+                $data = json_decode($response->getBody()->getContents(),true);
             }
             $message = 'success';
         } catch (Exception $e) {

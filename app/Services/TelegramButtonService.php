@@ -392,11 +392,18 @@ class TelegramButtonService
     {
         $calc_ai_conversation = $chat->calc_ai_conversation;
         if (!$calc_ai_conversation) {
+            $keyboard = ReplyKeyboard::make()
+            ->row([
+                ReplyButton::make(self::buttonLang('stop_calc_ai_conversation')),
+            ])->resize()
+            ->row([
+                ReplyButton::make(self::buttonLang('home')),
+            ])->resize();
             CalcAiConversation::create([
                 'chat_id' => $chat->chat_id,
                 'status' => 1
             ]);
-            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->removeReplyKeyboard()->send();
+            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
         } else {
             $keyboard = ReplyKeyboard::make()
                 ->row([
@@ -407,5 +414,10 @@ class TelegramButtonService
                 ])->resize();
             $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
         }
+    }
+    public static function stop_calc_ai_conversation($chat)
+    {
+        CalcAiConversation::where('chat_id' , $chat->chat_id)->update(['status' => 0]);
+        self::home($chat);
     }
 }

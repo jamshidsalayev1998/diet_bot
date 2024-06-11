@@ -121,11 +121,11 @@ class CustomTelegramBotHandler extends WebhookHandler
                 if (method_exists(TelegramButtonService::class, $keywordButton)) {
                     TelegramButtonService::$keywordButton($this->chat);
                 } else {
-                    $this->chat->message('topilmadi bu komanda')->send();
+                    $this->chat->message('topilmadi bu komanda lal')->send();
                 }
             } else {
                 if ($calc_ai_conversation) {
-                    CalcAiService::message_to_ai($this->chat, $text, $this->message->photos(), $calc_ai_conversation,$this->bot->token);
+                    CalcAiService::message_to_ai($this->chat, $text, $this->message->photos(), $calc_ai_conversation,$this->bot->token,$userInfo);
                 } else {
                     $this->chat->message('topilmadi bu komanda ')->send();
                 }
