@@ -83,6 +83,7 @@ return [
         'carbs' => 'Uglevodlar',
         'fats' => 'Yog\'',
         'ingredients' => 'Tarkibidagi mahsulotlar',
+        'saved' => '✅Saqlandi'
     ],
     'ru' => [
         'select_language' => 'Foydalanish tilini tanlang',
@@ -166,5 +167,6 @@ return [
         'carbs' => 'Uglevodlar',
         'fats' => 'Yog\'',
         'ingredients' => 'Tarkibidagi mahsulotlar',
+        'saved' => '✅Saqlandi'
     ],
 ];

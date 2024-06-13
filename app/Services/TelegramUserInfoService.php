@@ -146,6 +146,7 @@ class TelegramUserInfoService
     {
         $calories = null;
         $userInfo = $chat->user_info;
+        $oldMenuSizeId = $userInfo->menu_size_id;
         if ($userInfo->gender) {
             $calories = 66 + 13.7 * $userInfo->weight + 5 * $userInfo->tall - 6.76 * $userInfo->age;
         } else {
@@ -166,6 +167,10 @@ class TelegramUserInfoService
             $firstMenu = MenuSize::where('calories', '>=', $needCalories)->orderBy('calories', 'DESC')->first();
         }
         $userInfo->menu_size_id = $firstMenu->id;
+        if ($oldMenuSizeId != $firstMenu->id) {
+            MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
+            MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
+        }
         $userInfo->update();
     }
 
