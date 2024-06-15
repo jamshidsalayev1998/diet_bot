@@ -417,7 +417,7 @@ class TelegramButtonService
     }
     public static function stop_calc_ai_conversation($chat)
     {
-        CalcAiConversation::where('chat_id' , $chat->chat_id)->update(['status' => 0]);
-        self::home($chat);
+        CalcAiConversation::where('chat_id' , $chat->chat_id)->where('status' , 1)->update(['status' => 0]);
+        self::start_calc_ai_conversation($chat);
     }
 }

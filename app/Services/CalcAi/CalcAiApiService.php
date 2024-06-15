@@ -8,7 +8,7 @@ use GuzzleHttp\RequestOptions;
 
 class CalcAiApiService
 {
-    public static function request($url, $method, $body, $token)
+    public static function request($url, $method, $body, $token, $typeBody = 'json')
     {
         $base_url = config('calc_ai_variables.base_url');
         $headers = [
@@ -23,10 +23,16 @@ class CalcAiApiService
         $data = [];
         try {
             if ($method == 'post') {
-                $response = $client->post($base_url . $url, [
-                    RequestOptions::MULTIPART => $body
-                ]);
-                $data = json_decode($response->getBody()->getContents(),true);
+                if ($typeBody == 'json') {
+                    $response = $client->post($base_url . $url, [
+                        RequestOptions::JSON => $body
+                    ]);
+                } else {
+                    $response = $client->post($base_url . $url, [
+                        RequestOptions::MULTIPART => $body
+                    ]);
+                }
+                $data = json_decode($response->getBody()->getContents(), true);
             }
             $message = 'success';
         } catch (Exception $e) {

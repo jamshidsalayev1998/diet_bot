@@ -125,7 +125,11 @@ class CustomTelegramBotHandler extends WebhookHandler
                 }
             } else {
                 if ($calc_ai_conversation) {
-                    CalcAiService::message_to_ai($this->chat, $text, $this->message->photos(), $calc_ai_conversation,$this->bot->token,$userInfo);
+                    if (count($this->message->photos())) {
+                        CalcAiService::message_to_ai($this->chat, $text, $this->message->photos(), $calc_ai_conversation, $this->bot->token, $userInfo);
+                    } else {
+                        CalcAiService::comment_to_ai($this->chat, $text,  $calc_ai_conversation, $this->bot->token, $userInfo);
+                    }
                 } else {
                     $this->chat->message('topilmadi bu komanda ')->send();
                 }
