@@ -6,7 +6,6 @@ use App\Services\RandomStringService;
 use App\Traits\TelegramMessageLangsTrait;
 use DefStudio\Telegraph\Enums\ChatActions;
 use DefStudio\Telegraph\Facades\Telegraph;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class CalcAiService
@@ -23,7 +22,7 @@ class CalcAiService
                     ->chatAction(ChatActions::TYPING)
                     ->send();
                 // $chat->message('token - ' . $token)->send();
-                $resultStore = Telegraph::store(Arr::last($photos), Storage::path('/calc_ai_images/' . $chat->chat_id), RandomStringService::randomAlphaAndNumberHelper(15) . '.jpg');
+                $resultStore = Telegraph::store($photos[0], Storage::path('/calc_ai_images/' . $chat->chat_id), RandomStringService::randomAlphaAndNumberHelper(15) . '.jpg');
                 $filePath = $resultStore;
                 $fileName = basename($filePath);
                 $body = [
