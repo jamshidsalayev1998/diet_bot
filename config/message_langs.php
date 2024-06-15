@@ -83,7 +83,8 @@ return [
         'carbs' => 'Uglevodlar',
         'fats' => 'Yog\'',
         'ingredients' => 'Tarkibidagi mahsulotlar',
-        'saved' => '✅Saqlandi'
+        'saved' => '✅Saqlandi',
+        'welcome_to_calc_ai_conversation' => ''
     ],
     'ru' => [
         'select_language' => 'Foydalanish tilini tanlang',
