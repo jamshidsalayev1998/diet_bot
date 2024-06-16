@@ -5,6 +5,7 @@ namespace App\Handlers;
 use App\Models\TempMessage;
 use App\Models\Track\DailyTrackReport;
 use App\Models\V1\ActivityType;
+use App\Models\V1\CalcAiConversation;
 use App\Models\V1\ChildTelegramChat;
 use App\Models\V1\UserInfo;
 use App\Services\CalcAi\CalcAiService;
@@ -30,7 +31,7 @@ class CustomTelegramBotHandler extends WebhookHandler
     {
         $userAction = $this->chat->user_action;
         $userInfo = $this->chat->user_info;
-        $calc_ai_conversation = $this->chat->calc_ai_conversation;
+
         if ($userAction) {
             if ($userInfo->status < 9) {
                 switch ($userAction->screen) {
@@ -124,12 +125,9 @@ class CustomTelegramBotHandler extends WebhookHandler
                     $this->chat->message('topilmadi bu komanda lal')->send();
                 }
             } else {
+                $calc_ai_conversation = $this->chat->calc_ai_conversation;
                 if ($calc_ai_conversation) {
-                    if (count($this->message->photos())) {
-                        CalcAiService::message_to_ai($this->chat, $text, $this->message->photos(), $calc_ai_conversation, $this->bot->token, $userInfo);
-                    } else {
-                        CalcAiService::comment_to_ai($this->chat, $text,  $calc_ai_conversation, $this->bot->token, $userInfo);
-                    }
+                    CalcAiService::connect_with_ai($this->chat,$text,$this->message->photos(),$calc_ai_conversation,$this->bot->token,$userInfo);
                 } else {
                     $this->chat->message('topilmadi bu komanda ')->send();
                 }
@@ -378,6 +376,13 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramButtonService::change_user_info($this->chat);
         UserActionService::remove($this->chat);
+    }
+
+    public function ai_commenting()
+    {
+        $calc_ai_conversation_id = $this->data->get('calc_ai_conversation_id');
+        CalcAiConversation::where('id' , $calc_ai_conversation_id)->update(['commenting' => 1]);
+        $this->chat->message(self::lang('tell_me_about_this_product'))->send();
     }
 
     public function daily_track_request()
