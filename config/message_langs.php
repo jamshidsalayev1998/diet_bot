@@ -53,7 +53,7 @@ return [
         'partially_follow_a_diet' => '🙂 qisman amal qildim',
         'did_not_follow_a_diet' => '☹️ amal qilmadim',
         'next_time_be_more_active' => "Siz 1 ball qo\'lga kiritdingiz. \n\n" . "Keyingi safar yanada masuliyatli bo\'ling va menyularga to\'liq amal qiling 🙂",
-        'next_time_also_be_active' => "Juda zo\'r siz 2 ball qo\'lga kiritdingiz. \n\n" . "Keyingi kunlarda ham shunday davom eting 🤩",
+        'next_time_also_be_active' => "Juda zo'r siz 2 ball qo'lga kiritdingiz. \n\n" . "Keyingi kunlarda ham shunday davom eting 🤩",
         'next_time_follow' => "Keyingi kun albatta menyularga qatiyan amal qiling.\n\n",
         'track_report_after_19_every_day' => 'Kunlik hisobotlar har kuni soat 19:00 dan keyin beriladi',
         'welcome_for_new_user' => "Sizni bizning Dieto botimizda ko'rishdan mamnunmiz\n\n" .
@@ -84,7 +84,10 @@ return [
         'fats' => 'Yog\'',
         'ingredients' => 'Tarkibidagi mahsulotlar',
         'saved' => '✅Saqlandi',
-        // 'welcome_to_calc_ai_conversation' => ''
+        'spcial_menu_for_you' => 'siz uchun maxsus menyu',
+        'daily_need_calories' => 'Kunlik yeyish kerak bo\'lgan kkaloriya',
+        'rules_which_need_follow' => "Amal qilish kerak bo'lgan qoidalar",
+        'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling"
     ],
     'ru' => [
         'select_language' => 'Foydalanish tilini tanlang',
@@ -168,6 +171,10 @@ return [
         'carbs' => 'Uglevodlar',
         'fats' => 'Yog\'',
         'ingredients' => 'Tarkibidagi mahsulotlar',
-        'saved' => '✅Saqlandi'
+        'saved' => '✅Saqlandi',
+        'spcial_menu_for_you' => 'siz uchun maxsus menyu',
+        'daily_need_calories' => 'Kunlik yeyish kerak bo\'lgan kkaloriya',
+        'rules_which_need_follow' => "Amal qilish kerak bo'lgan qoidalar",
+        'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling"
     ],
 ];
