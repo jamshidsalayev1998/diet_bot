@@ -168,8 +168,15 @@ class TelegramUserInfoService
         }
         $userInfo->menu_size_id = $firstMenu->id;
         if ($oldMenuSizeId != $firstMenu->id) {
-            MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
-            MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
+            $userInfo->menu_image = null;
+            $userInfo->menu_part_images = null;
+            $userInfo->update();
+            $chat->message('menu size id ozgardi')->send();
+            $resultGenerateMenu = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
+            $chat->message('menu generate result '.json_encode($resultGenerateMenu))->send();
+            $resultGenerateMenuPart = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
+            $chat->message('menu parts generate result '.json_encode($resultGenerateMenuPart))->send();
+
         }
         $userInfo->update();
     }
