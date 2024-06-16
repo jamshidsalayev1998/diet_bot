@@ -167,16 +167,16 @@ class TelegramUserInfoService
             $firstMenu = MenuSize::where('calories', '>=', $needCalories)->orderBy('calories', 'DESC')->first();
         }
         $userInfo->menu_size_id = $firstMenu->id;
+        $userInfo->update();
         if ($oldMenuSizeId != $firstMenu->id) {
             $userInfo->menu_image = null;
             $userInfo->menu_part_images = null;
             $userInfo->update();
             $chat->message('menu size id ozgardi')->send();
             $resultGenerateMenu = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
-            $chat->message('menu generate result '.json_encode($resultGenerateMenu))->send();
+            $chat->message('menu generate result ' . json_encode($resultGenerateMenu))->send();
             $resultGenerateMenuPart = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
-            $chat->message('menu parts generate result '.json_encode($resultGenerateMenuPart))->send();
-
+            $chat->message('menu parts generate result ' . json_encode($resultGenerateMenuPart))->send();
         }
         $userInfo->update();
     }
