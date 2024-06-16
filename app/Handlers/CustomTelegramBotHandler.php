@@ -348,6 +348,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramButtonService::change_user_info($this->chat);
         UserActionService::remove($this->chat);
+        TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
     }
     public function change_activity_type()
     {
