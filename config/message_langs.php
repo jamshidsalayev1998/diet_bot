@@ -84,7 +84,7 @@ return [
         'fats' => 'Yog\'',
         'ingredients' => 'Tarkibidagi mahsulotlar',
         'saved' => '✅Saqlandi',
-        'spcial_menu_for_you' => 'siz uchun maxsus menyu',
+        'special_menu_for_you' => 'siz uchun maxsus menyu',
         'daily_need_calories' => 'Kunlik yeyish kerak bo\'lgan kkaloriya',
         'rules_which_need_follow' => "Amal qilish kerak bo'lgan qoidalar",
         'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling"
@@ -172,7 +172,7 @@ return [
         'fats' => 'Yog\'',
         'ingredients' => 'Tarkibidagi mahsulotlar',
         'saved' => '✅Saqlandi',
-        'spcial_menu_for_you' => 'siz uchun maxsus menyu',
+        'special_menu_for_you' => 'siz uchun maxsus menyu',
         'daily_need_calories' => 'Kunlik yeyish kerak bo\'lgan kkaloriya',
         'rules_which_need_follow' => "Amal qilish kerak bo'lgan qoidalar",
         'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling"
