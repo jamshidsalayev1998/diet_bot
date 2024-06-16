@@ -342,13 +342,12 @@ class CustomTelegramBotHandler extends WebhookHandler
         $gender = $this->data->get('gender');
         $userInfo->gender = $gender;
         $userInfo->update();
+        TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
         $deletedMessages = [$this->messageId];
-        TelegramUserInfoService::calculate_daily_spend_calories($this->chat);
         $this->reply($this->lang('gender_changed'));
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramButtonService::change_user_info($this->chat);
         UserActionService::remove($this->chat);
-        TelegramUserInfoService::re_calculate_daily_spend_calories($this->chat);
     }
     public function change_activity_type()
     {
