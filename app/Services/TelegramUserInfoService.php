@@ -172,11 +172,14 @@ class TelegramUserInfoService
             $userInfo->menu_image = null;
             $userInfo->menu_part_images = null;
             $userInfo->update();
-            $chat->message('menu size id ozgardi')->send();
             $resultGenerateMenu = MenuImageGeneratorService::generateMenuImageForOneUser($userInfo);
-            $chat->message('menu generate result ' . json_encode($resultGenerateMenu))->send();
+            if (!$resultGenerateMenu['status']) {
+                $chat->message('menu generate error ' . json_encode($resultGenerateMenu))->send();
+            }
             $resultGenerateMenuPart = MenuImageGeneratorService::generateMenuPartsImageForOneUser($userInfo);
-            $chat->message('menu parts generate result ' . json_encode($resultGenerateMenuPart))->send();
+            if (!$resultGenerateMenuPart['status']) {
+                $chat->message('menu parts generate error ' . json_encode($resultGenerateMenuPart))->send();
+            }
         }
         $userInfo->update();
     }
