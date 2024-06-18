@@ -381,8 +381,18 @@ class CustomTelegramBotHandler extends WebhookHandler
     public function ai_commenting()
     {
         $calc_ai_conversation_id = $this->data->get('calc_ai_conversation_id');
+        $commentKeyboard = Keyboard::make()
+            ->row([
+                Button::make(self::lang('ai_result_is_correct'))->action('ai_result_is_correct')->param('calc_ai_conversation_id', $calc_ai_conversation_id),
+            ]);
         CalcAiConversation::where('id' , $calc_ai_conversation_id)->update(['commenting' => 1]);
-        $this->chat->message(self::lang('tell_me_about_this_product'))->send();
+        $this->chat->message(self::lang('tell_me_about_this_product'))->keyboard($commentKeyboard)->send();
+    }
+    public function ai_result_is_correct()
+    {
+        $calc_ai_conversation_id = $this->data->get('calc_ai_conversation_id');
+        CalcAiConversation::where('id' , $calc_ai_conversation_id)->update(['commenting' => 0]);
+        // $this->chat->message(self::lang('tell_me_about_this_product'))->send();
     }
 
     public function daily_track_request()

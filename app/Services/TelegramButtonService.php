@@ -21,7 +21,7 @@ class TelegramButtonService
         $userInfo = $chat->user_info;
         $calc_ai_conversation = $chat->calc_ai_conversation;
         if ($calc_ai_conversation) {
-            CalcAiConversation::where('chat_id' , $chat->chat_id)->where('status' , 1)->update(['status' => 0]);
+            CalcAiConversation::where('chat_id', $chat->chat_id)->where('status', 1)->update(['status' => 0]);
         }
         if ($userInfo->is_premium) {
 
@@ -370,51 +370,59 @@ class TelegramButtonService
 
     public static function calc_dieto($chat)
     {
-        $calc_ai_conversation = $chat->calc_ai_conversation;
-        if (!$calc_ai_conversation) {
-
-            CalcAiConversation::create([
-                'chat_id' => $chat->chat_id,
-                'status' => 1
-            ]);
-        }
-        $keyboard = ReplyKeyboard::make()
-            ->row([
-                ReplyButton::make(self::buttonLang('home')),
-            ])->resize();
-        $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
-    }
-
-    public static function start_calc_ai_conversation($chat)
-    {
-        $calc_ai_conversation = $chat->calc_ai_conversation;
-        if (!$calc_ai_conversation) {
-            $keyboard = ReplyKeyboard::make()
-                ->row([
-                    ReplyButton::make(self::buttonLang('stop_calc_ai_conversation')),
-                ])->resize()
-                ->row([
-                    ReplyButton::make(self::buttonLang('home')),
-                ])->resize();
-            CalcAiConversation::create([
-                'chat_id' => $chat->chat_id,
-                'status' => 1
-            ]);
-            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
+        $userInfo = $chat->user_info;
+        $status = 1;
+        if ($userInfo->calc_ai_attempts_count <= 0 && !$userInfo->is_premium) {
+            $chat->html(self::lang('your_calc_ai_attempts_is_over'))->send();
         } else {
+            $calc_ai_conversation = $chat->calc_ai_conversation;
+            if (!$calc_ai_conversation) {
+                CalcAiConversation::create([
+                    'chat_id' => $chat->chat_id,
+                    'status' => 1
+                ]);
+            }
             $keyboard = ReplyKeyboard::make()
-                ->row([
-                    ReplyButton::make(self::buttonLang('start_calc_ai_conversation')),
-                ])->resize()
                 ->row([
                     ReplyButton::make(self::buttonLang('home')),
                 ])->resize();
-            $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
+            $text = self::lang('welcome_to_calc_ai_conversation');
+            if (!$userInfo->is_premium)
+                $text .= PHP_EOL . self::lang('your_calc_ai_attempts_count', ['calc_ai_attempts_count' => $userInfo->calc_ai_attempts_count]);
+            $chat->html($text)->replyKeyboard($keyboard)->send();
         }
     }
-    public static function stop_calc_ai_conversation($chat)
-    {
-        CalcAiConversation::where('chat_id', $chat->chat_id)->where('status', 1)->update(['status' => 0]);
-        self::start_calc_ai_conversation($chat);
-    }
+
+    // public static function start_calc_ai_conversation($chat)
+    // {
+    //     $calc_ai_conversation = $chat->calc_ai_conversation;
+    //     if (!$calc_ai_conversation) {
+    //         $keyboard = ReplyKeyboard::make()
+    //             ->row([
+    //                 ReplyButton::make(self::buttonLang('stop_calc_ai_conversation')),
+    //             ])->resize()
+    //             ->row([
+    //                 ReplyButton::make(self::buttonLang('home')),
+    //             ])->resize();
+    //         CalcAiConversation::create([
+    //             'chat_id' => $chat->chat_id,
+    //             'status' => 1
+    //         ]);
+    //         $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
+    //     } else {
+    //         $keyboard = ReplyKeyboard::make()
+    //             ->row([
+    //                 ReplyButton::make(self::buttonLang('start_calc_ai_conversation')),
+    //             ])->resize()
+    //             ->row([
+    //                 ReplyButton::make(self::buttonLang('home')),
+    //             ])->resize();
+    //         $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
+    //     }
+    // }
+    // public static function stop_calc_ai_conversation($chat)
+    // {
+    //     CalcAiConversation::where('chat_id', $chat->chat_id)->where('status', 1)->update(['status' => 0]);
+    //     self::start_calc_ai_conversation($chat);
+    // }
 }
