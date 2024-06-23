@@ -127,7 +127,7 @@ class CustomTelegramBotHandler extends WebhookHandler
             } else {
                 $calc_ai_conversation = $this->chat->calc_ai_conversation;
                 if ($calc_ai_conversation) {
-                    CalcAiService::connect_with_ai($this->chat,$text,$this->message->photos(),$calc_ai_conversation,$this->bot->token,$userInfo);
+                    CalcAiService::connect_with_ai($this->chat, $text, $this->message->photos(), $calc_ai_conversation, $this->bot->token, $userInfo);
                 } else {
                     $this->chat->message('topilmadi bu komanda ')->send();
                 }
@@ -173,10 +173,10 @@ class CustomTelegramBotHandler extends WebhookHandler
         app()->setLocale($lang);
         UserActionService::remove($this->chat);
         $deletedMessages = [$this->messageId];
-        $this->chat->message($this->lang('saved'))->send();
+        // $this->chat->message($this->lang('saved'))->send();
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
-        $this->reply($this->lang(json_encode($deletedMessages)));
+        $this->reply($this->lang('language_saved'));
     }
     public function entering_activity_type()
     {
@@ -186,7 +186,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 8;
         $userInfo->update();
         $deletedMessages = [$this->messageId];
-        $this->chat->message($this->lang('saved'))->send();
+        // $this->chat->message($this->lang('saved'))->send();
         UserActionService::remove($this->chat);
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
@@ -200,7 +200,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $userInfo->status = 3;
         $userInfo->update();
         $deletedMessages = [$this->messageId];
-        $this->chat->message($this->lang('saved'))->send();
+        // $this->chat->message($this->lang('saved'))->send();
         UserActionService::remove($this->chat);
         $this->chat->deleteMessages($deletedMessages)->send();
         TelegramUserInfoService::check_user_info($this->chat);
@@ -330,9 +330,10 @@ class CustomTelegramBotHandler extends WebhookHandler
         $deletedMessages = [$this->messageId];
         $this->reply($this->lang('language_changed'));
         $this->chat->deleteMessages($deletedMessages)->send();
-        TelegramButtonService::profile($this->chat);
-        TelegramButtonService::my_user_info($this->chat);
+        // TelegramButtonService::profile($this->chat);
+        // TelegramButtonService::my_user_info($this->chat);
         UserActionService::remove($this->chat);
+        TelegramButtonService::home($this->chat);
     }
     public function changing_gender()
     {
@@ -381,19 +382,52 @@ class CustomTelegramBotHandler extends WebhookHandler
     public function ai_commenting()
     {
         $calc_ai_conversation_id = $this->data->get('calc_ai_conversation_id');
-        $commentKeyboard = Keyboard::make()
-            ->row([
-                Button::make(self::lang('ai_result_is_correct'))->action('ai_result_is_correct')->param('calc_ai_conversation_id', $calc_ai_conversation_id),
-            ]);
-        CalcAiConversation::where('id' , $calc_ai_conversation_id)->update(['commenting' => 1]);
-        $this->chat->message(self::lang('tell_me_about_this_product'))->keyboard($commentKeyboard)->send();
+        $conversation = CalcAiConversation::find($calc_ai_conversation_id);
+        if ($conversation) {
+            if ($conversation->status == 1) {
+                $commentKeyboard = Keyboard::make()
+                    ->row([
+                        Button::make(self::lang('ai_result_is_correct'))->action('ai_deleting')->param('calc_ai_conversation_id', $calc_ai_conversation_id),
+                    ]);
+                CalcAiConversation::where('id', $calc_ai_conversation_id)->update(['commenting' => 1]);
+                $this->chat->message(self::lang('tell_me_about_this_product'))->keyboard($commentKeyboard)->send();
+            } else {
+                $this->chat->message(self::lang('sorry_this_calc_ai_conversation_deleted'))->send();
+            }
+        }
     }
-    public function ai_result_is_correct()
+
+    public function ai_deleting()
     {
+        $userInfo = $this->chat->user_info;
         $calc_ai_conversation_id = $this->data->get('calc_ai_conversation_id');
-        CalcAiConversation::where('id' , $calc_ai_conversation_id)->update(['commenting' => 0]);
-        // $this->chat->message(self::lang('tell_me_about_this_product'))->send();
+        $conversation = CalcAiConversation::find($calc_ai_conversation_id);
+        if ($conversation) {
+            CalcAiService::delete_product_ai($conversation->product_id, $this->bot->token);
+            CalcAiService::edit_deleted_result_of_ai(json_decode($conversation->response, true), $this->chat, $userInfo, $this->messageId);
+        }
+        $this->reply($this->lang('ai_product_deleted'));
+        CalcAiConversation::create([
+            'chat_id' => $this->chat->chat_id,
+            'status' => 1
+        ]);
     }
+    // public function ai_result_is_correct()
+    // {
+    //     $userInfo = $this->chat->user_info;
+    //     $calc_ai_conversation_id = $this->data->get('calc_ai_conversation_id');
+    //     $conversation = CalcAiConversation::find($calc_ai_conversation_id);
+    //     if ($conversation) {
+    //         CalcAiService::delete_product_ai($conversation->product_id, $this->bot->token);
+    //         CalcAiService::edit_deleted_result_of_ai(json_decode($conversation->response,true),$this->chat,$userInfo,$this->messageId);
+    //     }
+    //     $this->reply($this->lang('ai_product_deleted'));
+    //     CalcAiConversation::create([
+    //         'chat_id' => $this->chat->chat_id,
+    //         'status' => 1
+    //     ]);
+    //     // $this->chat->message(self::lang('tell_me_about_this_product'))->send();
+    // }
 
     public function daily_track_request()
     {

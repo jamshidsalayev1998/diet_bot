@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 class TelegramButtonService
 {
     use TelegramMessageLangsTrait;
-    public static function home($chat)
+    public static function home($chat, $text = null)
     {
         $userInfo = $chat->user_info;
         $calc_ai_conversation = $chat->calc_ai_conversation;
@@ -61,7 +61,9 @@ class TelegramButtonService
                     ReplyButton::make(self::buttonLang('my_results')),
                 ])->resize();
         }
-        $chat->message(self::lang('welcome_to_home_for_old_user'))->replyKeyboard($keyboard)->send();
+        if (!$text)
+            $text = self::lang('welcome_to_home_for_old_user');
+        $chat->message($text)->replyKeyboard($keyboard)->send();
         // TelegramUserInfoService::send_group_link($chat,$userInfo);
     }
 
@@ -420,9 +422,9 @@ class TelegramButtonService
     //         $chat->message(self::lang('welcome_to_calc_ai_conversation'))->replyKeyboard($keyboard)->send();
     //     }
     // }
-    // public static function stop_calc_ai_conversation($chat)
-    // {
-    //     CalcAiConversation::where('chat_id', $chat->chat_id)->where('status', 1)->update(['status' => 0]);
-    //     self::start_calc_ai_conversation($chat);
-    // }
+    public static function stop_calc_ai_conversation($chat)
+    {
+        CalcAiConversation::where('chat_id', $chat->chat_id)->where('status', 1)->update(['status' => 0]);
+        self::home($chat);
+    }
 }

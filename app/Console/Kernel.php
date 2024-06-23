@@ -15,6 +15,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('track:sendDailyTrackMessage')->dailyAt('19:01');
         $schedule->command('userAction:timeOutDelete')->everyMinute();
         $schedule->command('calcAi:turnOffTheOldConversations')->everyMinute();
+        $schedule->command('calcAi:deleteTheOldConversations')->everyMinute();
+        $schedule->command('userMessage:sendUserMessages')->everyMinute();
+        $schedule->command('menuGenerate:reGenerateMenuForNewPremiumUsers')->everyMinute();
         // $schedule->command('track:sendDailyTrackMessage')->everyMinute();
     }
 

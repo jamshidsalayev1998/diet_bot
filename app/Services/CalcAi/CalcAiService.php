@@ -2,6 +2,7 @@
 
 namespace App\Services\CalcAi;
 
+use App\Models\V1\CalcAiConversation;
 use App\Services\RandomStringService;
 use App\Services\TelegramButtonService;
 use App\Traits\TelegramMessageLangsTrait;
@@ -84,9 +85,10 @@ class CalcAiService
                     ];
                     break;
             }
-            $chat->message(json_encode($body))->send();
+            // $chat->message(json_encode($body))->send();
             $responseAi = CalcAiApiService::request('/api/product', 'post', $body, $token, 'multipart');
-            $chat->message(json_encode($responseAi))->send();
+            // $responseAi = json_decode('{"status":1,"message":"success","data":{"success":true,"data":{"product_id":"667806a085d42a1c792085f7","result":{"for_eat_or_drink":true,"title":"Palov","total_calories":900,"macros":{"proteins":25,"carbs":110,"fats":35},"ingredients":[{"title":"Guruch","grams":200,"calories":260},{"title":"Go\'sht","grams":150,"calories":300},{"title":"Sabzi","grams":100,"calories":40},{"title":"Piyoz","grams":100,"calories":40},{"title":"Yog\'","grams":50,"calories":300}],"is_food":true}}}}', true);
+            // $chat->message(json_encode($responseAi))->send();
             if (!$responseAi['status']) {
                 $chat->message(self::lang('error_during_request_to_ai'))->send();
             } else {
@@ -115,9 +117,10 @@ class CalcAiService
             'product_id' => $calc_ai_conversation->product_id,
             'comment' => $text
         ];
-        $chat->message(json_encode($body))->send();
-        $responseAi = CalcAiApiService::request('/api/product/add/comment', 'post', $body, $token, 'json');
-        $chat->message(json_encode($responseAi))->send();
+        // $chat->message(json_encode($body))->send();
+        // $responseAi = CalcAiApiService::request('/api/product/add/comment', 'post', $body, $token, 'json');
+        $responseAi = json_decode('{"status":1,"message":"success","data":{"success":true,"data":{"product_id":"667806a085d42a1c792085f7","result":{"for_eat_or_drink":true,"title":"Palov","total_calories":900,"macros":{"proteins":25,"carbs":110,"fats":35},"ingredients":[{"title":"Guruch","grams":200,"calories":260},{"title":"Go\'sht","grams":150,"calories":300},{"title":"Sabzi","grams":100,"calories":40},{"title":"Piyoz","grams":100,"calories":40},{"title":"Yog\'","grams":50,"calories":300}],"is_food":true}}}}', true);
+        // $chat->message(json_encode($responseAi))->send();
         if ($responseAi['status']) {
             if ($responseAi['data']['data']['result']['is_food'] == false) {
                 $chat->message(self::lang('send_product_image_or_name'))->send();
@@ -131,8 +134,10 @@ class CalcAiService
             $chat->message(self::lang('calc_ai_error_please_try_again_later'));
         }
     }
-    public static function delete_product_ai($product_id)
+    public static function delete_product_ai($product_id, $token)
     {
+        $responseAi = CalcAiApiService::request('/api/product/' . $product_id, 'delete', [], $token);
+        CalcAiConversation::where('product_id', $product_id)->update(['status' => 2]);
     }
     public static function send_result_of_ai($responseAi, $chat, $userInfo, $calc_ai_conversation)
     {
@@ -144,6 +149,13 @@ class CalcAiService
         $parsedText = self::parse_response($responseAi, $userInfo->language);
         $parsedText .= PHP_EOL . self::lang('ai_result_comment_desc');
         $chat->html($parsedText)->keyboard($commentKeyboard)->send();
+    }
+    public static function edit_deleted_result_of_ai($responseAi, $chat, $userInfo,$messageId)
+    {
+        $parsedText = self::parse_response($responseAi, $userInfo->language);
+        $parsedText .= PHP_EOL . self::lang('this_result_of_ai_deleted');
+        $chat->edit($messageId)->html($parsedText)->send();
+        // $chat->html($parsedText)->send();
     }
     public static function message_to_ai($chat, $message, $photos, $calc_ai_conversation, $token, $userInfo)
     {

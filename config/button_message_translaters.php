@@ -2,12 +2,12 @@
 
 return [
     'menu' => [
-        'uz' => 'Menyular',
-        'ru' => 'Menyular ru'
+        'uz' => '🍽 Menyular',
+        'ru' => '🍽 Menyular ru'
     ],
     'profile' => [
-        'uz' => 'Profil',
-        'ru' => 'Profil ru'
+        'uz' => '👤 Profil',
+        'ru' => '👤 Profil ru'
     ],
     'support' => [
         'uz' => 'Mutaxasis',
@@ -46,8 +46,8 @@ return [
         'ru' => 'Ma`lumotlarni o`zgartirish ru'
     ],
     'my_results' => [
-        'uz' => 'Men va boshqalarning natijasi',
-        'ru' => 'Men va boshqalarning natijasi ru'
+        'uz' => '📈 Men va boshqalar natijasi',
+        'ru' => '📈 Men va boshqalar natijasi ru'
     ],
     'my_own_results' => [
         'uz' => 'Mening natijalarim',
@@ -58,12 +58,12 @@ return [
         'ru' => 'Boshqalarning natijalari ru'
     ],
     'calc_dieto' => [
-        'uz' => 'Ovqat yoki mahsulot kaloriyasini aniqlash',
-        'ru' => 'Ovqat yoki mahsulot kaloriyasini aniqlash ru'
+        'uz' => '🍱 Ovqat/mahsulot kaloriyasini aniqlash',
+        'ru' => '🍱 Ovqat/mahsulot kaloriyasini aniqlash ru'
     ],
     'send_today_track_report' => [
-        'uz' => 'Bugungi kun uchun hisobot jo\'natish',
-        'ru' => 'Bugungi kun uchun hisobot jo\'natish ru'
+        'uz' => "🗓 Bugungi kun uchun hisobot jo'natish",
+        'ru' => "🗓 Bugungi kun uchun hisobot jo'natish ru"
     ],
     'enter_changing_of_weight' => [
         'uz' => 'Vazn o\'zgarishini kiritish',
@@ -74,8 +74,8 @@ return [
         'ru' => 'Foydalanish tili ru'
     ],
     'buy_premium' => [
-        'uz' => 'Premium sotib olish',
-        'ru' => 'Premium sotib olish'
+        'uz' => '👑 Premium sotib olish',
+        'ru' => '👑 Premium sotib olish'
     ],
     'status_of_subscribe' => [
         'uz' => 'Obuna',

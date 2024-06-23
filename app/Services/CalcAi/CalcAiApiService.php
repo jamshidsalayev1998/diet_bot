@@ -34,6 +34,10 @@ class CalcAiApiService
                 }
                 $data = json_decode($response->getBody()->getContents(), true);
             }
+            if ($method == 'delete') {
+                $response = $client->delete($base_url . $url);
+                $data = json_decode($response->getBody()->getContents(), true);
+            }
             $message = 'success';
         } catch (Exception $e) {
             $status = 0;
