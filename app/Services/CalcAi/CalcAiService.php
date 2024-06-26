@@ -48,7 +48,8 @@ class CalcAiService
                 ->send();
             switch ($type_createing) {
                 case 'create_with_photo':
-                    $resultStore = Telegraph::store($photos[0], Storage::path('/calc_ai_images/' . $chat->chat_id), RandomStringService::randomAlphaAndNumberHelper(15) . '.jpg');
+                    $lastIndex = count($photos)-1;
+                    $resultStore = Telegraph::store($photos[$lastIndex], Storage::path('/calc_ai_images/' . $chat->chat_id), RandomStringService::randomAlphaAndNumberHelper(15) . '.jpg');
                     $calc_ai_conversation->image = $resultStore;
                     $filePath = $resultStore;
                     $fileName = basename($filePath);
