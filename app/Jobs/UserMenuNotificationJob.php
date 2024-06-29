@@ -28,6 +28,9 @@ class UserMenuNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
+        foreach([1,2,3] as $t){
+            sleep(10);
+        }
         $this->chat->message($this->message)->send();
     }
 }
