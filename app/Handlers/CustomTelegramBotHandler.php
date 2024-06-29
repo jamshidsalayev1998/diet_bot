@@ -395,6 +395,7 @@ class CustomTelegramBotHandler extends WebhookHandler
                 $this->chat->message(self::lang('sorry_this_calc_ai_conversation_deleted'))->send();
             }
         }
+        $this->reply($this->lang('comment'));
     }
 
     public function ai_deleting()

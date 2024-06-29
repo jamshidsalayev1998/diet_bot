@@ -336,11 +336,13 @@
                                 <div class="lunch-text-1">
                                     Siz tushlikda <b>600 kcal</b> iste'mol qilishingiz kerak
                                 </div>
+                                @if (!$user_info->is_premium)
                                 <div class="lunch-text-2">
                                     <b class="green-text">Premium obuna</b> sotib oling va biz
                                     sizga sun'iy intelekt yordamida ovqat kaloriyasini hisoblab
                                     beramiz
                                 </div>
+                                @endif
                             </div>
                         @endif
                         @if (!$user_info->is_premium)
