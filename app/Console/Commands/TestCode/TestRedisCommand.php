@@ -27,9 +27,8 @@ class TestRedisCommand extends Command
      */
     public function handle()
     {
-        $chats = TelegraphChat::all();
-        foreach($chats as $chat){
-            UserMenuNotificationJob::dispatch($chat,'dasada')->onQueue('telegram');
-        }
+        $this->info('started');
+        UserMenuNotificationJob::dispatch();
+        $this->info('ended');
     }
 }

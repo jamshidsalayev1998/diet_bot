@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use DefStudio\Telegraph\Models\TelegraphChat;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,12 +16,8 @@ class UserMenuNotificationJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    protected $chat;
-    protected $message;
-    public function __construct($chat,$message)
+    public function __construct()
     {
-        $this->chat = $chat;
-        $this->message = $message;
     }
 
     /**
@@ -28,9 +25,9 @@ class UserMenuNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-        foreach([1,2,3] as $t){
+        $chats = TelegraphChat::all();
+        foreach($chats as $chat){
             sleep(10);
         }
-        $this->chat->message($this->message)->send();
     }
 }
