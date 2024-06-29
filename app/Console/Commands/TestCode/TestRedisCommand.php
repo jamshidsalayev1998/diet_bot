@@ -29,7 +29,7 @@ class TestRedisCommand extends Command
     {
         $chats = TelegraphChat::all();
         foreach($chats as $chat){
-            UserMenuNotificationJob::dispatch($chat,'dasada');
+            UserMenuNotificationJob::dispatch($chat,'dasada')->onQueue('telegram');
         }
     }
 }
