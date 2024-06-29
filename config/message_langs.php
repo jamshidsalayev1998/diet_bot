@@ -73,7 +73,7 @@ return [
         'enter_the_correct_format' => 'To\'g\'ri formatda kiriting',
         'enter_the_correct_format_of_tall' => 'Bo\'yingizni to\'g\'ri formatda kiriting (misol uchun: 168)',
         'buy_premium_message' => "Premium obuna sotib olish uchun quyidagi kartaga kerakli summani o'tqazishingiz va chekini va shaxsiy raqamingizni :bill_check_admin ga jo'natishingiz kerak.\n\n Bir oylik obuna narxi: <code>:premium_price</code> so'm \n\n Karta: <code>:card_number</code> \n Shaxsiy raqamingiz: <code>:chat_id</code>",
-        'status_of_subscribe_premium' => "Siz <strong>Premium</strong> obunadasiz. \n\n Obunangiz tugash sanasi :premium_ending_date",
+        'status_of_subscribe_premium' => "Siz <strong>Premium</strong> obunadasiz. \n\nAmal qilish muddati <strong>:premium_ending_date</strong> gacha",
         'status_of_subscribe_base' => "Siz <strong>Base</strong> obunadasiz.\n\n",
         'ai_calculated' => '✅Hisoblandi',
         'i_think_its' => 'Menimcha bu',
@@ -108,7 +108,8 @@ return [
         'activity_type_selected' => "Aktivlik turi saqlandi",
         'language_saved' => 'Foydalanish turi saqlandi',
         'conguratulation_message_for_premium' => "Tabriklaymiz, siz 1 oylik premium obunaga ega bo'ldingiz. Botning barcha imkoniyatlaridan to'liq foydalanishingiz mumkin" . PHP_EOL . "Kunlik menyularni 'Menyular' bo'limidan olishingiz mumkin",
-        'returned_to_base' => "Siz premium obunangiz o'chirildi. Obunani qayta tiklash uchun '👑 Premium sotib olish' tugmasini bosing"
+        'returned_to_base' => "Siz premium obunangiz o'chirildi. Obunani qayta tiklash uchun '👑 Premium sotib olish' tugmasini bosing",
+        'welcome_to_my_results' => "Natijalar bo'limi"
 
     ],
     'ru' => [

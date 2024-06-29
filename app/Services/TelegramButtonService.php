@@ -79,7 +79,7 @@ class TelegramButtonService
             ->row([
                 ReplyButton::make(self::buttonLang('home')),
             ])->resize();
-        $chat->message(self::lang('welcome'))->replyKeyboard($keyboard)->send();
+        $chat->message(self::lang('welcome_to_my_results'))->replyKeyboard($keyboard)->send();
     }
 
     public static function menu($chat)
@@ -87,14 +87,14 @@ class TelegramButtonService
         $keyboard = ReplyKeyboard::make()
             ->row([
                 ReplyButton::make(self::buttonLang('full_menu')),
-                ReplyButton::make(self::buttonLang('snacks')),
-            ])->resize()
-            ->row([
                 ReplyButton::make(self::buttonLang('breakfasts')),
-                ReplyButton::make(self::buttonLang('lunches')),
+                // ReplyButton::make(self::buttonLang('snacks')),
             ])->resize()
             ->row([
+                ReplyButton::make(self::buttonLang('lunches')),
                 ReplyButton::make(self::buttonLang('dinners')),
+            ])->resize()
+            ->row([
                 ReplyButton::make(self::buttonLang('home')),
             ])->resize();
         $chat->message(self::lang('welcome_menus_page'))->replyKeyboard($keyboard)->send();
@@ -359,7 +359,7 @@ class TelegramButtonService
         $userInfo = $chat->user_info;
         if ($userInfo->is_premium) {
             $lastPayment = UserInfoPayment::where('chat_id', $chat->chat_id)->orderBy('id', 'DESC')->first();
-            $text = self::lang('status_of_subscribe_premium', ['premium_ending_date' => $userInfo->premium_ending_date]);
+            $text = self::lang('status_of_subscribe_premium', ['premium_ending_date' => date('d.m.Y' , strtotime($userInfo->premium_ending_date))]);
         } else {
             $text = self::lang('status_of_subscribe_base');
             $bill_card_number = config('projectDefaultValues.bill_card_number');
