@@ -27,7 +27,7 @@ class UserMenuNotificationJob implements ShouldQueue
     {
         $chats = TelegraphChat::all();
         foreach($chats as $chat){
-            $chat->message('redis is working');
+            $chat->message('redis is working')->send();
             sleep(10);
         }
     }
