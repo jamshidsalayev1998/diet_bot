@@ -28,7 +28,7 @@ class TestRedisCommand extends Command
     public function handle()
     {
         $this->info('started');
-        UserMenuNotificationJob::dispatch();
+        UserMenuNotificationJob::dispatch()->onQueue('default');
         $this->info('ended');
     }
 }
