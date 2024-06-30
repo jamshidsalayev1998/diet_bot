@@ -14,12 +14,7 @@ class TelegraphChatServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        TelegraphChat::macro('user_info', function() {
-            return $this->hasOne(UserInfo::class);
-        });
-        TelegraphChat::macro('calc_ai_conversation', function() {
-            return $this->hasOne(CalcAiConversation::class);
-        });
+
 
 
     }
@@ -29,6 +24,11 @@ class TelegraphChatServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        TelegraphChat::macro('user_info', function() {
+            return $this->hasOne(UserInfo::class);
+        });
+        TelegraphChat::macro('calc_ai_conversation', function() {
+            return $this->hasOne(CalcAiConversation::class);
+        });
     }
 }
