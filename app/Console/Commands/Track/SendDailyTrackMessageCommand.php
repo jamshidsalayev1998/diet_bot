@@ -5,6 +5,7 @@ namespace App\Console\Commands\Track;
 use App\Models\V1\UserInfo;
 use App\Services\TelegramUserInfoService;
 use App\Traits\TelegramMessageLangsTrait;
+use Exception;
 use Illuminate\Console\Command;
 
 class SendDailyTrackMessageCommand extends Command
@@ -33,10 +34,16 @@ class SendDailyTrackMessageCommand extends Command
         foreach($users as $user){
             $chat = $user->chat;
             $text = 'something';
-            $text = date('Y-m-d').' '.self::lang('for_this_day_how_did_you_follow').PHP_EOL.self::lang('you_must_not_eat_until_tomorrow');
-            $dataTrack = TelegramUserInfoService::track_message($text);
-            $chat->message($dataTrack['text'])->keyboard($dataTrack['keyboard'])->send();
-            $this->info('ishladi');
+            try{
+
+                $text = date('Y-m-d').' '.self::lang('for_this_day_how_did_you_follow').PHP_EOL.self::lang('you_must_not_eat_until_tomorrow');
+                $dataTrack = TelegramUserInfoService::track_message($text);
+                $chat->message($dataTrack['text'])->keyboard($dataTrack['keyboard'])->send();
+                $this->info('ishladi');
+            }catch(Exception $e){
+                $this->info($e->getMessage());
+
+            }
         }
     }
 }
