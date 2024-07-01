@@ -27,8 +27,7 @@ class TestRedisCommand extends Command
      */
     public function handle()
     {
-        $this->info('started');
-        UserMenuNotificationJob::dispatch()->onQueue('default');
-        $this->info('ended');
+        $chat = TelegraphChat::find(1);
+        $this->info('indo'.$chat->user_info);
     }
 }

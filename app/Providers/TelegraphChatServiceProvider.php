@@ -25,10 +25,10 @@ class TelegraphChatServiceProvider extends ServiceProvider
     public function boot(): void
     {
         TelegraphChat::macro('user_info', function() {
-            return $this->hasOne(UserInfo::class);
+            return $this->hasOne(UserInfo::class , 'chat_id' , 'chat_id');
         });
         TelegraphChat::macro('calc_ai_conversation', function() {
-            return $this->hasOne(CalcAiConversation::class);
+            return $this->hasOne(CalcAiConversation::class , 'chat_id' , 'chat_id');
         });
     }
 }

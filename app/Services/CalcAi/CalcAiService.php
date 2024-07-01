@@ -119,8 +119,8 @@ class CalcAiService
             'comment' => $text
         ];
         // $chat->message(json_encode($body))->send();
-        // $responseAi = CalcAiApiService::request('/api/product/add/comment', 'post', $body, $token, 'json');
-        $responseAi = json_decode('{"status":1,"message":"success","data":{"success":true,"data":{"product_id":"667806a085d42a1c792085f7","result":{"for_eat_or_drink":true,"title":"Palov","total_calories":900,"macros":{"proteins":25,"carbs":110,"fats":35},"ingredients":[{"title":"Guruch","grams":200,"calories":260},{"title":"Go\'sht","grams":150,"calories":300},{"title":"Sabzi","grams":100,"calories":40},{"title":"Piyoz","grams":100,"calories":40},{"title":"Yog\'","grams":50,"calories":300}],"is_food":true}}}}', true);
+        $responseAi = CalcAiApiService::request('/api/product/add/comment', 'post', $body, $token, 'json');
+        // $responseAi = json_decode('{"status":1,"message":"success","data":{"success":true,"data":{"product_id":"667806a085d42a1c792085f7","result":{"for_eat_or_drink":true,"title":"Palov","total_calories":900,"macros":{"proteins":25,"carbs":110,"fats":35},"ingredients":[{"title":"Guruch","grams":200,"calories":260},{"title":"Go\'sht","grams":150,"calories":300},{"title":"Sabzi","grams":100,"calories":40},{"title":"Piyoz","grams":100,"calories":40},{"title":"Yog\'","grams":50,"calories":300}],"is_food":true}}}}', true);
         // $chat->message(json_encode($responseAi))->send();
         if ($responseAi['status']) {
             if ($responseAi['data']['data']['result']['is_food'] == false) {
