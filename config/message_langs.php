@@ -109,7 +109,8 @@ return [
         'language_saved' => 'Foydalanish turi saqlandi',
         'conguratulation_message_for_premium' => "Tabriklaymiz, siz 1 oylik premium obunaga ega bo'ldingiz. Botning barcha imkoniyatlaridan to'liq foydalanishingiz mumkin" . PHP_EOL . "Kunlik menyularni 'Menyular' bo'limidan olishingiz mumkin",
         'returned_to_base' => "Siz premium obunangiz o'chirildi. Obunani qayta tiklash uchun '👑 Premium sotib olish' tugmasini bosing",
-        'welcome_to_my_results' => "Natijalar bo'limi"
+        'welcome_to_my_results' => "Natijalar bo'limi",
+        'calc_ai_conversation_closed_by_system' => "Suniy intelekt bilan muloqot yopildi"
 
     ],
     'ru' => [
@@ -163,8 +164,8 @@ return [
         'full_follow_a_diet' => '🤩 To\'liq amal qildim',
         'partially_follow_a_diet' => '🙂 qisman amal qildim',
         'did_not_follow_a_diet' => '☹️ amal qilmadim',
-        'next_time_be_more_active' => "Siz 1 ball qo\'lga kiritdingiz. \n\n" . "Keyingi safar yanada masuliyatli bo\'ling va menyularga to\'liq amal qiling 🙂",
-        'next_time_also_be_active' => "Juda zo\'r siz 2 ball qo\'lga kiritdingiz. \n\n" . "Keyingi kunlarda ham shunday davom eting 🤩",
+        'next_time_be_more_active' => "Siz 1 ball qo'lga kiritdingiz. \n\n" . "Keyingi safar yanada masuliyatli bo'ling va menyularga to'liq amal qiling 🙂",
+        'next_time_also_be_active' => "Juda zo'r siz 2 ball qo'lga kiritdingiz. \n\n" . "Keyingi kunlarda ham shunday davom eting 🤩",
         'next_time_follow' => "Keyingi kun albatta menyularga qatiyan amal qiling.\n\n",
         'track_report_after_19_every_day' => 'Kunlik hisobotlar har kuni soat 19:00 dan keyin beriladi',
         'welcome_for_new_user' => "Sizni bizning Dieto botimizda ko'rishdan mamnunmiz\n\n" .
@@ -183,8 +184,8 @@ return [
         'tap_on_button_which_you_want_to_change' => 'O\'zgartirmoqchi bo\'lgan ma\'lumotingiz ustiga bosing 👇👇👇',
         'enter_the_correct_format' => 'To\'g\'ri formatda kiriting',
         'enter_the_correct_format_of_tall' => 'Bo\'yingizni to\'g\'ri formatda kiriting (misol uchun: 168)',
-        'buy_premium_message' => "Premium obuna sotib olish uchun quyidagi kartaga kerakli summani o\'tqazishingiz va chekini va shaxsiy raqamingizni :bill_check_admin ga jo\'natishingiz kerak.\n\n Bir oylik obuna narxi: <code>:premium_price</code> so'm \n\n Karta: <code>:card_number</code> \n Shaxsiy raqamingiz: <code>:chat_id</code>",
-        'status_of_subscribe_premium' => "Siz <strong>Premium</strong> obunadasiz. \n\n Obunangiz tugash sanasi :premium_ending_date",
+        'buy_premium_message' => "Premium obuna sotib olish uchun quyidagi kartaga kerakli summani o'tqazishingiz va chekini va shaxsiy raqamingizni :bill_check_admin ga jo'natishingiz kerak.\n\n Bir oylik obuna narxi: <code>:premium_price</code> so'm \n\n Karta: <code>:card_number</code> \n Shaxsiy raqamingiz: <code>:chat_id</code>",
+        'status_of_subscribe_premium' => "Siz <strong>Premium</strong> obunadasiz. \n\nAmal qilish muddati <strong>:premium_ending_date</strong> gacha",
         'status_of_subscribe_base' => "Siz <strong>Base</strong> obunadasiz.\n\n",
         'ai_calculated' => '✅Hisoblandi',
         'i_think_its' => 'Menimcha bu',
@@ -198,6 +199,30 @@ return [
         'special_menu_for_you' => 'siz uchun maxsus menyu',
         'daily_need_calories' => 'Kunlik yeyish kerak bo\'lgan kkaloriya',
         'rules_which_need_follow' => "Amal qilish kerak bo'lgan qoidalar",
-        'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling"
+        'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling",
+        'ai_calculating' => "Hisoblayabmiz...",
+        'ai_comment' => "💬 Izoh berish",
+        'ai_delete' => "🚫 O'chirish",
+        'ai_result_comment_desc' => "⚠️ Natijada xatolik bo'lsa Izoh berish tugmasini bosib qo'shimcha izoh yozing",
+        'tell_me_about_this_product' => "Natijada xatolik mavjud bo'lsa qo'shimcha izoh yozing",
+        'ai_result_is_correct' => "✅ Natija to'g'ri",
+        'send_product_image_or_name' => "😒 Bu istemol qilinadigan mahsulot emas",
+        'welcome_to_calc_ai_conversation' =>  "Salom! 🍽️\n\nSiz ovqatning kaloriya va tarkibini aniqlash menyusidasiz. Quyida ikki usuldan birini tanlashingiz mumkin:\n\n1. <strong>Rasm yuborish:</strong> Ovqatning rasmini yuboring va biz uni aniqlaymiz.\n2. <strong>Ovqat nomini yozish:</strong> Ovqat nomini yozing va biz uning kaloriyasi va tarkibini ko'rsatamiz.\n\nTanlovingizni kiriting yoki rasmni yuklang!\n\nSiz yuborgan rasm yoki nom asosida biz quyidagi ma'lumotlarni taqdim etamiz:\n\n- <strong>Ovqat nomi:</strong> Ovqatning nomini aniqlab beramiz.\n- <strong>Umumiy kaloriyasi:</strong> Ovqatning umumiy kaloriyasini hisoblab chiqamiz.\n- <strong>Ozuqaviy qiymati:</strong> Protein, uglevodlar va yog' miqdorini ko'rsatamiz.\n- <strong>Tarkibidagi mahsulotlar:</strong> Ovqat tarkibidagi asosiy mahsulotlar va ularning kaloriya miqdorini sanab o'tamiz.",
+        'your_calc_ai_attempts_count' =>  "Eslatma: Sizda <strong> :calc_ai_attempts_count </strong> ta urinish mavjud. Har bir urinishda yangi ovqatning kaloriya va tarkibini aniqlashingiz mumkin. Urinishlaringiz tugagach, qo'shimcha urinishlar uchun premium obunani sotib olishingiz kerak.",
+        'your_calc_ai_attempts_is_over' =>  "Sizning barcha urinishlaringiz tugadi. Qo'shimcha urinishlar uchun premium obunani sotib olishingiz kerak. Premium xizmatini sotib olish uchun <strong> Premium sotib olish </strong> tugmasini bosing.",
+        'this_result_of_ai_deleted' => "Natija o'chirilgan !",
+        'sorry_this_calc_ai_conversation_deleted' => "Bu natija o'chirilgan",
+        'group_link_text_for_woman' => "Ayollar uchun guruhimizga qo'shiling",
+        'group_link_text_for_man' => "Erkaklar uchun guruhimizga qo'shiling",
+        'enter_the_group' => "Guruhga qo'shilish",
+        'language_changed' => "Foydalanish tili o'zgartirildi",
+        'gender_selected' => "Jins saqlandi",
+        'activity_type_selected' => "Aktivlik turi saqlandi",
+        'language_saved' => 'Foydalanish turi saqlandi',
+        'conguratulation_message_for_premium' => "Tabriklaymiz, siz 1 oylik premium obunaga ega bo'ldingiz. Botning barcha imkoniyatlaridan to'liq foydalanishingiz mumkin" . PHP_EOL . "Kunlik menyularni 'Menyular' bo'limidan olishingiz mumkin",
+        'returned_to_base' => "Siz premium obunangiz o'chirildi. Obunani qayta tiklash uchun '👑 Premium sotib olish' tugmasini bosing",
+        'welcome_to_my_results' => "Natijalar bo'limi",
+        'calc_ai_conversation_closed_by_system' => "Suniy intelekt bilan muloqot yopildi"
+
     ],
 ];
