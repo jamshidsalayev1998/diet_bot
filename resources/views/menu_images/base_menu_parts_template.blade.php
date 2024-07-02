@@ -242,6 +242,10 @@
         color: #2db362;
     }
 
+    #my-node{
+        padding: 30px;
+    }
+
     .w-full {
         width: 100%;
     }
