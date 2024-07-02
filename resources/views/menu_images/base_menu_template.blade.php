@@ -244,6 +244,10 @@
         color: #2db362;
     }
 
+    #my-node{
+        padding: 50px;
+    }
+
     /*# sourceMappingURL=style.css.map */
 </style>
 
