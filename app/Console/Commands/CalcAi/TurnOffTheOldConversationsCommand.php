@@ -29,10 +29,11 @@ class TurnOffTheOldConversationsCommand extends Command
     public function handle()
     {
         $fiveMinuteAgo = Carbon::now()->subMinutes(5);
-        $conversations = CalcAiConversation::where('created_at', '<', $fiveMinuteAgo)->delete();
+        $conversations = CalcAiConversation::where('created_at', '<', $fiveMinuteAgo)->get();
         foreach($conversations as $conversation){
             $telegraph_chat = $conversation->telegraph_chat;
             TelegramButtonService::stop_calc_ai_conversation($telegraph_chat);
+            $conversation->delete();
         }
     }
 }
