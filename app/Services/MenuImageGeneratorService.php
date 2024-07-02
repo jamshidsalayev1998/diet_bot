@@ -54,7 +54,7 @@ class MenuImageGeneratorService
                 $htmlContent = view('menu_images.base_menu_template', ['data' => $ready, 'lang' => $userInfo->language, 'user_info' => $userInfo, 'menu_rules' => $menuRules])->render();
                 $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
                 file_put_contents($htmlFilePath, $htmlContent);
-                $command = "wkhtmltoimage --width 1400 --height 2000  {$htmlFilePath} {$imagePath}";
+                $command = "wkhtmltoimage --width 1400  {$htmlFilePath} {$imagePath}";
                 shell_exec($command);
                 $userInfo->menu_image = $imageUrl;
                 $userInfo->update();
@@ -112,7 +112,7 @@ class MenuImageGeneratorService
                     $htmlContent = view('menu_images.base_menu_parts_template', ['data' => $ready, 'lang' => $userInfo->language, 'user_info' => $userInfo])->render();
                     $htmlFilePath = storage_path('app/public/image_html/base_menu.html');
                     file_put_contents($htmlFilePath, $htmlContent);
-                    $command = "wkhtmltoimage --width 1000  --quality 50 {$htmlFilePath} {$imagePath}";
+                    $command = "wkhtmltoimage --width 800  {$htmlFilePath} {$imagePath}";
                     shell_exec($command);
                     $menu_part_images[$menuType->id] = $imageUrl;
                 }
