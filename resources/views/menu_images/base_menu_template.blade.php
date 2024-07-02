@@ -446,7 +446,7 @@
             var img = new Image();
             img.src = dataUrl;
             img.style = "width: 100%;";
-            document.body.style = "padding: 30px;";
+            document.body.style = "padding: 60px;";
             document.body.innerHTML = "";
             document.body.appendChild(img);
         })
