@@ -90,7 +90,7 @@ return [
         'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling",
         'ai_calculating' => "Hisoblayabmiz...",
         'ai_comment' => "💬 Izoh berish",
-        'ai_delete' => "🚫 O'chirish",
+        'ai_delete' => "➕ Yangi mahsulot",
         'ai_result_comment_desc' => "⚠️ Natijada xatolik bo'lsa Izoh berish tugmasini bosib qo'shimcha izoh yozing",
         'tell_me_about_this_product' => "Natijada xatolik mavjud bo'lsa qo'shimcha izoh yozing",
         'ai_result_is_correct' => "✅ Natija to'g'ri",
