@@ -30,7 +30,7 @@ class TurnOffTheOldConversationsCommand extends Command
     public function handle()
     {
         $fiveMinuteAgo = Carbon::now()->subMinutes(5);
-        $conversations = CalcAiConversation::where('created_at', '<', $fiveMinuteAgo)->get();
+        $conversations = CalcAiConversation::where('updated_at', '<', $fiveMinuteAgo)->get();
         foreach($conversations as $conversation){
             $telegraph_chat = $conversation->telegraph_chat;
             if($conversation->product_id && $conversation->status == 1){
