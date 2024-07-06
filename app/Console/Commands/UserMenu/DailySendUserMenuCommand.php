@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands\UserMenu;
 
+use App\Models\V1\UserInfo;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class DailySendUserMenuCommand extends Command
@@ -25,6 +27,38 @@ class DailySendUserMenuCommand extends Command
      */
     public function handle()
     {
-        
+        $this->sendMealNotification('breakfast');
+        $this->sendMealNotification('lunch');
+        $this->sendMealNotification('dinner');
+    }
+
+    private function sendMealNotification($meal)
+    {
+        $time = Carbon::now()->format('H:i');
+        $mealTimes = [
+            'breakfast' => [
+                'time' => '07:00',
+                'id' => 1
+            ],
+            'lunch' => [
+                'time' => '11:00',
+                'id' => 2
+            ],
+            'dinner' => [
+                'time' => '17:00',
+                'id' => 3
+            ],
+        ];
+
+        if (1) {
+            $userInfos = UserInfo::where('is_premium', 1)->whereNotNull('menu_part_images')->get();
+            foreach($userInfos as $userInfo){
+                $chat = $userInfo->chat;
+                $partImages = json_decode($userInfo->menu_part_images,true);
+                $photoUrl = config('app.url').'/'.asset('storage' . $partImages[1]);
+                $chat->photo($photoUrl)->send();
+                $chat->message($photoUrl)->send();
+            }
+        }
     }
 }
