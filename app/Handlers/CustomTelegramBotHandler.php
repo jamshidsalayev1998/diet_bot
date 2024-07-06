@@ -117,6 +117,12 @@ class CustomTelegramBotHandler extends WebhookHandler
                 }
             }
         } else {
+            TempMessage::create([
+                'text_response' => json_encode($this->message)
+            ]);
+            TempMessage::create([
+                'text_response' => json_encode($this->message->photos())
+            ]);
             $keywordButton = TelegramButtonService::findMessageKeyword($text);
             if ($keywordButton) {
                 if (method_exists(TelegramButtonService::class, $keywordButton)) {
