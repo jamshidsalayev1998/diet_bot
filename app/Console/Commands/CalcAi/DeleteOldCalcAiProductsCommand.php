@@ -28,12 +28,13 @@ class DeleteOldCalcAiProductsCommand extends Command
      */
     public function handle()
     {
-        $conversations = CalcAiConversation::where('status', '=', 0)->whereNotNull('product_id')->get();
+        $conversations = CalcAiConversation::where('status', '=', 0)->get();
         foreach ($conversations as $conversation) {
             $token = config('calc_ai_variables.token');
             if ($conversation->product_id){
                 CalcAiService::delete_product_ai($conversation->product_id, $token);
             }
+            $conversation->delete();
         }
     }
 }
