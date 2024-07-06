@@ -45,7 +45,7 @@ class DailySendUserMenuCommand extends Command
                 'id' => 2
             ],
             'dinner' => [
-                'time' => '17:00',
+                'time' => '09:09',
                 'id' => 3
             ],
         ];
