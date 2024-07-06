@@ -61,11 +61,11 @@
     }
 
     .menu-types .wrap-left {
-        width: 60%;
+        width: 50%;
     }
 
     .menu-types .wrap-right {
-        width: 40%;
+        width: 50%;
         padding-left: 40px;
     }
 
@@ -272,50 +272,44 @@
     }
 
     .menu-owner {
-        border: 1px solid #eee;
-        padding: 16px;
-        display: flex;
-        margin-top: 24px;
-    }
+  border: 1px solid #eee;
+  padding: 16px;
+  display: flex;
+  margin-top: 24px;
+}
+.menu-owner .image-left {
+  width: 400px;
+}
+.menu-owner .image-left img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.menu-owner .info-right {
+  padding-left: 20px;
+}
+.menu-owner .info-right .info-owner-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.menu-owner .info-right .fio {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+  line-height: 28px;
+}
+.menu-owner .info-right .position-info {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ff7a00;
+  line-height: 28px;
+}
+.menu-owner .info-right .about-desc {
+  font-size: 16px;
+  color: #333333;
+}
 
-    .menu-owner .image-left {
-        width: 350px;
-    }
-
-    .menu-owner .image-left img {
-        width: 100%;
-        -o-object-fit: contain;
-        object-fit: contain;
-    }
-
-    .menu-owner .info-right {
-        padding-left: 20px;
-    }
-
-    .menu-owner .info-right .info-owner-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-
-    .menu-owner .info-right .fio {
-        font-size: 24px;
-        font-weight: 600;
-        margin-right: 10px;
-        line-height: 28px;
-    }
-
-    .menu-owner .info-right .position-info {
-        font-size: 18px;
-        font-weight: 500;
-        color: #ff7a00;
-        line-height: 28px;
-    }
-
-    .menu-owner .info-right .about-desc {
-        font-size: 16px;
-        color: #333333;
-    }
 
 
     /*# sourceMappingURL=style.css.map */
@@ -489,22 +483,25 @@
             </div>
             <div class="menu-owner">
                 <div class="image-left">
-                    <img src="https://www.mercy.net/content/dam/mercy/en/images/doctors/1649840059-h.jpg.transform/doctor-listing/image.jpeg"
-                        alt="" />
+                  <img
+                    src="https://media.istockphoto.com/id/177373093/photo/indian-male-doctor.jpg?s=612x612&w=0&k=20&c=5FkfKdCYERkAg65cQtdqeO_D0JMv6vrEdPw3mX1Lkfg="
+                    alt=""
+                  />
                 </div>
 
                 <div class="info-right">
-                    <div class="info-owner-header">
-                        <div class="fio">Ilhom Otajonov</div>
-                        <div class="position-info">dietolog, nutritsiolog</div>
-                    </div>
-                    <div class="about-desc">
-                        15 yillik tabribaga ega shifokor. O'zbekiston tibbiyot
-                        akademiyasi nutritsiologiya bo'limi dekani. Olimpiya qo'mitasida
-                        og'ir atletikachilar bilan dietolog bo'lib ishlagan
-                    </div>
+                  <div class="info-owner-header">
+                    <div class="fio">Ilhom Otajonov</div>
+                    <div class="position-info">dietolog, nutritsiolog</div>
+                  </div>
+                  <div class="about-desc">
+                    15 yillik tabribaga ega shifokor. O'zbekiston tibbiyot
+                    akademiyasi nutritsiologiya bo'limi dekani. Olimpiya qo'mitasida
+                    og'ir atletikachilar bilan dietolog bo'lib ishlagan
+                  </div>
                 </div>
-            </div>
+              </div>
+
 
 
             {{-- <div class="menu-item perekus">
