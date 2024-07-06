@@ -50,12 +50,12 @@ class DailySendUserMenuCommand extends Command
             ],
         ];
 
-        if (1) {
+        if ($time == $mealTimes[$meal]['time']) {
             $userInfos = UserInfo::where('is_premium', 1)->whereNotNull('menu_part_images')->get();
             foreach($userInfos as $userInfo){
                 $chat = $userInfo->chat;
                 $partImages = json_decode($userInfo->menu_part_images,true);
-                $photoUrl = config('app.url').'/'.asset('storage' . $partImages[1]);
+                $photoUrl = config('app.url').'/'.asset('storage' . $partImages[$mealTimes[$meal]['id']]);
                 $chat->photo($photoUrl)->send();
                 // $chat->message($photoUrl)->send();
             }
