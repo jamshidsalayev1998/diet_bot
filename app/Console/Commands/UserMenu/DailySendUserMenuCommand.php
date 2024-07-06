@@ -55,7 +55,7 @@ class DailySendUserMenuCommand extends Command
             foreach($userInfos as $userInfo){
                 $chat = $userInfo->chat;
                 $partImages = json_decode($userInfo->menu_part_images,true);
-                $photoUrl = config('app.url').'/'.asset('storage' . $partImages[0]);
+                $photoUrl = config('app.url').'/'.asset('storage' . $partImages[1]);
                 $chat->photo($photoUrl)->send();
                 // $chat->message($photoUrl)->send();
             }
