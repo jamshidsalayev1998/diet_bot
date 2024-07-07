@@ -110,7 +110,8 @@ return [
         'conguratulation_message_for_premium' => "Tabriklaymiz, siz 1 oylik premium obunaga ega bo'ldingiz. Botning barcha imkoniyatlaridan to'liq foydalanishingiz mumkin" . PHP_EOL . "Kunlik menyularni 'Menyular' bo'limidan olishingiz mumkin",
         'returned_to_base' => "Siz premium obunangiz o'chirildi. Obunani qayta tiklash uchun '👑 Premium sotib olish' tugmasini bosing",
         'welcome_to_my_results' => "Natijalar bo'limi",
-        'calc_ai_conversation_closed_by_system' => "Suniy intelekt bilan muloqot yopildi"
+        'calc_ai_conversation_closed_by_system' => "Suniy intelekt bilan muloqot yopildi",
+        'entering_fio' => "Ismingizni kiriting"
 
     ],
     'ru' => [
@@ -202,13 +203,13 @@ return [
         'for_more_menu_parts_buy_premium' => "Yana ham ko'proq menyularni olish uchun premium obunani sotib oling",
         'ai_calculating' => "Hisoblayabmiz...",
         'ai_comment' => "💬 Izoh berish",
-        'ai_delete' => "🚫 O'chirish",
+        'ai_delete' => "➕ Yangi mahsulot",
         'ai_result_comment_desc' => "⚠️ Natijada xatolik bo'lsa Izoh berish tugmasini bosib qo'shimcha izoh yozing",
         'tell_me_about_this_product' => "Natijada xatolik mavjud bo'lsa qo'shimcha izoh yozing",
         'ai_result_is_correct' => "✅ Natija to'g'ri",
         'send_product_image_or_name' => "😒 Bu istemol qilinadigan mahsulot emas",
-        'welcome_to_calc_ai_conversation' =>  "Salom! 🍽️\n\nSiz ovqatning kaloriya va tarkibini aniqlash menyusidasiz. Quyida ikki usuldan birini tanlashingiz mumkin:\n\n1. <strong>Rasm yuborish:</strong> Ovqatning rasmini yuboring va biz uni aniqlaymiz.\n2. <strong>Ovqat nomini yozish:</strong> Ovqat nomini yozing va biz uning kaloriyasi va tarkibini ko'rsatamiz.\n\nTanlovingizni kiriting yoki rasmni yuklang!\n\nSiz yuborgan rasm yoki nom asosida biz quyidagi ma'lumotlarni taqdim etamiz:\n\n- <strong>Ovqat nomi:</strong> Ovqatning nomini aniqlab beramiz.\n- <strong>Umumiy kaloriyasi:</strong> Ovqatning umumiy kaloriyasini hisoblab chiqamiz.\n- <strong>Ozuqaviy qiymati:</strong> Protein, uglevodlar va yog' miqdorini ko'rsatamiz.\n- <strong>Tarkibidagi mahsulotlar:</strong> Ovqat tarkibidagi asosiy mahsulotlar va ularning kaloriya miqdorini sanab o'tamiz.",
-        'your_calc_ai_attempts_count' =>  "Eslatma: Sizda <strong> :calc_ai_attempts_count </strong> ta urinish mavjud. Har bir urinishda yangi ovqatning kaloriya va tarkibini aniqlashingiz mumkin. Urinishlaringiz tugagach, qo'shimcha urinishlar uchun premium obunani sotib olishingiz kerak.",
+        'welcome_to_calc_ai_conversation' =>  "Siz ovqat yoki mahsulot kaloriyasini aniqlash menyusidasiz. \nOvqat .yoki mahsulot nomini kiriting yoki rasmini yuboring 👇👇👇",
+        'your_calc_ai_attempts_count' =>  "Eslatma: Sizda <strong> :calc_ai_attempts_count </strong> ta urinish mavjud. Har bir urinishda yangi ovqat yoki mahsulotning kaloriyasini aniqlashingiz mumkin. Urinishlaringiz tugagach, qo'shimcha urinishlar uchun premium obunani sotib olishingiz kerak.",
         'your_calc_ai_attempts_is_over' =>  "Sizning barcha urinishlaringiz tugadi. Qo'shimcha urinishlar uchun premium obunani sotib olishingiz kerak. Premium xizmatini sotib olish uchun <strong> Premium sotib olish </strong> tugmasini bosing.",
         'this_result_of_ai_deleted' => "Natija o'chirilgan !",
         'sorry_this_calc_ai_conversation_deleted' => "Bu natija o'chirilgan",
@@ -222,7 +223,8 @@ return [
         'conguratulation_message_for_premium' => "Tabriklaymiz, siz 1 oylik premium obunaga ega bo'ldingiz. Botning barcha imkoniyatlaridan to'liq foydalanishingiz mumkin" . PHP_EOL . "Kunlik menyularni 'Menyular' bo'limidan olishingiz mumkin",
         'returned_to_base' => "Siz premium obunangiz o'chirildi. Obunani qayta tiklash uchun '👑 Premium sotib olish' tugmasini bosing",
         'welcome_to_my_results' => "Natijalar bo'limi",
-        'calc_ai_conversation_closed_by_system' => "Suniy intelekt bilan muloqot yopildi"
+        'calc_ai_conversation_closed_by_system' => "Suniy intelekt bilan muloqot yopildi",
+        'entering_fio' => "Ismingizni kiriting"
 
     ],
 ];
