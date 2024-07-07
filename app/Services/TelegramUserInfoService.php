@@ -25,6 +25,12 @@ class TelegramUserInfoService
         // $userInfo = $chat->user_info;
         switch ($userInfo->status) {
             case 1:
+                $text = self::lang('entering_fio');
+                UserActionService::remove($chat);
+                UserActionService::add($chat, 'entering_fio');
+                $ttt = $chat->message($text)->send();
+                break;
+            case 0:
                 $text = self::lang('select_language');
                 UserActionService::remove($chat);
                 UserActionService::add($chat, 'entering_lang');
@@ -545,5 +551,14 @@ class TelegramUserInfoService
         $chat->message($text)->keyboard(Keyboard::make()->buttons([
             Button::make(self::lang('enter_the_group'))->url($linkGroup[$userInfo->gender]),
         ]))->send();
+    }
+
+    public static function store_fio($chat,$fio){
+        $fioString = (string) $fio;
+        $userInfo = $chat->user_info;
+        $userInfo->fio = $fioString;
+        $userInfo->status = 2;
+        $userInfo->update();
+        return 1;
     }
 }

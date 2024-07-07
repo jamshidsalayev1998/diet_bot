@@ -34,7 +34,6 @@ class UserDailyTrackService
                 $textStatus = 'track_status_unsatisfied';
         }
 
-        $text .= self::lang('your_track_status') . ': ' . self::lang($textStatus) . PHP_EOL . PHP_EOL;
         $text .= self::lang('your_track_result_of_this_week') . ': ' . PHP_EOL . PHP_EOL;
         $daysOfCurrentWeek = getDaysOfCurrentWeek();
         $reportsForWeek = DailyTrackReport::where('chat_id', $userInfo->chat_id)->whereIn('date_report', $daysOfCurrentWeek)->get()->groupBy('date_report')->toArray();

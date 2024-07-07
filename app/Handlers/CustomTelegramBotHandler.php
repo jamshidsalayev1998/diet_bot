@@ -35,6 +35,13 @@ class CustomTelegramBotHandler extends WebhookHandler
         if ($userAction) {
             if ($userInfo->status < 9) {
                 switch ($userAction->screen) {
+                    case 'entering_fio':
+                        $statusStore = TelegramUserInfoService::store_fio($this->chat, $text);
+                        if ($statusStore) {
+                            $this->chat->message($this->lang('saved'))->send();
+                            TelegramUserInfoService::check_user_info($this->chat);
+                        }
+                        break;
                     case 'entering_weight':
                         $statusStore = TelegramUserInfoService::store_weight($this->chat, $text);
                         if ($statusStore) {
@@ -174,7 +181,7 @@ class CustomTelegramBotHandler extends WebhookHandler
         $lang = $this->data->get('lang');
         $userInfo = TelegramUserInfoService::check_exists_user_info($this->chat);
         $userInfo->language = $lang;
-        $userInfo->status = 2;
+        $userInfo->status = 1;
         $userInfo->update();
         app()->setLocale($lang);
         UserActionService::remove($this->chat);
