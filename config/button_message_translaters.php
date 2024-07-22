@@ -3,90 +3,91 @@
 return [
     'menu' => [
         'uz' => '🍽 Menyular',
-        'ru' => '🍽 Menyular ru'
+        'ru' => '🍽 Меню'
     ],
     'profile' => [
         'uz' => '👤 Profil',
-        'ru' => '👤 Profil ru'
+        'ru' => '👤 Профиль'
     ],
     'support' => [
         'uz' => 'Mutaxasis',
-        'ru' => 'Mutaxasis ru'
+        'ru' => 'Специалист'
     ],
     'home' => [
         'uz' => 'Bosh sahifa',
-        'ru' => 'Bosh sahifa ru'
+        'ru' => 'Главная страница'
     ],
     'breakfasts' => [
         'uz' => 'Nonushta',
-        'ru' => 'Nonushta ru'
+        'ru' => 'Завтрак'
     ],
     'lunches' => [
         'uz' => 'Tushlik',
-        'ru' => 'Tushlik ru'
+        'ru' => 'Обед'
     ],
     'dinners' => [
         'uz' => 'Kechki ovqat',
-        'ru' => 'Kechki ovqat ru'
+        'ru' => 'Ужин'
     ],
     'full_menu' => [
         'uz' => 'To\'liq menyu',
-        'ru' => 'Toliq menyu ru'
+        'ru' => 'Полное меню'
     ],
     'snacks' => [
         'uz' => 'Perekuslar',
-        'ru' => 'Perekuslar ru'
+        'ru' => 'Перекусы'
     ],
     'my_user_info' => [
         'uz' => 'Ma`lumotlarim',
-        'ru' => 'Ma`lumotlarim ru'
+        'ru' => 'Моя информация'
     ],
     'change_user_info' => [
         'uz' => 'Ma`lumotlarni o`zgartirish',
-        'ru' => 'Ma`lumotlarni o`zgartirish ru'
+        'ru' => 'Изменить информацию'
     ],
     'my_results' => [
         'uz' => '📈 Men va boshqalar natijasi',
-        'ru' => '📈 Men va boshqalar natijasi ru'
+        'ru' => '📈 Мои и чужие результаты'
     ],
     'my_own_results' => [
         'uz' => 'Mening natijalarim',
-        'ru' => 'Mening natijalarim ru'
+        'ru' => 'Мои результаты'
     ],
     'liga_results' => [
         'uz' => 'Boshqalarning natijalari',
-        'ru' => 'Boshqalarning natijalari ru'
+        'ru' => 'Результаты других'
     ],
     'calc_dieto' => [
         'uz' => '🍱 Ovqat/mahsulot kaloriyasini aniqlash',
-        'ru' => '🍱 Ovqat/mahsulot kaloriyasini aniqlash ru'
+        'ru' => '🍱 Рассчитать калорийность пищи/продукта'
     ],
     'send_today_track_report' => [
         'uz' => "🗓 Bugungi kun uchun hisobot jo'natish",
-        'ru' => "🗓 Bugungi kun uchun hisobot jo'natish ru"
+        'ru' => "🗓 Отправить отчет за сегодня"
     ],
     'enter_changing_of_weight' => [
         'uz' => 'Vazn o\'zgarishini kiritish',
-        'ru' => 'Vazn o\'zgarishini kiritish ru',
+        'ru' => 'Ввести изменение веса'
     ],
     'enter_bot_language' => [
         'uz' => 'Foydalanish tili',
-        'ru' => 'Foydalanish tili ru'
+        'ru' => 'Язык использования'
     ],
     'buy_premium' => [
         'uz' => '👑 Premium sotib olish',
-        'ru' => '👑 Premium sotib olish'
+        'ru' => '👑 Купить премиум'
     ],
     'status_of_subscribe' => [
         'uz' => 'Obuna',
-        'ru' => 'Obuna'
+        'ru' => 'Подписка'
     ],
     'start_calc_ai_conversation' => [
         'uz' => 'Suniy intelekt bilan muloqotni boshlash',
-        'ru' => 'Suniy intelekt bilan muloqotni boshlash'
+        'ru' => 'Начать разговор с ИИ'
     ],
     'stop_calc_ai_conversation' => [
         'uz' => 'Suniy intelekt bilan muloqotni tugatish',
-        'ru' => 'Suniy intelekt bilan muloqotni tugatish'
+        'ru' => 'Закончить разговор с ИИ'
     ]
+
 ];
